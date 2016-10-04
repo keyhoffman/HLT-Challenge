@@ -17,7 +17,8 @@ final class ApplicationCoordinator: Coordinator {
     }
     
     func start() {
-        
+        let flickrCoordinator = FlickrCoordinator(window: window)
+        flickrCoordinator.start()
     }
     
 }

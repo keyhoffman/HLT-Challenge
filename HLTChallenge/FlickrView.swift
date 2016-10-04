@@ -8,10 +8,22 @@
 
 import UIKit
 
-final class FlickrView: UIView, Prerparable {
+final class FlickrView: UIView, Prerparable, Configurable {
 
+    let flickrImageView = FlickrViewStyleSheet.ImageView.flickr.imageView
+    
+    convenience init() {
+        self.init()
+        defer { prepare() }
+    }
+    
     
     func prepare() {
-        
+        defer { FlickrViewStyleSheet.prepare(self) }
+        addSubview(flickrImageView)
+    }
+    
+    func configure(withData image: UIImage) {
+        flickrImageView.image = image
     }
 }

@@ -12,5 +12,12 @@ struct FlickrTableViewControllerStyleSheet: ViewPreparer {
     
     static func prepare(_ flickrTVC: FlickrTableViewController) {
         
+        defer { flickrTVC.view.layoutSubviews() }
+        
+        flickrTVC.tableView.rowHeight = 200
+        
+        flickrTVC.navigationItem.titleView = flickrTVC.searchTextField
+        flickrTVC.navigationItem.rightBarButtonItem = flickrTVC.displaySearchButton
+        
     }
 }

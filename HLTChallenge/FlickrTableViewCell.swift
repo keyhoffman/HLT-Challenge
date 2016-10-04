@@ -10,11 +10,20 @@ import UIKit
 
 final class FlickrTableViewCell: UITableViewCell, Configurable, Prerparable {
     
-    func configure(withData data: UIImage) {
-        
+    // FIXEME: FlickrTableViewCellStyleSheet.View.flickr.view
+    let flickrView = FlickrView()
+    
+    convenience init() {
+        self.init()
+        defer { prepare() }
     }
     
     func prepare() {
-        
+        defer { FlickrTableViewCellStyleSheet.prepare(self) }
+        addSubview(flickrView)
+    }
+    
+    func configure(withData image: UIImage) {
+        flickrView.configure(withData: image)
     }
 }
