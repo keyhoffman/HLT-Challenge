@@ -11,6 +11,9 @@
 		030836931DA4431E0046827D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 030836921DA4431E0046827D /* Assets.xcassets */; };
 		030836961DA4431E0046827D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 030836941DA4431E0046827D /* LaunchScreen.storyboard */; };
 		030836A11DA4431E0046827D /* HLTChallengeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030836A01DA4431E0046827D /* HLTChallengeTests.swift */; };
+		030836AD1DA444F90046827D /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030836AC1DA444F90046827D /* ApplicationCoordinator.swift */; };
+		0370ECB11DA447BF008B8C5D /* FlickrCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECB01DA447BF008B8C5D /* FlickrCoordinator.swift */; };
+		0370ECB31DA447E4008B8C5D /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECB21DA447E4008B8C5D /* Coordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +35,9 @@
 		0308369C1DA4431E0046827D /* HLTChallengeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HLTChallengeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		030836A01DA4431E0046827D /* HLTChallengeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HLTChallengeTests.swift; sourceTree = "<group>"; };
 		030836A21DA4431E0046827D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		030836AC1DA444F90046827D /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
+		0370ECB01DA447BF008B8C5D /* FlickrCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrCoordinator.swift; sourceTree = "<group>"; };
+		0370ECB21DA447E4008B8C5D /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,10 +79,10 @@
 		0308368A1DA4431E0046827D /* HLTChallenge */ = {
 			isa = PBXGroup;
 			children = (
-				0308368B1DA4431E0046827D /* AppDelegate.swift */,
-				030836921DA4431E0046827D /* Assets.xcassets */,
-				030836941DA4431E0046827D /* LaunchScreen.storyboard */,
-				030836971DA4431E0046827D /* Info.plist */,
+				0370ECB21DA447E4008B8C5D /* Coordinator.swift */,
+				030836AC1DA444F90046827D /* ApplicationCoordinator.swift */,
+				0370ECB01DA447BF008B8C5D /* FlickrCoordinator.swift */,
+				030836AB1DA444E60046827D /* Support */,
 			);
 			path = HLTChallenge;
 			sourceTree = "<group>";
@@ -88,6 +94,17 @@
 				030836A21DA4431E0046827D /* Info.plist */,
 			);
 			path = HLTChallengeTests;
+			sourceTree = "<group>";
+		};
+		030836AB1DA444E60046827D /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				0308368B1DA4431E0046827D /* AppDelegate.swift */,
+				030836921DA4431E0046827D /* Assets.xcassets */,
+				030836941DA4431E0046827D /* LaunchScreen.storyboard */,
+				030836971DA4431E0046827D /* Info.plist */,
+			);
+			name = Support;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,7 +211,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0370ECB31DA447E4008B8C5D /* Coordinator.swift in Sources */,
 				0308368C1DA4431E0046827D /* AppDelegate.swift in Sources */,
+				0370ECB11DA447BF008B8C5D /* FlickrCoordinator.swift in Sources */,
+				030836AD1DA444F90046827D /* ApplicationCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +414,7 @@
 				030836A71DA4431E0046827D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		030836A81DA4431E0046827D /* Build configuration list for PBXNativeTarget "HLTChallengeTests" */ = {
 			isa = XCConfigurationList;
@@ -402,6 +423,7 @@
 				030836AA1DA4431E0046827D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
