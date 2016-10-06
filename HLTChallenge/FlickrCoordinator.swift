@@ -26,16 +26,16 @@ final class FlickrCoordinator: SubCoordinator {
         let flickrTableViewController = FlickrTableViewController(configuration: flickrTableViewControllerConfig)
         rootNavigationController.pushViewController(flickrTableViewController, animated: false)
         
-        FlickrImage.loadAll { result in
+        FlickrImageMetadata.loadAll { result in
             switch result {
             case let .error(error):  debugPrint(error)
-            case let .value(images): let _ = images.map { print($0) }
+            case let .value(images): let _ = images.map { print($0) } // FIXME: Start Here
             }
         }
         
     }
     
-    private func photo(from image: FlickrImage, withBlock block: @escaping (Result<UIImage>) -> Void) {
+    private func photo(from image: FlickrImageMetadata, withBlock block: @escaping (Result<UIImage>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let data = URL(string: image.url).flatMap { (try? Data(contentsOf: $0)) }
             DispatchQueue.main.async {

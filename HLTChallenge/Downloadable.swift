@@ -39,7 +39,7 @@ extension Downloadable {
     }
 }
 
-extension FlickrImage {
+extension FlickrImageMetadata {
 //    static func loadAll(request: URLRequest, withBlock block: @escaping ([Result<FlickrImage>]) -> Void) {
 //        URLSession.shared.dataTask(with: request) { data, response, error in
 //            DispatchQueue.main.async {
@@ -48,17 +48,17 @@ extension FlickrImage {
 //        }
 //    }
     
-    static func loadAll(withblock block: @escaping (Result<[FlickrImage]>) -> Void) {
+    static func loadAll(withblock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
         switch url() >>= urlRequest {
         case let .error(error):   block <^> Result(error)
         case let .value(request): dataTask(request: request, withBlock: block)
         }
     }
     
-    static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping (Result<[FlickrImage]>) -> Void) {
+    static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
-                block <^> (processDataTask(date: data, response: response, error: error) >>= FlickrImage.getAll)
+                block <^> (processDataTask(date: data, response: response, error: error) >>= FlickrImageMetadata.getAll)
             }
         }
     }

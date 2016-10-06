@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct FlickrImage: Downloadable {
+struct FlickrImageMetadata: Downloadable {
     let id:      String
     let ownerID: String
     let url:     String
 }
 
-extension FlickrImage {
+extension FlickrImageMetadata {
     static let urlQueryParameters = [
         FlickrConstants.ParameterKeys.apiKey:          FlickrConstants.ParameterValues.apiKey,
         FlickrConstants.ParameterKeys.method:          FlickrConstants.ParameterValues.searchMethod,
@@ -27,15 +27,15 @@ extension FlickrImage {
     ]
     
     static let urlAddressParameters = [
-        FlickrImage.host:   FlickrConstants.API.host,
-        FlickrImage.path:   FlickrConstants.API.path,
-        FlickrImage.scheme: FlickrConstants.API.scheme
+        FlickrImageMetadata.host:   FlickrConstants.API.host,
+        FlickrImageMetadata.path:   FlickrConstants.API.path,
+        FlickrImageMetadata.scheme: FlickrConstants.API.scheme
     ]
 
 }
 
-extension FlickrImage {
-    static func create(from dict: JSONDictionary) -> Result<FlickrImage> {
+extension FlickrImageMetadata {
+    static func create(from dict: JSONDictionary) -> Result<FlickrImageMetadata> {
 //        dict.print_(with: "FLICKR IMAGE CREATE")
 //        guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos] as? JSONDictionary else { return Result(CreationError.flickrImage) }
 //        guard let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrImage) }
@@ -45,29 +45,29 @@ extension FlickrImage {
         guard let id      = dict[FlickrConstants.ResponseKeys.id]        as? String,
               let ownerId = dict[FlickrConstants.ResponseKeys.ownerID]   as? String,
               let url     = dict[FlickrConstants.ResponseKeys.mediumURL] as? String else { return Result(CreationError.flickrImage) }
-        return curry(Result.init) <^> FlickrImage(id: id, ownerID: ownerId, url: url)
+        return curry(Result.init) <^> FlickrImageMetadata(id: id, ownerID: ownerId, url: url)
     }
 }
 
-extension FlickrImage {
+extension FlickrImageMetadata {
 //    static func getAll(from dict: JSONDictionary) -> [Result<FlickrImage>] {
 //        guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos] as? JSONDictionary else { return Result(CreationError.flickrImage) }
 //        guard let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrImage) }
 //        
 //        return photosArray.map(FlickrImage.create)
 //    }
-    static func getAll(from dict: JSONDictionary) -> Result<[FlickrImage]> {
+    static func getAll(from dict: JSONDictionary) -> Result<[FlickrImageMetadata]> {
         guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos]      as? JSONDictionary,
               let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrImage) }
-        return photosArray.map(FlickrImage.create).invert()
+        return photosArray.map(FlickrImageMetadata.create).invert()
     }
 
 }
 
-extension Sequence where Iterator.Element == Result<FlickrImage> {
+extension Sequence where Iterator.Element == Result<FlickrImageMetadata> {
     
-    fileprivate func invert() -> Result<[FlickrImage]> { // FIXME: THIS WHOLE FUNCTION IS BAD
-        var images: [FlickrImage] = []
+    fileprivate func invert() -> Result<[FlickrImageMetadata]> { // FIXME: THIS WHOLE FUNCTION IS BAD
+        var images: [FlickrImageMetadata] = []
         
         for result in self {
             switch result {
