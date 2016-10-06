@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias URLParameters = [String: String]
+
 final class FlickrCoordinator: SubCoordinator {
     
     private let window: UIWindow
@@ -28,6 +30,7 @@ final class FlickrCoordinator: SubCoordinator {
     }
     
     private func navigateToImageDetailView() {
-        
+        print("NAVIGATE")
     }
 }
+

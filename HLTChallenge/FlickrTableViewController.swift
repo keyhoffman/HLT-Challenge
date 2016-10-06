@@ -14,11 +14,22 @@ struct FlickrTableViewControllerConfiguration {
 
 final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, Prerparable, UITextFieldDelegate {
 
-    let searchTextField = UITextField()
+    lazy var searchTextField: UITextField = {
+        let tf      = FlickrTableViewControllerStyleSheet.TextField.search.textField
+        tf.isHidden = true
+        tf.delegate = self
+        tf.becomeFirstResponder()
+        return tf
+    }()
     
-    let displaySearchButton = UIBarButtonItem()
+    lazy var displaySearchTextFieldButton: UIBarButtonItem = {
+        let bbi    = FlickrTableViewControllerStyleSheet.BarButtonItem.displaySearchTextField.barButtonItem
+        bbi.target = self
+        bbi.action = #selector(displaySearchTextField)
+        return bbi
+    }()
     
-    let didSelectPhoto: (Void) -> Void
+    private let didSelectPhoto: (Void) -> Void
     
     init(configuration: FlickrTableViewControllerConfiguration) {
         didSelectPhoto = configuration.didSelectPhoto
@@ -32,17 +43,17 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
     override func viewDidLoad() {
         super.viewDidLoad()
         defer { prepare() }
-        
-        searchTextField.placeholder = "FOOOO"
-        searchTextField.becomeFirstResponder()
-        searchTextField.borderStyle = .line
-        
-        view.backgroundColor = .blue
-        displaySearchButton.title = "BUTT"
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        didSelectPhoto()
+    }
     
     func prepare() {
         defer { FlickrTableViewControllerStyleSheet.prepare(self) }
+    }
+    
+    dynamic private func displaySearchTextField() {
+        print("display search text field")
     }
 }

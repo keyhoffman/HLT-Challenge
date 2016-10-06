@@ -12,17 +12,17 @@ import Foundation
 
 struct FlickrConstants {
     
-    // MARK: Flickr
+    // MARK: API
     
-    struct Flickr {
-        static let APIScheme = "https"
-        static let APIHost   = "api.flickr.com"
-        static let APIPath   = "/services/rest"
+    struct API {
+        static let Scheme = "https"
+        static let Host   = "api.flickr.com"
+        static let Path   = "/services/rest"
     }
     
-    // MARK: FLickr Parameter Keys
+    // MARK: Parameter Keys
     
-    struct FlickrParameterKeys {
+    struct ParameterKeys {
         static let Method          = "method"
         static let APIKey          = "api_key"
         static let UserID          = "user_id"
@@ -35,14 +35,14 @@ struct FlickrConstants {
         static let SafeSearch      = "safe_search"
     }
     
-    // MARK: Flickr Parameter Values
+    // MARK: Parameter Values
     
-    struct FlickrParameterValues {
+    struct ParameterValues {
         static let PublicPhotosMethod  = "flickr.people.getPublicPhotos"
         static let SearchMethod        = "flickr.photos.search"
         static let APIKey              = "c9025518af10cb3bb1ec3fd80ea2fd52"
         static let UserID              = "90967382@N07"
-//        static let Fashion             = "fashion"
+        static let GeneralSearch       = "general"
         static let ResponseFormat      = "json"
         static let DisableJSONCallback = "1"
         static let MediumURL           = "url_m"
@@ -52,9 +52,9 @@ struct FlickrConstants {
         static let SafeSearchOff       = "0"
     }
     
-    // MARK: Flickr Response Keys
+    // MARK: Response Keys
     
-    struct FlickrResponseKeys {
+    struct ResponseKeys {
         static let Status     = "stat"
         static let Photos     = "photos"
         static let Photo      = "photo"
@@ -64,9 +64,9 @@ struct FlickrConstants {
         static let Total      = "total"
     }
     
-    // MARK: Flickr Response Values
+    // MARK: Response Values
     
-    struct FlickrResponseValues {
+    struct ResponseValues {
         static let OKStatus            = "ok"
         static let MaxPicturesReturned = 4000
     }
