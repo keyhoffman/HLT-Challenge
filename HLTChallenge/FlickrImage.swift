@@ -15,60 +15,69 @@ struct FlickrImage: Downloadable {
 }
 
 extension FlickrImage {
-    static let urlParameters = [
-        FlickrConstants.ParameterKeys.APIKey:          FlickrConstants.ParameterValues.APIKey,
-        FlickrConstants.ParameterKeys.Method:          FlickrConstants.ParameterValues.SearchMethod,
-        FlickrConstants.ParameterKeys.Extras:          FlickrConstants.ParameterValues.MediumURL,
-        FlickrConstants.ParameterKeys.Format:          FlickrConstants.ParameterValues.ResponseFormat,
-        FlickrConstants.ParameterKeys.NoJSONCallback:  FlickrConstants.ParameterValues.DisableJSONCallback,
-        FlickrConstants.ParameterKeys.SafeSearch:      FlickrConstants.ParameterValues.SafeSearchOn,
-        FlickrConstants.ParameterKeys.PicturesPerPage: String(FlickrConstants.ParameterValues.PicturesPerPage)
-//        FlickrConstants.ParameterKeys.Text:            searchTerm,
-//        FlickrConstants.ParameterKeys.PageNumber:      String(page)
+    static let urlQueryParameters = [
+        FlickrConstants.ParameterKeys.apiKey:          FlickrConstants.ParameterValues.apiKey,
+        FlickrConstants.ParameterKeys.method:          FlickrConstants.ParameterValues.searchMethod,
+        FlickrConstants.ParameterKeys.extras:          FlickrConstants.ParameterValues.mediumURL,
+        FlickrConstants.ParameterKeys.format:          FlickrConstants.ParameterValues.responseFormat,
+        FlickrConstants.ParameterKeys.noJSONCallback:  FlickrConstants.ParameterValues.disableJSONCallback,
+        FlickrConstants.ParameterKeys.safeSearch:      FlickrConstants.ParameterValues.safeSearchOn,
+        FlickrConstants.ParameterKeys.picturesPerPage: FlickrConstants.ParameterValues.picturesPerPage,
+        FlickrConstants.ParameterKeys.text:            FlickrConstants.ParameterValues.generalSearch
+    ]
+    
+    static let urlAddressParameters = [
+        FlickrImage.host:   FlickrConstants.API.host,
+        FlickrImage.path:   FlickrConstants.API.path,
+        FlickrImage.scheme: FlickrConstants.API.scheme
     ]
 
 }
 
+extension FlickrImage {
+    static func create(from dict: JSONDictionary) -> Result<FlickrImage> {
+//        dict.print_(with: "FLICKR IMAGE CREATE")
+//        guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos] as? JSONDictionary else { return Result(CreationError.flickrImage) }
+//        guard let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrImage) }
+//        
+//        let dict = photosArray[0]
+        
+        guard let id      = dict[FlickrConstants.ResponseKeys.id]        as? String,
+              let ownerId = dict[FlickrConstants.ResponseKeys.ownerID]   as? String,
+              let url     = dict[FlickrConstants.ResponseKeys.mediumURL] as? String else { return Result(CreationError.flickrImage) }
+        return curry(Result.init) <^> FlickrImage(id: id, ownerID: ownerId, url: url)
+    }
+}
 
+extension FlickrImage {
+//    static func getAll(from dict: JSONDictionary) -> [Result<FlickrImage>] {
+//        guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos] as? JSONDictionary else { return Result(CreationError.flickrImage) }
+//        guard let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrImage) }
+//        
+//        return photosArray.map(FlickrImage.create)
+//    }
+    static func getAll(from dict: JSONDictionary) -> Result<[FlickrImage]> {
+        guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos]      as? JSONDictionary,
+              let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrImage) }
+        return photosArray.map(FlickrImage.create).invert()
+    }
 
+}
 
-protocol Downloadable {
-    static var urlParameters: URLParameters { get }
+extension Sequence where Iterator.Element == Result<FlickrImage> {
+    
+    fileprivate func invert() -> Result<[FlickrImage]> { // FIXME: THIS WHOLE FUNCTION IS BAD
+        var images: [FlickrImage] = []
+        
+        for result in self {
+            switch result {
+            case .error(_):         continue
+            case .value(let image): images.append(image)
+            }
+        }
+        
+        return Result(images)
+    }
 }
 
 
-extension Downloadable {
-    static func loadPhotos(forPage page: Int, andSearchTerm searchTerm: String = FlickrConstants.ParameterValues.GeneralSearch) {
-        
-        switch url(from: urlParameters) >>= urlRequest {
-        case let .error(error): print(error)
-        case let .value(request): print(request)
-        }
-        
-    }
-    
-    static private func dataTask(request: URLRequest) {
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            
-        }
-
-    }
-    
-    static private func urlRequest(from url: URL) -> Result<URLRequest> {
-        return curry(Result.init) <^> URLRequest(url: url)
-    }
-    
-    static private func url(from parameters: URLParameters) -> Result<URL> {
-        var components        = URLComponents()
-        components.scheme     = FlickrConstants.API.Scheme
-        components.host       = FlickrConstants.API.Host
-        components.path       = FlickrConstants.API.Path
-        components.queryItems = parameters.map(urlQueryItem)
-        
-        return components.url.toResult(with:) <^> URLRequestError.invalidURL(parameters: parameters)
-    }
-    
-    static private func urlQueryItem(from name: String, and value: String?) -> URLQueryItem {
-        return URLQueryItem(name: name, value: value)
-    }
-}

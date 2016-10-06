@@ -13,10 +13,20 @@ final class FlickrTableViewCell: UITableViewCell, Configurable, Prerparable {
     // FIXEME: FlickrTableViewCellStyleSheet.View.flickr.view
     let flickrView = FlickrView()
     
-    convenience init() {
-        self.init()
+//    convenience init() {
+//        self.init()
+//        defer { prepare() }
+//    }
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         defer { prepare() }
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     
     func prepare() {
         defer { FlickrTableViewCellStyleSheet.prepare(self) }

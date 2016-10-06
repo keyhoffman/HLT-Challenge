@@ -15,59 +15,61 @@ struct FlickrConstants {
     // MARK: API
     
     struct API {
-        static let Scheme = "https"
-        static let Host   = "api.flickr.com"
-        static let Path   = "/services/rest"
+        static let scheme = "https"
+        static let host   = "api.flickr.com"
+        static let path   = "/services/rest"
     }
     
     // MARK: Parameter Keys
     
     struct ParameterKeys {
-        static let Method          = "method"
-        static let APIKey          = "api_key"
-        static let UserID          = "user_id"
-        static let Text            = "text"
-        static let Extras          = "extras"
-        static let PageNumber      = "page"
-        static let Format          = "format"
-        static let NoJSONCallback  = "nojsoncallback"
-        static let PicturesPerPage = "per_page"
-        static let SafeSearch      = "safe_search"
+        static let method          = "method"
+        static let apiKey          = "api_key"
+        static let userID          = "user_id"
+        static let text            = "text"
+        static let extras          = "extras"
+        static let pageNumber      = "page"
+        static let format          = "format"
+        static let noJSONCallback  = "nojsoncallback"
+        static let picturesPerPage = "per_page"
+        static let safeSearch      = "safe_search"
     }
     
     // MARK: Parameter Values
     
     struct ParameterValues {
-        static let PublicPhotosMethod  = "flickr.people.getPublicPhotos"
-        static let SearchMethod        = "flickr.photos.search"
-        static let APIKey              = "c9025518af10cb3bb1ec3fd80ea2fd52"
-        static let UserID              = "90967382@N07"
-        static let GeneralSearch       = "general"
-        static let ResponseFormat      = "json"
-        static let DisableJSONCallback = "1"
-        static let MediumURL           = "url_m"
-        static let PicturesPerPage     = 2
-        static let PageNumber          = "1"
-        static let SafeSearchOn        = "1"
-        static let SafeSearchOff       = "0"
+        static let publicPhotosMethod  = "flickr.people.getPublicPhotos"
+        static let searchMethod        = "flickr.photos.search"
+        static let apiKey              = "c9025518af10cb3bb1ec3fd80ea2fd52"
+        static let userID              = "90967382@N07"
+        static let generalSearch       = "general"
+        static let responseFormat      = "json"
+        static let disableJSONCallback = "1"
+        static let mediumURL           = "url_m"
+        static let picturesPerPage     = "2"
+        static let pageNumber          = "1"
+        static let safeSearchOn        = "1"
+        static let safeSearchOff       = "0"
     }
     
     // MARK: Response Keys
     
     struct ResponseKeys {
-        static let Status     = "stat"
-        static let Photos     = "photos"
-        static let Photo      = "photo"
-        static let Title      = "title"
+        static let status     = "stat"
+        static let photos     = "photos"
+        static let photo      = "photo"
+        static let title      = "title"
+        static let id         = "id"
+        static let ownerID    = "owner"
         static let mediumURL  = "url_m"
-        static let TotalPages = "pages"
-        static let Total      = "total"
+        static let totalPages = "pages"
+        static let total      = "total"
     }
     
     // MARK: Response Values
     
     struct ResponseValues {
-        static let OKStatus            = "ok"
-        static let MaxPicturesReturned = 4000
+        static let okStatus            = "ok"
+        static let maxPicturesReturned = 4000
     }
 }

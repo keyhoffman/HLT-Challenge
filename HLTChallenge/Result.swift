@@ -19,6 +19,19 @@ enum Result<T> {
 }
 
 extension Result {
+    init(_ error: Error?, _ value: Value?) { 
+        if let value = value {
+            self = .value(value)
+        }
+        else if let error = error {
+            self = .error(error)
+        } else {
+            self = curry(Result.init) <^> OptionalError.nonExistantValue(value)
+        }
+    }
+}
+
+extension Result {
     func flatMap<U>(_ f: (T) -> Result<U>) -> Result<U> {
         switch self {
         case let .error(error): return .error(error)

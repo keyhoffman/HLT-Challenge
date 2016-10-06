@@ -8,14 +8,23 @@
 
 import Foundation
 
-enum OptionalError<T>: Error, CustomStringConvertible, CustomDebugStringConvertible {
+protocol ErrorMessageSender: CustomStringConvertible {}
+
+extension ErrorMessageSender {
+    var messagePrefix: String {
+        return "Oooops... Something went wrong!\n"
+    }
+}
+
+
+enum OptionalError<T>: Error, CustomDebugStringConvertible, ErrorMessageSender {
     case nonExistantValue(T)
 }
 
 extension OptionalError {
     var description: String {
         switch self {
-        case let .nonExistantValue(value): return "No value exists for" + String(describing: value)
+        case let .nonExistantValue(value): return messagePrefix + "No value exists for" + String(describing: value)
         }
     }
 }

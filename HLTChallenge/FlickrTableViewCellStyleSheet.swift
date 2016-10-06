@@ -20,10 +20,10 @@ struct FlickrTableViewCellStyleSheet: ViewPreparer {
         
         flickrCell.flickrView.translatesAutoresizingMaskIntoConstraints = false
         
-        let flickrViewTop      = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .top <^> .equal <^> flickrCell <^> .top <^> 1 <^> 0
-        let flickrViewBottom   = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .top <^> .equal <^> flickrCell <^> .top <^> 1 <^> 0
-        let flickrViewLeading  = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .top <^> .equal <^> flickrCell <^> .top <^> 1 <^> 0
-        let flickrViewTrailing = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .top <^> .equal <^> flickrCell <^> .top <^> 1 <^> 0
+        let flickrViewTop      = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .top      <^> .equal <^> flickrCell <^> .top      <^> 1 <^> 0
+        let flickrViewBottom   = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .bottom   <^> .equal <^> flickrCell <^> .bottom   <^> 1 <^> 0
+        let flickrViewLeading  = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .leading  <^> .equal <^> flickrCell <^> .leading  <^> 1 <^> 0
+        let flickrViewTrailing = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .trailing <^> .equal <^> flickrCell <^> .trailing <^> 1 <^> 0
         
         let flickrViewConstraints = [flickrViewTop, flickrViewBottom, flickrViewLeading, flickrViewTrailing]
         

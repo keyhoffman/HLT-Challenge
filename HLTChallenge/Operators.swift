@@ -10,8 +10,7 @@ import Foundation
 
 precedencegroup CurryPrecedence {
     associativity: left
-    lowerThan:     LogicalDisjunctionPrecedence
-    higherThan:    AssignmentPrecedence
+    higherThan:    LogicalDisjunctionPrecedence
 }
 
 precedencegroup FlatMapPrecedence {
@@ -45,3 +44,5 @@ func >>= <A, B>(a: A?, f: (A) -> B?) -> B? {
 func >>= <A, B>(a: A?, f: (A?) -> Result<B>) -> Result<B> {
     return f(a)
 }
+
+

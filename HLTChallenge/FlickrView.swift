@@ -12,11 +12,14 @@ final class FlickrView: UIView, Prerparable, Configurable {
 
     let flickrImageView = FlickrViewStyleSheet.ImageView.flickr.imageView
     
-    convenience init() {
-        self.init()
+    init() {
+        super.init(frame: .zero)
         defer { prepare() }
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func prepare() {
         defer { FlickrViewStyleSheet.prepare(self) }

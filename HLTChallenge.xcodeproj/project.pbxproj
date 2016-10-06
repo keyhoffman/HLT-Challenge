@@ -34,6 +34,12 @@
 		03DE2B2D1DA5D1CF008CE5B1 /* FlickrImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B2C1DA5D1CF008CE5B1 /* FlickrImage.swift */; };
 		03DE2B2F1DA5E9C2008CE5B1 /* OptionalExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B2E1DA5E9C2008CE5B1 /* OptionalExt.swift */; };
 		03DE2B321DA5EAA9008CE5B1 /* OptionalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B311DA5EAA9008CE5B1 /* OptionalError.swift */; };
+		03DE2B341DA60579008CE5B1 /* CreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B331DA60579008CE5B1 /* CreationError.swift */; };
+		03DE2B371DA60906008CE5B1 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B361DA60906008CE5B1 /* Response.swift */; };
+		03DE2B3A1DA60BA7008CE5B1 /* Downloadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B391DA60BA7008CE5B1 /* Downloadable.swift */; };
+		03DE2B3F1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B3E1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift */; };
+		03DE2B411DA62072008CE5B1 /* URLParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B401DA62072008CE5B1 /* URLParameters.swift */; };
+		03DE2B441DA6208D008CE5B1 /* JSONDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B431DA6208D008CE5B1 /* JSONDictionary.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +84,12 @@
 		03DE2B2C1DA5D1CF008CE5B1 /* FlickrImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrImage.swift; sourceTree = "<group>"; };
 		03DE2B2E1DA5E9C2008CE5B1 /* OptionalExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalExt.swift; sourceTree = "<group>"; };
 		03DE2B311DA5EAA9008CE5B1 /* OptionalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalError.swift; sourceTree = "<group>"; };
+		03DE2B331DA60579008CE5B1 /* CreationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationError.swift; sourceTree = "<group>"; };
+		03DE2B361DA60906008CE5B1 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		03DE2B391DA60BA7008CE5B1 /* Downloadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloadable.swift; sourceTree = "<group>"; };
+		03DE2B3E1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStringConvertibleExt.swift; sourceTree = "<group>"; };
+		03DE2B401DA62072008CE5B1 /* URLParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLParameters.swift; sourceTree = "<group>"; };
+		03DE2B431DA6208D008CE5B1 /* JSONDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDictionary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +210,8 @@
 		0370ECBD1DA453C6008B8C5D /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				03DE2B421DA62078008CE5B1 /* TypeAliases */,
+				03DE2B351DA608DE008CE5B1 /* Networking */,
 				03DE2B301DA5E9CB008CE5B1 /* Extensions */,
 				03DE2B2A1DA5CD42008CE5B1 /* Functors */,
 				0370ECDE1DA461E2008B8C5D /* Operators */,
@@ -225,6 +239,7 @@
 				0370ECBF1DA453FF008B8C5D /* FatalError.swift */,
 				03DE2B261DA5CAE2008CE5B1 /* URLRequestError.swift */,
 				03DE2B311DA5EAA9008CE5B1 /* OptionalError.swift */,
+				03DE2B331DA60579008CE5B1 /* CreationError.swift */,
 			);
 			name = Errors;
 			sourceTree = "<group>";
@@ -274,6 +289,7 @@
 		03DE2B2B1DA5D1BB008CE5B1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				03DE2B381DA60B93008CE5B1 /* Protocols */,
 				03DE2B2C1DA5D1CF008CE5B1 /* FlickrImage.swift */,
 			);
 			name = Models;
@@ -283,8 +299,34 @@
 			isa = PBXGroup;
 			children = (
 				03DE2B2E1DA5E9C2008CE5B1 /* OptionalExt.swift */,
+				03DE2B3E1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		03DE2B351DA608DE008CE5B1 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				03DE2B361DA60906008CE5B1 /* Response.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		03DE2B381DA60B93008CE5B1 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				03DE2B391DA60BA7008CE5B1 /* Downloadable.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		03DE2B421DA62078008CE5B1 /* TypeAliases */ = {
+			isa = PBXGroup;
+			children = (
+				03DE2B401DA62072008CE5B1 /* URLParameters.swift */,
+				03DE2B431DA6208D008CE5B1 /* JSONDictionary.swift */,
+			);
+			name = TypeAliases;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,10 +434,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				03DE2B2D1DA5D1CF008CE5B1 /* FlickrImage.swift in Sources */,
+				03DE2B341DA60579008CE5B1 /* CreationError.swift in Sources */,
+				03DE2B3F1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift in Sources */,
 				0370ECC51DA456AB008B8C5D /* FlickrView.swift in Sources */,
 				0370ECCE1DA45817008B8C5D /* FlickrViewStyleSheet.swift in Sources */,
 				0370ECD01DA45899008B8C5D /* Preparable.swift in Sources */,
 				0370ECB51DA45303008B8C5D /* Configurable.swift in Sources */,
+				03DE2B371DA60906008CE5B1 /* Response.swift in Sources */,
 				0370ECCB1DA45763008B8C5D /* ViewPreparer.swift in Sources */,
 				0370ECB31DA447E4008B8C5D /* Coordinator.swift in Sources */,
 				0308368C1DA4431E0046827D /* AppDelegate.swift in Sources */,
@@ -403,12 +448,15 @@
 				0370ECDA1DA45B1C008B8C5D /* FlickrConstants.swift in Sources */,
 				0370ECDD1DA461D7008B8C5D /* Curry.swift in Sources */,
 				03DE2B271DA5CAE3008CE5B1 /* URLRequestError.swift in Sources */,
+				03DE2B441DA6208D008CE5B1 /* JSONDictionary.swift in Sources */,
 				0370ECC71DA456D3008B8C5D /* FlickrTableViewCell.swift in Sources */,
 				0370ECD71DA4598C008B8C5D /* FlickrTableViewControllerStyleSheet.swift in Sources */,
 				0370ECC01DA453FF008B8C5D /* FatalError.swift in Sources */,
 				0370ECD51DA45922008B8C5D /* BaseTableViewController.swift in Sources */,
 				0370ECB11DA447BF008B8C5D /* FlickrCoordinator.swift in Sources */,
+				03DE2B411DA62072008CE5B1 /* URLParameters.swift in Sources */,
 				0370ECD21DA458C8008B8C5D /* FlickrTableViewCellStyleSheet.swift in Sources */,
+				03DE2B3A1DA60BA7008CE5B1 /* Downloadable.swift in Sources */,
 				03DE2B2F1DA5E9C2008CE5B1 /* OptionalExt.swift in Sources */,
 				030836AD1DA444F90046827D /* ApplicationCoordinator.swift in Sources */,
 				03DE2B291DA5CD3B008CE5B1 /* Result.swift in Sources */,
