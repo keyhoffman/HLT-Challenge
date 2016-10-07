@@ -26,7 +26,7 @@ final class FlickrCoordinator: SubCoordinator {
         let flickrTableViewController = FlickrTableViewController(configuration: flickrTableViewControllerConfig)
         rootNavigationController.pushViewController(flickrTableViewController, animated: false)
         
-        FlickrImageMetadata.loadAll { result in
+        FlickrImageMetadata.getAll { result in
             switch result {
             case let .error(error):    debugPrint(error)
             case let .value(metaData):

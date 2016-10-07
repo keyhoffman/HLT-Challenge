@@ -67,18 +67,6 @@ extension FlickrImageMetadata {
 }
 
 
-// FIXME: Find a way to make this generic!!!!!
-extension Sequence where Iterator.Element == Result<FlickrImageMetadata> {
-    
-    /// Transforms an `Array` of `Result` of `FlickrImageMetadata` into
-    /// a `Result` of an `Array` of `FlickrImageMetadata`.
-    ///
-    /// - note: Transformation Structure --  [Result\<FlickrImageMetadata\>] -> Result<[FlickrImageMetadata]>
-    ///
-    /// - returns: A `Result` of an `Array` of `FlickrImageMetadata`
-    fileprivate func invert() -> Result<[FlickrImageMetadata]> {
-        return curry(Result.init) <^> self.map { $0.toOptional() }.flatMap { $0 }
-    }
-}
+
 
 

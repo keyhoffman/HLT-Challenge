@@ -30,15 +30,16 @@
 		0370ECDD1DA461D7008B8C5D /* Curry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECDC1DA461D7008B8C5D /* Curry.swift */; };
 		0370ECE01DA46202008B8C5D /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECDF1DA46202008B8C5D /* Operators.swift */; };
 		0370ECE21DA4705C008B8C5D /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECE11DA4705C008B8C5D /* General.swift */; };
+		03B0272D1DA76CD0003FDA88 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B0272C1DA76CD0003FDA88 /* Sequence.swift */; };
 		03DE2B271DA5CAE3008CE5B1 /* URLRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B261DA5CAE2008CE5B1 /* URLRequestError.swift */; };
 		03DE2B291DA5CD3B008CE5B1 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B281DA5CD3B008CE5B1 /* Result.swift */; };
 		03DE2B2D1DA5D1CF008CE5B1 /* FlickrImageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B2C1DA5D1CF008CE5B1 /* FlickrImageMetadata.swift */; };
-		03DE2B2F1DA5E9C2008CE5B1 /* OptionalExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B2E1DA5E9C2008CE5B1 /* OptionalExt.swift */; };
+		03DE2B2F1DA5E9C2008CE5B1 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B2E1DA5E9C2008CE5B1 /* Optional.swift */; };
 		03DE2B321DA5EAA9008CE5B1 /* OptionalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B311DA5EAA9008CE5B1 /* OptionalError.swift */; };
 		03DE2B341DA60579008CE5B1 /* CreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B331DA60579008CE5B1 /* CreationError.swift */; };
 		03DE2B371DA60906008CE5B1 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B361DA60906008CE5B1 /* Response.swift */; };
 		03DE2B3A1DA60BA7008CE5B1 /* RESTGetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B391DA60BA7008CE5B1 /* RESTGetable.swift */; };
-		03DE2B3F1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B3E1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift */; };
+		03DE2B3F1DA61F3A008CE5B1 /* CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B3E1DA61F3A008CE5B1 /* CustomStringConvertible.swift */; };
 		03DE2B411DA62072008CE5B1 /* URLParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B401DA62072008CE5B1 /* URLParameters.swift */; };
 		03DE2B441DA6208D008CE5B1 /* JSONDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B431DA6208D008CE5B1 /* JSONDictionary.swift */; };
 /* End PBXBuildFile section */
@@ -81,15 +82,16 @@
 		0370ECDC1DA461D7008B8C5D /* Curry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Curry.swift; sourceTree = "<group>"; };
 		0370ECDF1DA46202008B8C5D /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		0370ECE11DA4705C008B8C5D /* General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
+		03B0272C1DA76CD0003FDA88 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		03DE2B261DA5CAE2008CE5B1 /* URLRequestError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequestError.swift; sourceTree = "<group>"; };
 		03DE2B281DA5CD3B008CE5B1 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		03DE2B2C1DA5D1CF008CE5B1 /* FlickrImageMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrImageMetadata.swift; sourceTree = "<group>"; };
-		03DE2B2E1DA5E9C2008CE5B1 /* OptionalExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalExt.swift; sourceTree = "<group>"; };
+		03DE2B2E1DA5E9C2008CE5B1 /* Optional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
 		03DE2B311DA5EAA9008CE5B1 /* OptionalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalError.swift; sourceTree = "<group>"; };
 		03DE2B331DA60579008CE5B1 /* CreationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationError.swift; sourceTree = "<group>"; };
 		03DE2B361DA60906008CE5B1 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		03DE2B391DA60BA7008CE5B1 /* RESTGetable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTGetable.swift; sourceTree = "<group>"; };
-		03DE2B3E1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStringConvertibleExt.swift; sourceTree = "<group>"; };
+		03DE2B3E1DA61F3A008CE5B1 /* CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStringConvertible.swift; sourceTree = "<group>"; };
 		03DE2B401DA62072008CE5B1 /* URLParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLParameters.swift; sourceTree = "<group>"; };
 		03DE2B431DA6208D008CE5B1 /* JSONDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDictionary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -309,8 +311,9 @@
 		03DE2B301DA5E9CB008CE5B1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				03DE2B2E1DA5E9C2008CE5B1 /* OptionalExt.swift */,
-				03DE2B3E1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift */,
+				03DE2B2E1DA5E9C2008CE5B1 /* Optional.swift */,
+				03DE2B3E1DA61F3A008CE5B1 /* CustomStringConvertible.swift */,
+				03B0272C1DA76CD0003FDA88 /* Sequence.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -446,7 +449,8 @@
 			files = (
 				03DE2B2D1DA5D1CF008CE5B1 /* FlickrImageMetadata.swift in Sources */,
 				03DE2B341DA60579008CE5B1 /* CreationError.swift in Sources */,
-				03DE2B3F1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift in Sources */,
+				03B0272D1DA76CD0003FDA88 /* Sequence.swift in Sources */,
+				03DE2B3F1DA61F3A008CE5B1 /* CustomStringConvertible.swift in Sources */,
 				0370ECC51DA456AB008B8C5D /* FlickrView.swift in Sources */,
 				0370ECCE1DA45817008B8C5D /* FlickrViewStyleSheet.swift in Sources */,
 				0370ECD01DA45899008B8C5D /* Preparable.swift in Sources */,
@@ -469,7 +473,7 @@
 				03DE2B411DA62072008CE5B1 /* URLParameters.swift in Sources */,
 				0370ECD21DA458C8008B8C5D /* FlickrTableViewCellStyleSheet.swift in Sources */,
 				03DE2B3A1DA60BA7008CE5B1 /* RESTGetable.swift in Sources */,
-				03DE2B2F1DA5E9C2008CE5B1 /* OptionalExt.swift in Sources */,
+				03DE2B2F1DA5E9C2008CE5B1 /* Optional.swift in Sources */,
 				030836AD1DA444F90046827D /* ApplicationCoordinator.swift in Sources */,
 				03DE2B291DA5CD3B008CE5B1 /* Result.swift in Sources */,
 				0370ECE21DA4705C008B8C5D /* General.swift in Sources */,

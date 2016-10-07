@@ -9,14 +9,14 @@
 import Foundation
 
 extension FlickrImageMetadata {
-    static func loadAll(withblock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
+    static func getAll(withblock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
         switch url() >>= urlRequest {
         case let .error(error):   block <^> Result(error)
-        case let .value(request): dataTaskMy(request: request, withBlock: block)
+        case let .value(request): dataTask(request: request, withBlock: block)
         }
     }
     
-    static fileprivate func dataTaskMy(request: URLRequest, withBlock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
+    static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 block <^> (processDataTask(date: data, response: response, error: error) >>= FlickrImageMetadata.getAll)
@@ -47,7 +47,7 @@ extension RESTGetable {
 }
 
 extension RESTGetable {
-    static func load(withBlock block: @escaping (Result<Self>) -> Void) {
+    static func get(withBlock block: @escaping (Result<Self>) -> Void) {
         switch url() >>= urlRequest {
         case let .error(error):   block <^> Result(error)
         case let .value(request): dataTask(request: request, withBlock: block)
@@ -62,7 +62,6 @@ extension RESTGetable {
                 block <^> (processDataTask(date: data, response: response, error: error) >>= Self.create)
             }
         }.resume()
-        
     }
     
     static fileprivate func processDataTask(date: Data?, response: URLResponse?, error: Error?) -> Result<JSONDictionary> {
