@@ -12,6 +12,7 @@
 		030836961DA4431E0046827D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 030836941DA4431E0046827D /* LaunchScreen.storyboard */; };
 		030836A11DA4431E0046827D /* HLTChallengeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030836A01DA4431E0046827D /* HLTChallengeTests.swift */; };
 		030836AD1DA444F90046827D /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030836AC1DA444F90046827D /* ApplicationCoordinator.swift */; };
+		033FAD7A1DA719F6001DB453 /* ResultRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FAD791DA719F6001DB453 /* ResultRepresentable.swift */; };
 		0370ECB11DA447BF008B8C5D /* FlickrCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECB01DA447BF008B8C5D /* FlickrCoordinator.swift */; };
 		0370ECB31DA447E4008B8C5D /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECB21DA447E4008B8C5D /* Coordinator.swift */; };
 		0370ECB51DA45303008B8C5D /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECB41DA45303008B8C5D /* Configurable.swift */; };
@@ -36,7 +37,7 @@
 		03DE2B321DA5EAA9008CE5B1 /* OptionalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B311DA5EAA9008CE5B1 /* OptionalError.swift */; };
 		03DE2B341DA60579008CE5B1 /* CreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B331DA60579008CE5B1 /* CreationError.swift */; };
 		03DE2B371DA60906008CE5B1 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B361DA60906008CE5B1 /* Response.swift */; };
-		03DE2B3A1DA60BA7008CE5B1 /* Downloadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B391DA60BA7008CE5B1 /* Downloadable.swift */; };
+		03DE2B3A1DA60BA7008CE5B1 /* RESTGetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B391DA60BA7008CE5B1 /* RESTGetable.swift */; };
 		03DE2B3F1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B3E1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift */; };
 		03DE2B411DA62072008CE5B1 /* URLParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B401DA62072008CE5B1 /* URLParameters.swift */; };
 		03DE2B441DA6208D008CE5B1 /* JSONDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B431DA6208D008CE5B1 /* JSONDictionary.swift */; };
@@ -62,6 +63,7 @@
 		030836A01DA4431E0046827D /* HLTChallengeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HLTChallengeTests.swift; sourceTree = "<group>"; };
 		030836A21DA4431E0046827D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		030836AC1DA444F90046827D /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
+		033FAD791DA719F6001DB453 /* ResultRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultRepresentable.swift; sourceTree = "<group>"; };
 		0370ECB01DA447BF008B8C5D /* FlickrCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrCoordinator.swift; sourceTree = "<group>"; };
 		0370ECB21DA447E4008B8C5D /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		0370ECB41DA45303008B8C5D /* Configurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
@@ -86,7 +88,7 @@
 		03DE2B311DA5EAA9008CE5B1 /* OptionalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalError.swift; sourceTree = "<group>"; };
 		03DE2B331DA60579008CE5B1 /* CreationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationError.swift; sourceTree = "<group>"; };
 		03DE2B361DA60906008CE5B1 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		03DE2B391DA60BA7008CE5B1 /* Downloadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloadable.swift; sourceTree = "<group>"; };
+		03DE2B391DA60BA7008CE5B1 /* RESTGetable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTGetable.swift; sourceTree = "<group>"; };
 		03DE2B3E1DA61F3A008CE5B1 /* CustomStringConvertibleExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStringConvertibleExt.swift; sourceTree = "<group>"; };
 		03DE2B401DA62072008CE5B1 /* URLParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLParameters.swift; sourceTree = "<group>"; };
 		03DE2B431DA6208D008CE5B1 /* JSONDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDictionary.swift; sourceTree = "<group>"; };
@@ -160,6 +162,14 @@
 				030836971DA4431E0046827D /* Info.plist */,
 			);
 			name = Support;
+			sourceTree = "<group>";
+		};
+		033FAD781DA719D5001DB453 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				033FAD791DA719F6001DB453 /* ResultRepresentable.swift */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 		0370ECB81DA45375008B8C5D /* Views */ = {
@@ -281,6 +291,7 @@
 		03DE2B2A1DA5CD42008CE5B1 /* Functors */ = {
 			isa = PBXGroup;
 			children = (
+				033FAD781DA719D5001DB453 /* Protocols */,
 				03DE2B281DA5CD3B008CE5B1 /* Result.swift */,
 			);
 			name = Functors;
@@ -315,7 +326,7 @@
 		03DE2B381DA60B93008CE5B1 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				03DE2B391DA60BA7008CE5B1 /* Downloadable.swift */,
+				03DE2B391DA60BA7008CE5B1 /* RESTGetable.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -442,6 +453,7 @@
 				0370ECB51DA45303008B8C5D /* Configurable.swift in Sources */,
 				03DE2B371DA60906008CE5B1 /* Response.swift in Sources */,
 				0370ECCB1DA45763008B8C5D /* ViewPreparer.swift in Sources */,
+				033FAD7A1DA719F6001DB453 /* ResultRepresentable.swift in Sources */,
 				0370ECB31DA447E4008B8C5D /* Coordinator.swift in Sources */,
 				0308368C1DA4431E0046827D /* AppDelegate.swift in Sources */,
 				0370ECC31DA455D5008B8C5D /* FlickrTableViewController.swift in Sources */,
@@ -456,7 +468,7 @@
 				0370ECB11DA447BF008B8C5D /* FlickrCoordinator.swift in Sources */,
 				03DE2B411DA62072008CE5B1 /* URLParameters.swift in Sources */,
 				0370ECD21DA458C8008B8C5D /* FlickrTableViewCellStyleSheet.swift in Sources */,
-				03DE2B3A1DA60BA7008CE5B1 /* Downloadable.swift in Sources */,
+				03DE2B3A1DA60BA7008CE5B1 /* RESTGetable.swift in Sources */,
 				03DE2B2F1DA5E9C2008CE5B1 /* OptionalExt.swift in Sources */,
 				030836AD1DA444F90046827D /* ApplicationCoordinator.swift in Sources */,
 				03DE2B291DA5CD3B008CE5B1 /* Result.swift in Sources */,

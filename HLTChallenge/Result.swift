@@ -8,7 +8,17 @@
 
 import Foundation
 
-enum Result<T> {
+protocol ResultType {
+    associatedtype Value: ResultRepresentable
+    
+    func toOptional() -> Value?
+    
+    init(_ value: Value)
+    init(_ error: Error)
+    init(_ error: Error?, _ value: Value?)
+}
+
+enum Result<T: ResultRepresentable>: ResultType {
     typealias Value = T
     
     case value(Value)
@@ -32,10 +42,19 @@ extension Result {
 }
 
 extension Result {
-    func flatMap<U>(_ f: (T) -> Result<U>) -> Result<U> {
+    func flatMap<U>(_ f: (Value) -> Result<U>) -> Result<U> {
         switch self {
         case let .error(error): return .error(error)
         case let .value(value): return f(value)
+        }
+    }
+}
+
+extension Result {
+    func toOptional() -> Value? {
+        switch self {
+        case .error(_):         return nil
+        case .value(let value): return value
         }
     }
 }

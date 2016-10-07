@@ -8,14 +8,15 @@
 
 import Foundation
 
-extension Optional {
+extension Optional where Wrapped: ResultRepresentable {
     func toResult() -> Result<Wrapped> {
         guard let x = self else { return curry(Result.init) <^> OptionalError.nonExistantValue(self) }
         return Result(x)
     }
     
-    func toResult(with error: Error) -> Result<Wrapped> {
+    func toResult(withError error: Error) -> Result<Wrapped> {
         guard let x = self else { return Result(error) }
         return Result(x)
     }
 }
+

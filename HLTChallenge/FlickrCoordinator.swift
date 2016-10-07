@@ -28,21 +28,18 @@ final class FlickrCoordinator: SubCoordinator {
         
         FlickrImageMetadata.loadAll { result in
             switch result {
-            case let .error(error):  debugPrint(error)
-            case let .value(images): let _ = images.map { print($0) } // FIXME: Start Here
+            case let .error(error):    debugPrint(error)
+            case let .value(metaData):
+                _ = metaData.map { $0.image { imgResult in
+                        switch imgResult {
+                        case let .error(imgError): debugPrint(imgError)
+                        case let .value(image):    flickrTableViewController.data.append(image)
+                        }
+                    }
+                }
             }
         }
         
-    }
-    
-    private func photo(from image: FlickrImageMetadata, withBlock block: @escaping (Result<UIImage>) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            let data = URL(string: image.url).flatMap { (try? Data(contentsOf: $0)) }
-            DispatchQueue.main.async {
-                block <^> data.flatMap { UIImage(data: $0) }.toResult()
-            }
-            
-        }
     }
     
     private func navigateToImageDetailView() {

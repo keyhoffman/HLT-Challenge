@@ -6,12 +6,16 @@
 //  Copyright © 2016 Key Hoffman. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-struct FlickrImageMetadata: Downloadable {
+struct FlickrImageMetadata: RESTGetable, ResultRepresentable {
     let id:      String
     let ownerID: String
     let url:     String
+}
+
+func ==(_ lhs: FlickrImageMetadata, _ rhs: FlickrImageMetadata) -> Bool {
+    return lhs.id == rhs.id && lhs.ownerID == rhs.ownerID && lhs.url == rhs.url
 }
 
 extension FlickrImageMetadata {
@@ -36,12 +40,6 @@ extension FlickrImageMetadata {
 
 extension FlickrImageMetadata {
     static func create(from dict: JSONDictionary) -> Result<FlickrImageMetadata> {
-//        dict.print_(with: "FLICKR IMAGE CREATE")
-//        guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos] as? JSONDictionary else { return Result(CreationError.flickrImage) }
-//        guard let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrImage) }
-//        
-//        let dict = photosArray[0]
-        
         guard let id      = dict[FlickrConstants.ResponseKeys.id]        as? String,
               let ownerId = dict[FlickrConstants.ResponseKeys.ownerID]   as? String,
               let url     = dict[FlickrConstants.ResponseKeys.mediumURL] as? String else { return Result(CreationError.flickrImage) }
@@ -50,33 +48,36 @@ extension FlickrImageMetadata {
 }
 
 extension FlickrImageMetadata {
-//    static func getAll(from dict: JSONDictionary) -> [Result<FlickrImage>] {
-//        guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos] as? JSONDictionary else { return Result(CreationError.flickrImage) }
-//        guard let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrImage) }
-//        
-//        return photosArray.map(FlickrImage.create)
-//    }
     static func getAll(from dict: JSONDictionary) -> Result<[FlickrImageMetadata]> {
         guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos]      as? JSONDictionary,
               let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrImage) }
         return photosArray.map(FlickrImageMetadata.create).invert()
     }
-
 }
 
-extension Sequence where Iterator.Element == Result<FlickrImageMetadata> {
-    
-    fileprivate func invert() -> Result<[FlickrImageMetadata]> { // FIXME: THIS WHOLE FUNCTION IS BAD
-        var images: [FlickrImageMetadata] = []
-        
-        for result in self {
-            switch result {
-            case .error(_):         continue
-            case .value(let image): images.append(image)
+extension FlickrImageMetadata {
+    func image(withBlock block: @escaping (Result<UIImage>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
+            DispatchQueue.main.async {
+                block <^> data.flatMap(UIImage.init).toResult()
             }
         }
-        
-        return Result(images)
+    }
+}
+
+
+// FIXME: Find a way to make this generic!!!!!
+extension Sequence where Iterator.Element == Result<FlickrImageMetadata> {
+    
+    /// Transforms an `Array` of `Result` of `FlickrImageMetadata` into
+    /// a `Result` of an `Array` of `FlickrImageMetadata`.
+    ///
+    /// - note: Transformation Structure --  [Result\<FlickrImageMetadata\>] -> Result<[FlickrImageMetadata]>
+    ///
+    /// - returns: A `Result` of an `Array` of `FlickrImageMetadata`
+    fileprivate func invert() -> Result<[FlickrImageMetadata]> {
+        return curry(Result.init) <^> self.map { $0.toOptional() }.flatMap { $0 }
     }
 }
 

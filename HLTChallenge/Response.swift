@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Response {
+struct Response: ResultRepresentable {
     let data:       Data
     let statusCode: Int
     

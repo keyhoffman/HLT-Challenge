@@ -8,14 +8,31 @@
 
 import Foundation
 
-protocol Downloadable {
+extension FlickrImageMetadata {
+    static func loadAll(withblock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
+        switch url() >>= urlRequest {
+        case let .error(error):   block <^> Result(error)
+        case let .value(request): dataTaskMy(request: request, withBlock: block)
+        }
+    }
+    
+    static fileprivate func dataTaskMy(request: URLRequest, withBlock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                block <^> (processDataTask(date: data, response: response, error: error) >>= FlickrImageMetadata.getAll)
+            }
+        }.resume()
+    }
+}
+
+protocol RESTGetable: Equatable, ResultRepresentable {
     static var urlQueryParameters:   URLParameters { get }
     static var urlAddressParameters: URLParameters { get }
     
     static func create(from dictionary: JSONDictionary) -> Result<Self>
 }
 
-extension Downloadable {
+extension RESTGetable {
     static var scheme: String {
         return "scheme"
     }
@@ -29,8 +46,7 @@ extension Downloadable {
     }
 }
 
-
-extension Downloadable {
+extension RESTGetable {
     static func load(withBlock block: @escaping (Result<Self>) -> Void) {
         switch url() >>= urlRequest {
         case let .error(error):   block <^> Result(error)
@@ -39,34 +55,7 @@ extension Downloadable {
     }
 }
 
-extension FlickrImageMetadata {
-//    static func loadAll(request: URLRequest, withBlock block: @escaping ([Result<FlickrImage>]) -> Void) {
-//        URLSession.shared.dataTask(with: request) { data, response, error in
-//            DispatchQueue.main.async {
-//                block <^> (processDataTask(date: data, response: response, error: error) >>= FlickrImage.getAll)
-//            }
-//        }
-//    }
-    
-    static func loadAll(withblock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
-        switch url() >>= urlRequest {
-        case let .error(error):   block <^> Result(error)
-        case let .value(request): dataTask(request: request, withBlock: block)
-        }
-    }
-    
-    static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            DispatchQueue.main.async {
-                block <^> (processDataTask(date: data, response: response, error: error) >>= FlickrImageMetadata.getAll)
-            }
-        }
-    }
-    
-    
-}
-
-extension Downloadable {
+extension RESTGetable {
     static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping (Result<Self>) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
@@ -95,23 +84,21 @@ extension Downloadable {
     }
 }
 
-extension Downloadable {
+extension RESTGetable {
     static fileprivate func urlRequest(from url: URL) -> Result<URLRequest> {
         return curry(Result.init) <^> URLRequest(url: url)
     }
     
     static fileprivate func url() -> Result<URL> {
+        guard let compontentsPath = urlAddressParameters[path] else { return curry(Result.init) <^> URLRequestError.invalidURLPath(path: urlAddressParameters[path]) }
+        
         var components        = URLComponents()
+        components.path       = compontentsPath
         components.scheme     = urlAddressParameters[scheme]
         components.host       = urlAddressParameters[host]
-        components.path       = urlAddressParameters[path]! // FIXME:
-        components.queryItems = urlQueryParameters.map(urlQueryItem)
+        components.queryItems = urlQueryParameters.map(URLQueryItem.init)
         
-        return components.url.toResult(with:) <^> URLRequestError.invalidURL(parameters: urlQueryParameters)
-    }
-    
-    static private func urlQueryItem(from name: String, and value: String?) -> URLQueryItem {
-        return URLQueryItem(name: name, value: value)
+        return components.url.toResult(withError:) <^> URLRequestError.invalidURL(parameters: urlQueryParameters)
     }
 }
 
