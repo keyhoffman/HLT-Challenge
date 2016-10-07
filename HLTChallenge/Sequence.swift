@@ -6,7 +6,7 @@
 //  Copyright © 2016 Key Hoffman. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // FIXME: Find a way to make this generic!!!!!
 extension Sequence where Iterator.Element == Result<FlickrPhotoMetadata> {
@@ -18,6 +18,13 @@ extension Sequence where Iterator.Element == Result<FlickrPhotoMetadata> {
     ///
     /// - returns: A `Result` of an `Array` of `FlickrImageMetadata`
     func invert() -> Result<[FlickrPhotoMetadata]> {
+        return curry(Result.init) <^> self.map { $0.toOptional() }.flatMap { $0 }
+    }
+}
+
+// FIXME: Find a way to make this generic!!!!!
+extension Sequence where Iterator.Element == Result<UIImage> {
+    func invert() -> Result<[UIImage]> {
         return curry(Result.init) <^> self.map { $0.toOptional() }.flatMap { $0 }
     }
 }

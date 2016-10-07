@@ -26,19 +26,27 @@ final class FlickrCoordinator: SubCoordinator {
         let flickrTableViewController = FlickrTableViewController(configuration: flickrTableViewControllerConfig)
         rootNavigationController.pushViewController(flickrTableViewController, animated: false)
         
-        FlickrPhotoMetadata.getAll { result in
+        FlickrPhotoMetadata.getAllPhotos { result in
             switch result {
-            case let .error(error):    debugPrint(error)
-            case let .value(metaData):
-                _ = metaData.map { $0.image { imgResult in
-                        switch imgResult {
-                        case let .error(imgError): debugPrint(imgError)
-                        case let .value(image):    flickrTableViewController.data.append(image)
-                        }
-                    }
-                }
+            case let .error(error):  debugPrint(error)
+            case let .value(photos): flickrTableViewController.data = photos
             }
         }
+        
+        
+//        FlickrPhotoMetadata.getAllMetadata { result in
+//            switch result {
+//            case let .error(error):    debugPrint(error)
+//            case let .value(metaData):
+//                _ = metaData.map { $0.getPhoto { imgResult in
+//                        switch imgResult {
+//                        case let .error(imgError): debugPrint(imgError)
+//                        case let .value(image):    flickrTableViewController.data.append(image)
+//                        }
+//                    }
+//                }
+//            }
+//        }
         
     }
     
