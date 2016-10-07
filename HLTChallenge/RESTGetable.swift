@@ -8,23 +8,6 @@
 
 import Foundation
 
-extension FlickrImageMetadata {
-    static func getAll(withblock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
-        switch url() >>= urlRequest {
-        case let .error(error):   block <^> Result(error)
-        case let .value(request): dataTask(request: request, withBlock: block)
-        }
-    }
-    
-    static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping (Result<[FlickrImageMetadata]>) -> Void) {
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            DispatchQueue.main.async {
-                block <^> (processDataTask(date: data, response: response, error: error) >>= FlickrImageMetadata.getAll)
-            }
-        }.resume()
-    }
-}
-
 protocol RESTGetable: Equatable, ResultRepresentable {
     static var urlQueryParameters:   URLParameters { get }
     static var urlAddressParameters: URLParameters { get }
@@ -64,7 +47,7 @@ extension RESTGetable {
         }.resume()
     }
     
-    static fileprivate func processDataTask(date: Data?, response: URLResponse?, error: Error?) -> Result<JSONDictionary> {
+    static func processDataTask(date: Data?, response: URLResponse?, error: Error?) -> Result<JSONDictionary> {
         return (Result(error, Response(data: date, urlResponse: response)) >>= parseResponse) >>= decodeJSON
     }
     
@@ -84,11 +67,11 @@ extension RESTGetable {
 }
 
 extension RESTGetable {
-    static fileprivate func urlRequest(from url: URL) -> Result<URLRequest> {
+    static func urlRequest(from url: URL) -> Result<URLRequest> {
         return curry(Result.init) <^> URLRequest(url: url)
     }
     
-    static fileprivate func url() -> Result<URL> {
+    static func url() -> Result<URL> {
         guard let compontentsPath = urlAddressParameters[path] else { return curry(Result.init) <^> URLRequestError.invalidURLPath(path: urlAddressParameters[path]) }
         
         var components        = URLComponents()
