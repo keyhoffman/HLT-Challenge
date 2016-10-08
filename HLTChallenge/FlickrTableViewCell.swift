@@ -28,7 +28,7 @@ final class FlickrTableViewCell: UITableViewCell, Configurable, Prerparable {
         addSubview(flickrView)
     }
     
-    func configure(withData photoData: (photo: UIImage, metaData: FlickrPhotoMetadata)) {
-        flickrView.configure(withData: photoData.photo)
+    func configure(withData flickrPhoto: FlickrPhoto) {
+        flickrView.configure(withData: flickrPhoto)
     }
 }

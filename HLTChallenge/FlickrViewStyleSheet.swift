@@ -10,15 +10,18 @@ import UIKit
 
 struct FlickrViewStyleSheet: ViewPreparer {
     
+    static private let titleLabelBottomToFlickrViewTopOffsetByViewHeightFactor: CGFloat = 0.8
+    
     static func prepare(_ flickrView: FlickrView) {
         
         defer { flickrView.layoutSubviews() }
         
+        flickrView.backgroundColor = .green
+        
         // MARK: AutoLayout
         
-        flickrView.backgroundColor = .red
+        let titleLabelBottomToFlickrViewTopOffset = titleLabelBottomToFlickrViewTopOffsetByViewHeightFactor * flickrView.frame.height
         
-//        flickrView.flickrImageView.translatesAutoresizingMaskIntoConstraints = false
         
         let flickrImageViewTop      = curry(NSLayoutConstraint.init) <^> flickrView.flickrImageView <^> .top      <^> .equal <^> flickrView <^> .top      <^> 1 <^> 0
         let flickrImageViewBottom   = curry(NSLayoutConstraint.init) <^> flickrView.flickrImageView <^> .bottom   <^> .equal <^> flickrView <^> .bottom   <^> 1 <^> 0
@@ -27,7 +30,14 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
         let flickrImageViewConstraints = [flickrImageViewTop, flickrImageViewBottom, flickrImageViewLeading, flickrImageViewTrailing]
         
-        let activeConstraints = flickrImageViewConstraints
+        let titleLabelTop      = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .top      <^> .equal <^> flickrView <^> .topMargin      <^> 1 <^> 0
+        let titleLabelBottom   = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .bottom   <^> .equal <^> flickrView <^> .top            <^> 1 <^> titleLabelBottomToFlickrViewTopOffset
+        let titleLabelLeading  = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .leading  <^> .equal <^> flickrView <^> .leadingMargin  <^> 1 <^> 0
+        let titleLabelTrailing = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .trailing <^> .equal <^> flickrView <^> .trailingMargin <^> 1 <^> 0
+        
+        let titleLabelConstraints = [titleLabelTop, titleLabelBottom, titleLabelLeading, titleLabelTrailing]
+        
+        let activeConstraints = titleLabelConstraints + flickrImageViewConstraints
         
         NSLayoutConstraint.activate(activeConstraints)
         
@@ -39,16 +49,52 @@ struct FlickrViewStyleSheet: ViewPreparer {
         case title = 1
         
         var label: UILabel {
-            let l = UILabel()
-            l.tag = rawValue
-//            l.backgroundColor = 
-//            l.textAlignment = 
-//            l.numberOfLines =
-//            l.textColor = 
+            let l                                       = UILabel()
+            l.tag                                       = rawValue
+            l.backgroundColor                           = backgroundColor
+            l.textColor                                 = textColor
+            l.textAlignment                             = textAlignment
+            l.numberOfLines                             = numberOfLines
+            l.adjustsFontSizeToFitWidth                 = adjustsFontSizeToFitWidth
+            l.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
             return l
         }
         
-//        private var backg
+        private var backgroundColor: UIColor {
+            switch self {
+            case .title: return #colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 0.470515839)
+            }
+        }
+        
+        private var textColor: UIColor {
+            switch self {
+            case .title: return .black
+            }
+        }
+        
+        private var textAlignment: NSTextAlignment {
+            switch self {
+            case .title: return .center
+            }
+        }
+        
+        private var numberOfLines: Int {
+            switch self {
+            case .title: return 2
+            }
+        }
+        
+        private var adjustsFontSizeToFitWidth: Bool {
+            switch self {
+            case .title: return true
+            }
+        }
+        
+        private var translatesAutoresizingMaskIntoConstraints: Bool {
+            switch self {
+            case .title: return false
+            }
+        }
     }
     
     // MARK: ImageView

@@ -16,7 +16,7 @@ struct FlickrTableViewCellStyleSheet: ViewPreparer {
         
         // MARK: AutoLayout
         
-        flickrCell.backgroundColor = .green
+        flickrCell.backgroundColor = .blue
         
         flickrCell.flickrView.translatesAutoresizingMaskIntoConstraints = false
         

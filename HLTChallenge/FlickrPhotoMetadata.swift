@@ -55,19 +55,22 @@ extension FlickrPhotoMetadata {
 // MARK: - Module Static API
 
 extension FlickrPhotoMetadata {
-    static func getPhotosStream(withBlock block: @escaping (Result<UIImage>) -> Void) {
-        getAllMetadata { _ = $0 >>= { curry(Result.init) <^> $0.map { data in data.getPhoto <^> block } } }
+    static func getPhotosStream(withBlock block: @escaping (Result<FlickrPhoto>) -> Void) {
+        getAllMetadata { _ = $0 >>= { curry(Result.init) <^> $0.map { data in data.getFlickrPhoto <^> block } } }
     }
 }
 
 // MARK: - Fileprivate Instance API {
 
 extension FlickrPhotoMetadata {
-    fileprivate func getPhoto(withBlock block: @escaping (Result<UIImage>) -> Void) {
+    fileprivate func getFlickrPhoto(withBlock block: @escaping (Result<FlickrPhoto>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
             DispatchQueue.main.async {
-                block <^> (data.flatMap(UIImage.init).toResult <^> CreationError.flickrPhoto(forURL: self.url))
+                switch data.flatMap(UIImage.init).toResult <^> CreationError.flickrPhoto(forURL: self.url) { // FIXME: GET RID OF THIS SWITCH STATEMENT
+                case let .error(error): block <^> Result(error)
+                case let .value(photo): block <^> (curry(Result.init) <^> FlickrPhoto(photo: photo, metadata: self))
+                }
             }
         }
     }

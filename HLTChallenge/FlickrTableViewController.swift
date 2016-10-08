@@ -11,7 +11,7 @@ import UIKit
 // PARAMETER OBJECT
 
 struct FlickrTableViewControllerConfiguration {
-    let didSelectPhoto: (Void) -> Void
+    let didSelectPhoto: (FlickrPhotoMetadata) -> Void
 }
 
 final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, Prerparable, UITextFieldDelegate {
@@ -32,7 +32,7 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
     }()
     
     private var selectedIndexPath: IndexPath?
-    private let didSelectPhoto: (Void) -> Void
+    private let didSelectPhoto: (FlickrPhotoMetadata) -> Void
     
     init(configuration: FlickrTableViewControllerConfiguration) {
         didSelectPhoto = configuration.didSelectPhoto

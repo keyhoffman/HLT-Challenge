@@ -21,7 +21,7 @@ final class FlickrCoordinator: SubCoordinator {
         window.rootViewController = rootNavigationController
         window.makeKeyAndVisible()
         
-        let flickrTableViewControllerConfig = FlickrTableViewControllerConfiguration(didSelectPhoto: navigateToImageDetailView)
+        let flickrTableViewControllerConfig = FlickrTableViewControllerConfiguration(didSelectPhoto: navigateToDetailView)
         
         let flickrTableViewController = FlickrTableViewController(configuration: flickrTableViewControllerConfig)
         rootNavigationController.pushViewController(flickrTableViewController, animated: false)
@@ -29,13 +29,13 @@ final class FlickrCoordinator: SubCoordinator {
         FlickrPhotoMetadata.getPhotosStream { result in
             switch result {
             case let .error(error): debugPrint(error)
-            case let .value(photo): flickrTableViewController.data.append(photo)
+            case let .value(flickrPhoto): flickrTableViewController.data.append(flickrPhoto)
             }
         }
     }
     
-    private func navigateToImageDetailView() {
-        print("NAVIGATE")
+    private func navigateToDetailView(for: FlickrPhotoMetadata) {
+        
     }
 }
 
