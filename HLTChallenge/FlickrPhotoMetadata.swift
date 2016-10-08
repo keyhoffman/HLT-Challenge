@@ -14,6 +14,7 @@ struct FlickrPhotoMetadata: RESTGetable, ResultRepresentable {
     let id:      String
     let ownerID: String
     let url:     String
+    let title:   String
 }
 
 // MARK: - Equatable Conformance
@@ -45,61 +46,46 @@ extension FlickrPhotoMetadata {
     static func create(from dict: JSONDictionary) -> Result<FlickrPhotoMetadata> {
         guard let id      = dict[FlickrConstants.ResponseKeys.id]        as? String,
               let ownerId = dict[FlickrConstants.ResponseKeys.ownerID]   as? String,
-              let url     = dict[FlickrConstants.ResponseKeys.mediumURL] as? String else { return Result(CreationError.flickrImage) }
-        return curry(Result.init) <^> FlickrPhotoMetadata(id: id, ownerID: ownerId, url: url)
+              let url     = dict[FlickrConstants.ResponseKeys.mediumURL] as? String,
+              let title   = dict[FlickrConstants.ResponseKeys.title]     as? String else { return Result(CreationError.flickrPhotoMetadata) }
+        return curry(Result.init) <^> FlickrPhotoMetadata(id: id, ownerID: ownerId, url: url, title: title)
     }
 }
 
-// MARK: - Module API
-
-extension Sequence where Iterator.Element == ((@escaping (Result<UIImage>) -> Void) -> Void) {
-    func invert() -> Result<[UIImage]> {
-        let foo = self.flatMap { $0 { result in return } }
-        
-        let fuu = self.flatMap(<#T##transform: ((((Result<UIImage>) -> Void) -> Void)) throws -> ElementOfResult?##((((Result<UIImage>) -> Void) -> Void)) throws -> ElementOfResult?#>) // MARK: - START HERE
-        
-        //return curry(Result.init) <^> self.map { $0.toOptional() }.flatMap { $0 }
-    }
-}
+// MARK: - Module Static API
 
 extension FlickrPhotoMetadata {
-    static func getAllMetadata(withblock block: @escaping (Result<[FlickrPhotoMetadata]>) -> Void) {
-        
-//        block <^> (curry(dataTask) <^> (url() >>= urlRequest) <^> block)
-        
-//        block <^> ((url() >>= urlRequest) >>= dataTask)
-        
+    static func getPhotosStream(withBlock block: @escaping (Result<UIImage>) -> Void) {
+        getAllMetadata { _ = $0 >>= { curry(Result.init) <^> $0.map { data in data.getPhoto <^> block } } }
+    }
+}
+
+// MARK: - Fileprivate Instance API {
+
+extension FlickrPhotoMetadata {
+    fileprivate func getPhoto(withBlock block: @escaping (Result<UIImage>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
+            DispatchQueue.main.async {
+                block <^> (data.flatMap(UIImage.init).toResult <^> CreationError.flickrPhoto(forURL: self.url))
+            }
+        }
+    }
+}
+
+// MARK: - Fileprivate Static API
+
+extension FlickrPhotoMetadata {
+    static fileprivate func getAllMetadata(withblock block: @escaping (Result<[FlickrPhotoMetadata]>) -> Void) {
+//        url() >>= urlRequest |> (block <^> dataTask)
+//        block <^> (url() >>= urlRequest |> dataTask)
         switch url() >>= urlRequest { // FIXME: GET RID OF THIS SWITCH STATEMENT
         case let .error(error):   block <^> Result(error)
         case let .value(request): dataTask(request: request, withBlock: block)
         }
     }
-    
-    static func getAllPhotos(withBlock block: @escaping (Result<[UIImage]>) -> Void) {
-        getAllMetadata { result in
-            switch result { // FIXME: GET RID OF THIS SWITCH STATEMENT
-            case let .error(error):    block <^> Result(error)
-            case let .value(metadata): block <^> metadata.map(getPhoto).invert()
-            }
-        }
-    }
-}
 
-extension FlickrPhotoMetadata {
-    func getPhoto(withBlock block: @escaping (Result<UIImage>) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
-            DispatchQueue.main.async {
-                block <^> data.flatMap(UIImage.init).toResult()
-            }
-        }
-    }
-}
-
-// MARK: - Fileprivate API
-
-extension FlickrPhotoMetadata {
-        static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping (Result<[FlickrPhotoMetadata]>) -> Void) {
+    static private func dataTask(request: URLRequest, withBlock block: @escaping (Result<[FlickrPhotoMetadata]>) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 block <^> (processDataTask(date: data, response: response, error: error) >>= FlickrPhotoMetadata.extractMetadata)
@@ -109,7 +95,7 @@ extension FlickrPhotoMetadata {
     
     static private func extractMetadata(from dict: JSONDictionary) -> Result<[FlickrPhotoMetadata]> {
         guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos]      as? JSONDictionary,
-              let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrImage) }
+              let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrPhotoMetadata) }
         return photosArray.map(FlickrPhotoMetadata.create).invert()
     }
 }

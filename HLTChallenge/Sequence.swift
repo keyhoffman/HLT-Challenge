@@ -28,3 +28,5 @@ extension Sequence where Iterator.Element == Result<UIImage> {
         return curry(Result.init) <^> self.map { $0.toOptional() }.flatMap { $0 }
     }
 }
+
+

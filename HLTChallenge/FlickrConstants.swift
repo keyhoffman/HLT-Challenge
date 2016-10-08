@@ -46,7 +46,7 @@ struct FlickrConstants {
         static let responseFormat      = "json"
         static let disableJSONCallback = "1"
         static let mediumURL           = "url_m"
-        static let picturesPerPage     = "2"
+        static let picturesPerPage     = "20"
         static let pageNumber          = "1"
         static let safeSearchOn        = "1"
         static let safeSearchOff       = "0"

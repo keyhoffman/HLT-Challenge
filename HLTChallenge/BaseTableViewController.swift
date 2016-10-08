@@ -42,7 +42,7 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     // MARK: UITableViewDatasource Conformance Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Int(data.count)
+        return data.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -55,3 +55,35 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     }
 }
 
+class FOOOO<Cell: UITableViewCell>: UITableView where Cell: Configurable {
+    
+    typealias DataType = Cell.DataType
+    
+    private let cellIdentifier = String(describing: Cell.self)
+    
+    var data: [DataType] = [] {
+        didSet { reloadData() }
+    }
+    
+    init() {
+        super.init(frame: .zero, style: .plain)
+        register(Cell.self, forCellReuseIdentifier: cellIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func numberOfRows(inSection section: Int) -> Int {
+        return data.count
+    }
+    
+    override func cellForRow(at indexPath: IndexPath) -> UITableViewCell? {
+        guard let cell = dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? Cell else {
+            fatalError(FatalError.couldNotDequeueCell(identifier: cellIdentifier).debugDescription)
+        }
+        let row = indexPath.row
+        cell.configure(withData: data[row])
+        return cell
+    }
+}

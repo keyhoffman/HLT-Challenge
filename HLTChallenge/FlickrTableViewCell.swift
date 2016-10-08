@@ -13,11 +13,6 @@ final class FlickrTableViewCell: UITableViewCell, Configurable, Prerparable {
     // FIXEME: FlickrTableViewCellStyleSheet.View.flickr.view
     let flickrView = FlickrView()
     
-//    convenience init() {
-//        self.init()
-//        defer { prepare() }
-//    }
-
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         defer { prepare() }
@@ -33,7 +28,7 @@ final class FlickrTableViewCell: UITableViewCell, Configurable, Prerparable {
         addSubview(flickrView)
     }
     
-    func configure(withData image: UIImage) {
-        flickrView.configure(withData: image)
+    func configure(withData photoData: (photo: UIImage, metaData: FlickrPhotoMetadata)) {
+        flickrView.configure(withData: photoData.photo)
     }
 }

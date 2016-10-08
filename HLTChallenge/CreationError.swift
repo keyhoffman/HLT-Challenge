@@ -9,13 +9,15 @@
 import Foundation
 
 enum CreationError: Error, CustomDebugStringConvertible, ErrorMessageSender {
-    case flickrImage
+    case flickrPhotoMetadata
+    case flickrPhoto(forURL: String)
 }
 
 extension CreationError {
     var description: String {
         switch self {
-        case .flickrImage: return messagePrefix + "Unable to retrieve photos!"
+        case .flickrPhotoMetadata: return messagePrefix + "Unable to retrieve photos!"
+        case .flickrPhoto(_):         return messagePrefix + "Unable to download photo"
         }
     }
 }
@@ -23,7 +25,8 @@ extension CreationError {
 extension CreationError {
     var debugDescription: String {
         switch self {
-        case .flickrImage: return "Invalid JSONDictionary"
+        case .flickrPhotoMetadata:          return "ERROR: Invalid JSONDictionary"
+        case .flickrPhoto(forURL: let url): return "ERROR: Unable to load photo for URL:\n" + url
         }
     }
 }

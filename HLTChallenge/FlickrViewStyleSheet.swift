@@ -33,7 +33,25 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
     }
     
-    // MARK ImageView
+    // MARK: Label
+    
+    enum Label: Int {
+        case title = 1
+        
+        var label: UILabel {
+            let l = UILabel()
+            l.tag = rawValue
+//            l.backgroundColor = 
+//            l.textAlignment = 
+//            l.numberOfLines =
+//            l.textColor = 
+            return l
+        }
+        
+//        private var backg
+    }
+    
+    // MARK: ImageView
     
     enum ImageView: Int {
         case flickr = 1

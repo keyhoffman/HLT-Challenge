@@ -8,6 +8,8 @@
 
 import UIKit
 
+// PARAMETER OBJECT
+
 struct FlickrTableViewControllerConfiguration {
     let didSelectPhoto: (Void) -> Void
 }
@@ -18,7 +20,7 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
         let tf      = FlickrTableViewControllerStyleSheet.TextField.search.textField
         tf.isHidden = true
         tf.delegate = self
-        tf.becomeFirstResponder()
+//        tf.becomeFirstResponder()
         return tf
     }()
     
@@ -29,6 +31,7 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
         return bbi
     }()
     
+    private var selectedIndexPath: IndexPath?
     private let didSelectPhoto: (Void) -> Void
     
     init(configuration: FlickrTableViewControllerConfiguration) {
@@ -46,8 +49,36 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        didSelectPhoto()
+//        didSelectPhoto()
+        defer { animateCellHeightChange(withDuration: 0.3, at: indexPath) }
+        guard let _selectedIndexPath = selectedIndexPath, _selectedIndexPath == indexPath else {
+            selectedIndexPath = indexPath
+            return
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+        selectedIndexPath = nil
     }
+    
+    
+    // TODO: Move to stylesheet
+    private var defaultCellHeight:  CGFloat { return view.frame.height * 0.6 }
+    private var selectedCellHeight: CGFloat { return view.frame.height * 0.9 }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard selectedIndexPath == indexPath else { return defaultCellHeight }
+        return selectedCellHeight
+    }
+    
+    private func animateCellHeightChange(withDuration duration: TimeInterval, at indexPath: IndexPath) {
+        UIView.animate(withDuration: duration) { 
+            self.tableView.beginUpdates()
+            if let _ = self.selectedIndexPath {
+                self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            }
+            self.tableView.endUpdates()
+        }
+    }
+    
     
     func prepare() {
         defer { FlickrTableViewControllerStyleSheet.prepare(self) }

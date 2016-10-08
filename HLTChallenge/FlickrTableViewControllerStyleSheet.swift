@@ -14,7 +14,7 @@ struct FlickrTableViewControllerStyleSheet: ViewPreparer {
         
         defer { flickrTVC.view.layoutSubviews() }
         
-        flickrTVC.tableView.rowHeight = 200
+//        flickrTVC.tableView.rowHeight = 200
         
         flickrTVC.navigationItem.titleView = flickrTVC.searchTextField
         flickrTVC.navigationItem.rightBarButtonItem = flickrTVC.displaySearchTextFieldButton

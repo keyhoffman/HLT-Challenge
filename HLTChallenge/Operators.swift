@@ -28,8 +28,7 @@ func <^> <A, B>(_ f: (A) -> B, _ a: A) -> B {
     return f(a)
 }
 
-
-public func |> <T, U>(x: T, f: (T) -> U) -> U {
+func |> <T, U>(x: T, f: (T) -> U) -> U {
     return f(x)
 }
 
@@ -41,8 +40,8 @@ func >>= <A, B>(a: A?, f: (A) -> B?) -> B? {
     return a.flatMap(f)
 }
 
-func >>= <A, B>(a: A?, f: (A?) -> Result<B>) -> Result<B> {
-    return f(a)
-}
+//func >>= <A, B>(a: A?, f: (A) -> Result<B>) -> Result<B> {
+//    return a.toResult()
+//}
 
 
