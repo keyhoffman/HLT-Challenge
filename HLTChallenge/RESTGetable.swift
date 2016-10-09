@@ -30,7 +30,7 @@ extension RESTGetable {
 
 extension RESTGetable {
     static func get(withBlock block: @escaping (Result<Self>) -> Void) {
-        switch url() >>= urlRequest {
+        switch url() >>= urlRequest { // FIXME: GIT RID OF THIS SWITCH STATEMENT
         case let .error(error):   block <^> Result(error)
         case let .value(request): dataTask(request: request, withBlock: block)
         }
@@ -39,7 +39,7 @@ extension RESTGetable {
     // MARK: Data Processing
     
     static func processDataTask(date: Data?, response: URLResponse?, error: Error?) -> Result<JSONDictionary> {
-        return (Result(error, Response(data: date, urlResponse: response)) >>= parse(response:)) >>= decode(jsonData:)
+        return (Result(error, Response(data: date, urlResponse: response)) >>= parse(response:)) >>= decode(json:)
     }
     
     // MARK: URL Configuration
@@ -73,16 +73,11 @@ extension RESTGetable {
     }
     
     static fileprivate func parse(response: Response) -> Result<Data> {
-        let successRange = 200..<300
-        return successRange.contains(response.statusCode) ? Result(response.data) : curry(Result.init) <^> URLRequestError.invalidResponseStatus(code: response.statusCode)
+        return Response.successRange.contains(response.statusCode) ? Result(response.data) : curry(Result.init) <^> URLRequestError.invalidResponseStatus(code: response.statusCode)
     }
     
-    static fileprivate func decode(jsonData data: Data) -> Result<JSONDictionary> {
-        do {
-            guard let jsonDict = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? JSONDictionary else { return Result(URLRequestError.couldNotParseJSON) }
-            return Result(jsonDict)
-        } catch {
-            return Result(error)
-        }
+    static fileprivate func decode(json data: Data) -> Result<JSONDictionary> {
+        do    { return (try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? JSONDictionary).toResult(withError:) <^> URLRequestError.couldNotParseJSON }
+        catch { return Result(error) }
     }
 }

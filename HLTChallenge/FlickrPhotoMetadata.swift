@@ -8,6 +8,16 @@
 
 import UIKit
 
+// MARK: - FlickrPhotoComment
+
+struct FlickrPhotoComment {
+    let id:      String
+    let author:  String
+    let content: String
+}
+
+
+
 
 // MARK: - FlickrPhotoMetadata
 
@@ -54,6 +64,21 @@ extension FlickrPhotoMetadata {
 // MARK: - Fileprivate Instance API {
 
 extension FlickrPhotoMetadata {
+    
+//    fileprivate func url(withMethod method: String) -> Result<URL> {
+//        let path = FlickrPhotoMetadata.urlAddressParameters[FlickrPhotoMetadata.path]
+//        
+//        guard let compontentsPath = path else { return curry(Result.init) <^> URLRequestError.invalidURLPath(path: path) }
+//        
+//        var components        = URLComponents()
+//        components.path       = compontentsPath
+//        components.scheme     = FlickrPhotoMetadata.urlAddressParameters[FlickrPhotoMetadata.scheme]
+//        components.host       = FlickrPhotoMetadata.urlAddressParameters[FlickrPhotoMetadata.host]
+//        components.queryItems = FlickrPhotoMetadata.urlQueryParameters.map(URLQueryItem.init)
+//        
+//        return components.url.toResult(withError:) <^> URLRequestError.invalidURL(parameters: FlickrPhotoMetadata.urlQueryParameters)
+//    }
+    
     fileprivate func getFlickrPhoto(withBlock block: @escaping (Result<FlickrPhoto>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }

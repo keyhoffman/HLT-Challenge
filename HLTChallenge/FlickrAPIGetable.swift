@@ -21,6 +21,8 @@ extension FlickrAPIGetable {
         ]
     }
     
+    // MARK: RESTGetable Conformance
+    
     static var urlAddressParameters: URLParameters {
         return [
             host:   FlickrConstants.API.host,
