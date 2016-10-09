@@ -8,8 +8,12 @@
 
 import Foundation
 
+// MARK: - Coordinator Protocol
+
 protocol Coordinator {
     func start()
 }
+
+// MARK: - SubCoordinator Protocol
 
 protocol SubCoordinator: Coordinator {}

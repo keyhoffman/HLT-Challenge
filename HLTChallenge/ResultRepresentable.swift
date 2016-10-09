@@ -8,7 +8,11 @@
 
 import UIKit
 
+// MARK: - ResultRepresentable Protocol
+
 protocol ResultRepresentable {}
+
+// MARK: - ResultRepresentable Conformance -- Native Swift Types
 
 extension Array:      ResultRepresentable {}
 extension UIImage:    ResultRepresentable {}

@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - FlickrPhoto
+
 struct FlickrPhoto: ResultRepresentable {
     let photo:    UIImage
     let metadata: FlickrPhotoMetadata

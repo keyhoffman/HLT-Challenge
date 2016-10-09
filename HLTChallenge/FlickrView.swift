@@ -8,26 +8,25 @@
 
 import UIKit
 
-final class FlickrView: UIView, Prerparable, Configurable {
+// MARK: - FlickrView
 
+final class FlickrView: UIView, Preparable, Configurable {
+
+    // MARK: - Property Declarations
+    
     let flickrImageView = FlickrViewStyleSheet.ImageView.flickr.imageView
     
     let titleLabel = FlickrViewStyleSheet.Label.title.label
     
-//    init() {
-//        super.init(frame: .zero)
-//        
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    // MARK: - Preparable Conformance
     
     func prepare() {
         defer { FlickrViewStyleSheet.prepare(self) }
         addSubview(flickrImageView)
         addSubview(titleLabel)
     }
+    
+    // MARK: - Configurable Conformance
     
     func configure(withData flickrPhoto: FlickrPhoto) {
         defer { prepare() }

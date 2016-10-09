@@ -38,9 +38,9 @@ extension FlickrPhotoMetadata {
     ]
     
     static let urlAddressParameters = [
-        FlickrPhotoMetadata.host:   FlickrConstants.API.host,
-        FlickrPhotoMetadata.path:   FlickrConstants.API.path,
-        FlickrPhotoMetadata.scheme: FlickrConstants.API.scheme
+        host:   FlickrConstants.API.host,
+        path:   FlickrConstants.API.path,
+        scheme: FlickrConstants.API.scheme
     ]
     
     static func create(from dict: JSONDictionary) -> Result<FlickrPhotoMetadata> {
@@ -76,6 +76,7 @@ extension FlickrPhotoMetadata {
     }
 }
 
+
 // MARK: - Fileprivate Static API
 
 extension FlickrPhotoMetadata {
@@ -91,12 +92,12 @@ extension FlickrPhotoMetadata {
     static private func dataTask(request: URLRequest, withBlock block: @escaping (Result<[FlickrPhotoMetadata]>) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
-                block <^> (processDataTask(date: data, response: response, error: error) >>= FlickrPhotoMetadata.extractMetadata)
+                block <^> (processDataTask(date: data, response: response, error: error) >>= FlickrPhotoMetadata.extract)
             }
         }.resume()
     }
     
-    static private func extractMetadata(from dict: JSONDictionary) -> Result<[FlickrPhotoMetadata]> {
+    static func extract(from dict: JSONDictionary) -> Result<[FlickrPhotoMetadata]> {
         guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos]      as? JSONDictionary,
               let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrPhotoMetadata) }
         return photosArray.map(FlickrPhotoMetadata.create).invert()

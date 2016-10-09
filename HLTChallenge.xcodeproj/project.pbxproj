@@ -31,6 +31,7 @@
 		0370ECE01DA46202008B8C5D /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECDF1DA46202008B8C5D /* Operators.swift */; };
 		0370ECE21DA4705C008B8C5D /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECE11DA4705C008B8C5D /* General.swift */; };
 		037692721DA8EB6F009CDAA6 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037692711DA8EB6F009CDAA6 /* FlickrPhoto.swift */; };
+		039F28521DA9EFEA001EF113 /* ResultType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039F28511DA9EFEA001EF113 /* ResultType.swift */; };
 		03B0272D1DA76CD0003FDA88 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B0272C1DA76CD0003FDA88 /* Sequence.swift */; };
 		03B027301DA76DF8003FDA88 /* ErrorMessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B0272F1DA76DF8003FDA88 /* ErrorMessageSender.swift */; };
 		03DE2B271DA5CAE3008CE5B1 /* URLRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B261DA5CAE2008CE5B1 /* URLRequestError.swift */; };
@@ -41,8 +42,7 @@
 		03DE2B341DA60579008CE5B1 /* CreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B331DA60579008CE5B1 /* CreationError.swift */; };
 		03DE2B371DA60906008CE5B1 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B361DA60906008CE5B1 /* Response.swift */; };
 		03DE2B3A1DA60BA7008CE5B1 /* RESTGetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B391DA60BA7008CE5B1 /* RESTGetable.swift */; };
-		03DE2B411DA62072008CE5B1 /* URLParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B401DA62072008CE5B1 /* URLParameters.swift */; };
-		03DE2B441DA6208D008CE5B1 /* JSONDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B431DA6208D008CE5B1 /* JSONDictionary.swift */; };
+		03DE2B411DA62072008CE5B1 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B401DA62072008CE5B1 /* TypeAliases.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +84,7 @@
 		0370ECDF1DA46202008B8C5D /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		0370ECE11DA4705C008B8C5D /* General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
 		037692711DA8EB6F009CDAA6 /* FlickrPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
+		039F28511DA9EFEA001EF113 /* ResultType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultType.swift; sourceTree = "<group>"; };
 		03B0272C1DA76CD0003FDA88 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		03B0272F1DA76DF8003FDA88 /* ErrorMessageSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessageSender.swift; sourceTree = "<group>"; };
 		03DE2B261DA5CAE2008CE5B1 /* URLRequestError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequestError.swift; sourceTree = "<group>"; };
@@ -94,8 +95,7 @@
 		03DE2B331DA60579008CE5B1 /* CreationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationError.swift; sourceTree = "<group>"; };
 		03DE2B361DA60906008CE5B1 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		03DE2B391DA60BA7008CE5B1 /* RESTGetable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTGetable.swift; sourceTree = "<group>"; };
-		03DE2B401DA62072008CE5B1 /* URLParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLParameters.swift; sourceTree = "<group>"; };
-		03DE2B431DA6208D008CE5B1 /* JSONDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDictionary.swift; sourceTree = "<group>"; };
+		03DE2B401DA62072008CE5B1 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				033FAD791DA719F6001DB453 /* ResultRepresentable.swift */,
+				039F28511DA9EFEA001EF113 /* ResultType.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -226,7 +227,7 @@
 			children = (
 				03DE2B421DA62078008CE5B1 /* TypeAliases */,
 				03DE2B351DA608DE008CE5B1 /* Networking */,
-				03DE2B301DA5E9CB008CE5B1 /* Extensions */,
+				03DE2B301DA5E9CB008CE5B1 /* NativeExtensions */,
 				03DE2B2A1DA5CD42008CE5B1 /* Functors */,
 				0370ECDE1DA461E2008B8C5D /* Operators */,
 				0370ECD81DA45AD7008B8C5D /* Constants */,
@@ -293,6 +294,14 @@
 			name = Operators;
 			sourceTree = "<group>";
 		};
+		039F28531DA9F08C001EF113 /* Result */ = {
+			isa = PBXGroup;
+			children = (
+				03DE2B281DA5CD3B008CE5B1 /* Result.swift */,
+			);
+			name = Result;
+			sourceTree = "<group>";
+		};
 		03B0272E1DA76DEB003FDA88 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,7 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				033FAD781DA719D5001DB453 /* Protocols */,
-				03DE2B281DA5CD3B008CE5B1 /* Result.swift */,
+				039F28531DA9F08C001EF113 /* Result */,
 			);
 			name = Functors;
 			sourceTree = "<group>";
@@ -320,13 +329,13 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		03DE2B301DA5E9CB008CE5B1 /* Extensions */ = {
+		03DE2B301DA5E9CB008CE5B1 /* NativeExtensions */ = {
 			isa = PBXGroup;
 			children = (
 				03DE2B2E1DA5E9C2008CE5B1 /* Optional.swift */,
 				03B0272C1DA76CD0003FDA88 /* Sequence.swift */,
 			);
-			name = Extensions;
+			name = NativeExtensions;
 			sourceTree = "<group>";
 		};
 		03DE2B351DA608DE008CE5B1 /* Networking */ = {
@@ -348,8 +357,7 @@
 		03DE2B421DA62078008CE5B1 /* TypeAliases */ = {
 			isa = PBXGroup;
 			children = (
-				03DE2B401DA62072008CE5B1 /* URLParameters.swift */,
-				03DE2B431DA6208D008CE5B1 /* JSONDictionary.swift */,
+				03DE2B401DA62072008CE5B1 /* TypeAliases.swift */,
 			);
 			name = TypeAliases;
 			sourceTree = "<group>";
@@ -476,13 +484,12 @@
 				0370ECDA1DA45B1C008B8C5D /* FlickrConstants.swift in Sources */,
 				0370ECDD1DA461D7008B8C5D /* Curry.swift in Sources */,
 				03DE2B271DA5CAE3008CE5B1 /* URLRequestError.swift in Sources */,
-				03DE2B441DA6208D008CE5B1 /* JSONDictionary.swift in Sources */,
 				0370ECC71DA456D3008B8C5D /* FlickrTableViewCell.swift in Sources */,
 				0370ECD71DA4598C008B8C5D /* FlickrTableViewControllerStyleSheet.swift in Sources */,
 				0370ECC01DA453FF008B8C5D /* FatalError.swift in Sources */,
 				0370ECD51DA45922008B8C5D /* BaseTableViewController.swift in Sources */,
 				0370ECB11DA447BF008B8C5D /* FlickrCoordinator.swift in Sources */,
-				03DE2B411DA62072008CE5B1 /* URLParameters.swift in Sources */,
+				03DE2B411DA62072008CE5B1 /* TypeAliases.swift in Sources */,
 				0370ECD21DA458C8008B8C5D /* FlickrTableViewCellStyleSheet.swift in Sources */,
 				03DE2B3A1DA60BA7008CE5B1 /* RESTGetable.swift in Sources */,
 				03DE2B2F1DA5E9C2008CE5B1 /* Optional.swift in Sources */,
@@ -490,6 +497,7 @@
 				03DE2B291DA5CD3B008CE5B1 /* Result.swift in Sources */,
 				0370ECE21DA4705C008B8C5D /* General.swift in Sources */,
 				03DE2B321DA5EAA9008CE5B1 /* OptionalError.swift in Sources */,
+				039F28521DA9EFEA001EF113 /* ResultType.swift in Sources */,
 				0370ECE01DA46202008B8C5D /* Operators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

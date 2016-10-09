@@ -8,7 +8,11 @@
 
 import UIKit
 
+// MARK: - FlickrTableViewControllerStyleSheet
+
 struct FlickrTableViewControllerStyleSheet: ViewPreparer {
+    
+    // MARK: - ViewPreparer Conformance
     
     static func prepare(_ flickrTVC: FlickrTableViewController) {
         
@@ -16,10 +20,9 @@ struct FlickrTableViewControllerStyleSheet: ViewPreparer {
         
         flickrTVC.navigationItem.titleView = flickrTVC.searchTextField
         flickrTVC.navigationItem.rightBarButtonItem = flickrTVC.displaySearchTextFieldButton
-        
     }
     
-    // MARK: BarButtonItem
+    // MARK: - BarButtonItem
     
     enum BarButtonItem: Int {
         case displaySearchTextField = 1
@@ -38,7 +41,7 @@ struct FlickrTableViewControllerStyleSheet: ViewPreparer {
         }
     }
     
-    // MARK: TextField
+    // MARK: - TextField
     
     enum TextField: Int {
         case search = 1
@@ -104,6 +107,5 @@ struct FlickrTableViewControllerStyleSheet: ViewPreparer {
             case .search : return .search
             }
         }
-
     }
 }

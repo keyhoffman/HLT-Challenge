@@ -8,14 +8,18 @@
 
 import UIKit
 
-// PARAMETER OBJECT
+// MARK: - FlickrTableViewControllerConfiguration
 
 struct FlickrTableViewControllerConfiguration {
     let didSelectPhoto: (FlickrPhotoMetadata) -> Void
 }
 
-final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, Prerparable, UITextFieldDelegate {
+// MARK: - FlickrTableViewController
 
+final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, Preparable, UITextFieldDelegate {
+
+    // MARK: - Property Delcarations
+    
     lazy var searchTextField: UITextField = {
         let tf      = FlickrTableViewControllerStyleSheet.TextField.search.textField
         tf.isHidden = true
@@ -34,6 +38,8 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
     private var selectedIndexPath: IndexPath?
     private let didSelectPhoto: (FlickrPhotoMetadata) -> Void
     
+    // MARK: - Initialization
+    
     init(configuration: FlickrTableViewControllerConfiguration) {
         didSelectPhoto = configuration.didSelectPhoto
         super.init()
@@ -43,10 +49,14 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - ViewController Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         defer { prepare() }
     }
+    
+    // MARK: - UITableView Delegate Conformance
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        didSelectPhoto()
@@ -58,7 +68,6 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
         tableView.deselectRow(at: indexPath, animated: true)
         selectedIndexPath = nil
     }
-    
     
     // TODO: Move to stylesheet
     private var defaultCellHeight:  CGFloat { return view.frame.height * 0.6 }
@@ -79,6 +88,7 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
         }
     }
     
+    // MARK: - Preparable Conformance
     
     func prepare() {
         defer { FlickrTableViewControllerStyleSheet.prepare(self) }

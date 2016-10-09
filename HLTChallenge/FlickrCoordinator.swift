@@ -8,14 +8,22 @@
 
 import UIKit
 
+// MARK: - FlickrCoordinator
+
 final class FlickrCoordinator: SubCoordinator {
+    
+    // MARK: - Property Declarations
     
     private let window: UIWindow
     private let rootNavigationController = UINavigationController()
     
+    // MARK: - Initialization
+    
     init(window: UIWindow) {
         self.window = window
     }
+    
+    // MARK: - SubCoordinator Conformance
     
     func start() {
         window.rootViewController = rootNavigationController

@@ -8,9 +8,13 @@
 
 import UIKit
 
+// MARK: - AppDelegate
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    // MARK: - Property Declarations
+    
     var window: UIWindow?
 
     private lazy var applicationCoordinator: ApplicationCoordinator? = {

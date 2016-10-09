@@ -14,7 +14,7 @@ extension Sequence where Iterator.Element == Result<FlickrPhotoMetadata> {
     /// Transforms an `Array` of `Result` of `FlickrImageMetadata` into
     /// a `Result` of an `Array` of `FlickrImageMetadata`.
     ///
-    /// - note: Transformation Structure --  [Result\<FlickrImageMetadata\>] -> Result<[FlickrImageMetadata]>
+    /// - note: Transformation Structure ====>>  [Result\<FlickrImageMetadata\>] -> Result<[FlickrImageMetadata]>
     ///
     /// - returns: A `Result` of an `Array` of `FlickrImageMetadata`
     func invert() -> Result<[FlickrPhotoMetadata]> {

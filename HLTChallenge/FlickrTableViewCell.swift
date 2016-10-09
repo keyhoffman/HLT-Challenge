@@ -8,10 +8,16 @@
 
 import UIKit
 
-final class FlickrTableViewCell: UITableViewCell, Configurable, Prerparable {
+// MARK: - FlickrTableViewCell
+
+final class FlickrTableViewCell: UITableViewCell, Configurable, Preparable {
+    
+    // MARK: - Property Declarations
     
     // FIXEME: FlickrTableViewCellStyleSheet.View.flickr.view
     let flickrView = FlickrView()
+    
+    // MARK: - Initialization
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,11 +28,14 @@ final class FlickrTableViewCell: UITableViewCell, Configurable, Prerparable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Preparable Conformance
     
     func prepare() {
         defer { FlickrTableViewCellStyleSheet.prepare(self) }
         addSubview(flickrView)
     }
+    
+    // MARK: - Configurable Conformance
     
     func configure(withData flickrPhoto: FlickrPhoto) {
         flickrView.configure(withData: flickrPhoto)

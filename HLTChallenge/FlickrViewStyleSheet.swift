@@ -8,9 +8,13 @@
 
 import UIKit
 
+// MARK: - FlickrViewStyleSheet
+
 struct FlickrViewStyleSheet: ViewPreparer {
     
     static private let titleLabelBottomToFlickrViewTopOffsetByViewHeightFactor: CGFloat = 0.8
+    
+    // MARK: - ViewPreparer Conformance
     
     static func prepare(_ flickrView: FlickrView) {
         
@@ -43,7 +47,7 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
     }
     
-    // MARK: Label
+    // MARK: - Label
     
     enum Label: Int {
         case title = 1
@@ -97,7 +101,7 @@ struct FlickrViewStyleSheet: ViewPreparer {
         }
     }
     
-    // MARK: ImageView
+    // MARK: - ImageView
     
     enum ImageView: Int {
         case flickr = 1

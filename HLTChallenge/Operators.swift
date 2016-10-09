@@ -8,21 +8,27 @@
 
 import Foundation
 
+// MARK: - CurryPrecedence Group
+
 precedencegroup CurryPrecedence {
     associativity: left
     higherThan:    LogicalDisjunctionPrecedence
 }
 
-precedencegroup FlatMapPrecedence {
+// MARK: - MonadicPrecedence Group
+
+precedencegroup MonadicPrecedence {
     associativity: left
     higherThan: DefaultPrecedence
 }
 
+// MARK: - Operator Declarations
 
 infix operator <^> : CurryPrecedence
-infix operator |>  : FlatMapPrecedence
-infix operator >>= : FlatMapPrecedence
+infix operator |>  : MonadicPrecedence
+infix operator >>= : MonadicPrecedence
 
+// MARK: - Operator Implementations
 
 func <^> <A, B>(_ f: (A) -> B, _ a: A) -> B {
     return f(a)
@@ -43,5 +49,3 @@ func >>= <A, B>(a: A?, f: (A) -> B?) -> B? {
 //func >>= <A, B>(a: A?, f: (A) -> Result<B>) -> Result<B> {
 //    return a.toResult()
 //}
-
-

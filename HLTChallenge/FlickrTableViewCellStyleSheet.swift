@@ -8,15 +8,19 @@
 
 import UIKit
 
+// MARK: - FlickrTableViewCellStyleSheet
+
 struct FlickrTableViewCellStyleSheet: ViewPreparer {
+    
+    // MARK: - ViewPreparer Conformance
     
     static func prepare(_ flickrCell: FlickrTableViewCell) {
         
         defer { flickrCell.layoutSubviews() }
         
-        // MARK: AutoLayout
-        
         flickrCell.backgroundColor = .blue
+        
+        // MARK: AutoLayout
         
         flickrCell.flickrView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -31,6 +35,8 @@ struct FlickrTableViewCellStyleSheet: ViewPreparer {
         
         NSLayoutConstraint.activate(activeConstraints)
     }
+    
+    // MARK: - View
     
     enum View: Int {
         case flickr = 1

@@ -8,8 +8,10 @@
 
 import Foundation
 
+// MARK: - ViewPreparer
+
 protocol ViewPreparer {
-    associatedtype SubjectType: Prerparable
+    associatedtype SubjectType: Preparable
     static func prepare(_ subject: SubjectType)
 }
 

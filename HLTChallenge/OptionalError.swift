@@ -8,9 +8,13 @@
 
 import Foundation
 
+// MARK: - OptionalError
+
 enum OptionalError<T>: Error, CustomDebugStringConvertible, ErrorMessageSender {
     case nonExistantValue(T)
 }
+
+// MARK: - CustomStringConvertible Conformance
 
 extension OptionalError {
     var description: String {
@@ -19,6 +23,8 @@ extension OptionalError {
         }
     }
 }
+
+// MARK: - CustomDebugStringConvertible Conformance
 
 extension OptionalError {
     var debugDescription: String {

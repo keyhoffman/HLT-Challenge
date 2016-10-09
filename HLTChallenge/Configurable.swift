@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: - Configurable Protocol
+
 protocol Configurable {
     associatedtype DataType
     func configure(withData data: DataType)

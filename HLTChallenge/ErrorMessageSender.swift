@@ -8,7 +8,11 @@
 
 import Foundation
 
+// MARK: - ErrorMessageSender Protocol
+
 protocol ErrorMessageSender: CustomStringConvertible {}
+
+
 
 extension ErrorMessageSender {
     var messagePrefix: String {

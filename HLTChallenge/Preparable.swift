@@ -8,6 +8,8 @@
 
 import Foundation
 
-protocol Prerparable {
+// MARK: - Preparable Protocol
+
+protocol Preparable {
     func prepare()
 }

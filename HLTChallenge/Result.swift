@@ -8,15 +8,7 @@
 
 import Foundation
 
-protocol ResultType {
-    associatedtype Value: ResultRepresentable
-    
-    func toOptional() -> Value?
-    
-    init(_ value: Value)
-    init(_ error: Error)
-    init(_ error: Error?, _ value: Value?)
-}
+// MARK: - Result
 
 enum Result<T: ResultRepresentable>: ResultType {
     typealias Value = T

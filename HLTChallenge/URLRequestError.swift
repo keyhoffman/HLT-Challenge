@@ -8,12 +8,16 @@
 
 import Foundation
 
+// MARK: - URLRequestError
+
 enum URLRequestError: Error, CustomDebugStringConvertible, ErrorMessageSender {
     case invalidURL(parameters: URLParameters)
     case invalidURLPath(path: String?)
     case invalidResponseStatus(code: Int)
     case couldNotParseJSON
 }
+
+// MARK: - CustomStringConvertible Conformance
 
 extension URLRequestError {
     var description: String {
@@ -25,6 +29,8 @@ extension URLRequestError {
         }
     }
 }
+
+// MARK: - CustomDebugStringConvertible Conformance
 
 extension URLRequestError {
     var debugDescription: String {

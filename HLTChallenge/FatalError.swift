@@ -8,9 +8,13 @@
 
 import Foundation
 
+// MARK: - FatalError
+
 enum FatalError: Error, CustomDebugStringConvertible {
     case couldNotDequeueCell(identifier: String)
 }
+
+// MARK: - CustomDebugStringConvertible Conformance
 
 extension FatalError {
     var debugDescription: String {

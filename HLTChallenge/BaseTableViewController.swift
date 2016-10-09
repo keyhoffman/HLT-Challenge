@@ -8,38 +8,48 @@
 
 import UIKit
 
+//class FOOTVC<TableView: FOOOO<UITableViewCell>>: UITableViewController where Cell: Configurable {
+//    
+//}
+
 // MARK: - TableViewController
 
 class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cell: Configurable {
     
     typealias DataType = Cell.DataType
-    
-    // MARK: Property Declarations
+
+    // MARK: - Property Declarations
     
     private let cellIdentifier = String(describing: Cell.self)
+    
+    
+//    var fooTV: FOOOO<Cell> {
+//        return tableView as! FOOOO<Cell>
+//    }
     
     var data: [DataType] = [] {
         didSet { tableView.reloadData() }
     }
     
-    // MARK: Initialization
+    // MARK: - Initialization
     
     init() {
         super.init(nibName: nil, bundle: nil)
+//        tableView = tableView as! FOOOO<Cell>
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: ViewController Lifecycle Methods
+     // MARK: - ViewController Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifier)
     }
     
-    // MARK: UITableViewDatasource Conformance Methods
+     // MARK: - UITableViewDatasource Conformance Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count

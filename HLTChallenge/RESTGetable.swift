@@ -15,6 +15,7 @@ protocol RESTGetable: Equatable, ResultRepresentable {
     static var urlAddressParameters: URLParameters { get }
     
     static func create(from dictionary: JSONDictionary) -> Result<Self>
+    static func extract(from: JSONDictionary) -> Result<[Self]>
 }
 
 // MARK: - Module Static `urlAddressParameters` Keys

@@ -1,5 +1,5 @@
 //
-//  JSONDictionary.swift
+//  URLParameters.swift
 //  HLTChallenge
 //
 //  Created by Key Hoffman on 10/6/16.
@@ -7,5 +7,11 @@
 //
 
 import Foundation
+
+// MARK: - URLParamters
+
+typealias URLParameters = [String: String]
+
+// MARK: - JSONDictionary
 
 typealias JSONDictionary = [String: AnyObject]

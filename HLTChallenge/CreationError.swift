@@ -8,19 +8,25 @@
 
 import Foundation
 
+// MARK: - CreationError
+
 enum CreationError: Error, CustomDebugStringConvertible, ErrorMessageSender {
     case flickrPhotoMetadata
     case flickrPhoto(forURL: String)
 }
 
+// MARK: - CustomStringConvertible Conformance
+
 extension CreationError {
     var description: String {
         switch self {
         case .flickrPhotoMetadata: return messagePrefix + "Unable to retrieve photos!"
-        case .flickrPhoto(_):         return messagePrefix + "Unable to download photo"
+        case .flickrPhoto(_):      return messagePrefix + "Unable to download photo"
         }
     }
 }
+
+// MARK: - CustomDebugStringConvertible Conformance
 
 extension CreationError {
     var debugDescription: String {
