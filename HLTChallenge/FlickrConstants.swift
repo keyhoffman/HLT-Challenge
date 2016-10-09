@@ -12,7 +12,7 @@ import Foundation
 
 struct FlickrConstants {
     
-    // MARK: API
+    // MARK: - API
     
     struct API {
         static let scheme = "https"
@@ -20,56 +20,145 @@ struct FlickrConstants {
         static let path   = "/services/rest"
     }
     
-    // MARK: Parameter Keys
+    // MARK: - Parameters
     
-    struct ParameterKeys {
-        static let method          = "method"
-        static let apiKey          = "api_key"
-        static let userID          = "user_id"
-        static let text            = "text"
-        static let extras          = "extras"
-        static let pageNumber      = "page"
-        static let format          = "format"
-        static let noJSONCallback  = "nojsoncallback"
-        static let picturesPerPage = "per_page"
-        static let safeSearch      = "safe_search"
+    struct Parameters {
+        
+        // MARK: - Keys
+        
+        struct Keys {
+            
+            // MARK: General
+            
+            struct General {
+                static let apiKey          = "api_key"
+                static let responseFormat  = "format"
+                static let noJSONCallback  = "nojsoncallback"
+            }
+            
+            // MARK: Metadata
+            
+            struct Metadata {
+                static let method          = "method"
+                static let picturesPerPage = "per_page"
+                static let pageNumber      = "page"
+                static let text            = "text"
+                static let extras          = "extras"
+                static let safeSearch      = "safe_search"
+
+            }
+            
+            // MARK: PhotoInfo
+            
+            struct PhotoInfo {
+                static let method  = "method"
+                static let photoID = "photo_id"
+            }
+            
+            // MARK: PhotoComments
+            
+            struct PhotoComments {
+                static let method  = "method"
+                static let photoID = "photo_id"
+            }
+        }
+        
+        // MARK: - Values
+        
+        struct Values {
+            
+            // MARK: General
+            
+            struct General {
+                static let apiKey         = "c9025518af10cb3bb1ec3fd80ea2fd52"
+                static let responseFormat = "json"
+                static let noJSONCallback = "1"
+                
+            }
+            
+            // MARK: Metadata
+            
+            struct Metadata {
+                static let search          = "flickr.photos.search"
+                static let getRecent       = "flickr.photos.getRecent"
+                static let picturesPerPage = "20"
+                static let pageNumber      = "1"
+                static let extras          = "url_m"
+                static let safeSearch      = "1"
+                
+            }
+            
+            // MARK: PhotoInfo
+            
+            struct PhotoInfo {
+                static let method = "flickr.photos.getInfo"
+            }
+            
+            // MARK: PhotoComments
+            
+            struct PhotoComments {
+                static let method = "flickr.photos.comments.getList"
+            }
+        }
     }
     
-    // MARK: Parameter Values
+    // MARK: - Response
     
-    struct ParameterValues {
-        static let publicPhotosMethod  = "flickr.people.getPublicPhotos"
-        static let searchMethod        = "flickr.photos.search"
-        static let apiKey              = "c9025518af10cb3bb1ec3fd80ea2fd52"
-        static let userID              = "90967382@N07"
-        static let generalSearch       = "general"
-        static let responseFormat      = "json"
-        static let disableJSONCallback = "1"
-        static let mediumURL           = "url_m"
-        static let picturesPerPage     = "20"
-        static let pageNumber          = "1"
-        static let safeSearchOn        = "1"
-        static let safeSearchOff       = "0"
-    }
-    
-    // MARK: Response Keys
-    
-    struct ResponseKeys {
-        static let status     = "stat"
-        static let photos     = "photos"
-        static let photo      = "photo"
-        static let title      = "title"
-        static let id         = "id"
-        static let ownerID    = "owner"
-        static let mediumURL  = "url_m"
-        static let totalPages = "pages"
-        static let total      = "total"
-    }
-    
-    // MARK: Response Values
-    
-    struct ResponseValues {
-        static let okStatus            = "ok"
-        static let maxPicturesReturned = 4000
+    struct Response {
+        
+        // MARK: - Keys
+        
+        struct Keys {
+            
+            // MARK: General
+            
+            struct General {
+                static let status = "stat"
+            }
+            
+            // MARK: Metadata
+            
+            struct Metadata {
+                static let photos  = "photos"
+                static let photo   = "photo"
+                static let title   = "title"
+                static let id      = "id"
+                static let ownerID = "owner"
+                static let url     = "url_m"
+            }
+            
+            // MARK: PhotoInfo
+            
+            struct PhotoInfo {
+                static let photo    = "photo"
+                static let owner    = "owner"
+                static let username = "username"
+            }
+            
+            // MARK: PhotoComments
+            
+            struct PhotoComments {
+                static let comments = "comments"
+                static let comment  = "comment"
+                static let content  = "_content"
+            }
+        }
+        
+        // MARK: - Values
+        
+        struct Values {
+            
+            // MARK: General
+            
+            struct General {
+                
+                // MARK: Status
+                
+                struct Status {
+                    static let error   = "fail"
+                    static let success = "ok"
+                }
+            }
+        }
     }
 }

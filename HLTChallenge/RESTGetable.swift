@@ -15,7 +15,7 @@ protocol RESTGetable: Equatable, ResultRepresentable {
     static var urlAddressParameters: URLParameters { get }
     
     static func create(from dictionary: JSONDictionary) -> Result<Self>
-    static func extract(from: JSONDictionary) -> Result<[Self]>
+//    static func extract(from: JSONDictionary) -> Result<[Self]>
 }
 
 // MARK: - Module Static `urlAddressParameters` Keys
@@ -39,7 +39,7 @@ extension RESTGetable {
     // MARK: Data Processing
     
     static func processDataTask(date: Data?, response: URLResponse?, error: Error?) -> Result<JSONDictionary> {
-        return (Result(error, Response(data: date, urlResponse: response)) >>= parse) >>= decodeJSON
+        return (Result(error, Response(data: date, urlResponse: response)) >>= parse(response:)) >>= decode(jsonData:)
     }
     
     // MARK: URL Configuration
@@ -77,10 +77,10 @@ extension RESTGetable {
         return successRange.contains(response.statusCode) ? Result(response.data) : curry(Result.init) <^> URLRequestError.invalidResponseStatus(code: response.statusCode)
     }
     
-    static fileprivate func decodeJSON(from data: Data) -> Result<JSONDictionary> {
+    static fileprivate func decode(jsonData data: Data) -> Result<JSONDictionary> {
         do {
-            guard let decodedJSON = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? JSONDictionary else { return Result(URLRequestError.couldNotParseJSON) }
-            return Result(decodedJSON)
+            guard let jsonDict = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? JSONDictionary else { return Result(URLRequestError.couldNotParseJSON) }
+            return Result(jsonDict)
         } catch {
             return Result(error)
         }

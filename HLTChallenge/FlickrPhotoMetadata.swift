@@ -8,9 +8,10 @@
 
 import UIKit
 
+
 // MARK: - FlickrPhotoMetadata
 
-struct FlickrPhotoMetadata: RESTGetable, ResultRepresentable {
+struct FlickrPhotoMetadata: FlickrAPIGetable {
     let id:      String
     let ownerID: String
     let url:     String
@@ -23,31 +24,21 @@ func ==(_ lhs: FlickrPhotoMetadata, _ rhs: FlickrPhotoMetadata) -> Bool {
     return lhs.id == rhs.id && lhs.ownerID == rhs.ownerID && lhs.url == rhs.url
 }
 
-// MARK: - RESTGetable Conformance
+// MARK: - FlickrAPIGetable Conformance
 
 extension FlickrPhotoMetadata {
-    static let urlQueryParameters = [
-        FlickrConstants.ParameterKeys.apiKey:          FlickrConstants.ParameterValues.apiKey,
-        FlickrConstants.ParameterKeys.method:          FlickrConstants.ParameterValues.searchMethod,
-        FlickrConstants.ParameterKeys.extras:          FlickrConstants.ParameterValues.mediumURL,
-        FlickrConstants.ParameterKeys.format:          FlickrConstants.ParameterValues.responseFormat,
-        FlickrConstants.ParameterKeys.noJSONCallback:  FlickrConstants.ParameterValues.disableJSONCallback,
-        FlickrConstants.ParameterKeys.safeSearch:      FlickrConstants.ParameterValues.safeSearchOn,
-        FlickrConstants.ParameterKeys.picturesPerPage: FlickrConstants.ParameterValues.picturesPerPage,
-        FlickrConstants.ParameterKeys.text:            FlickrConstants.ParameterValues.generalSearch
-    ]
-    
-    static let urlAddressParameters = [
-        host:   FlickrConstants.API.host,
-        path:   FlickrConstants.API.path,
-        scheme: FlickrConstants.API.scheme
+    static let urlQueryParameters = urlGeneralQueryParameters + [
+        FlickrConstants.Parameters.Keys.Metadata.method:          FlickrConstants.Parameters.Values.Metadata.getRecent,
+        FlickrConstants.Parameters.Keys.Metadata.extras:          FlickrConstants.Parameters.Values.Metadata.extras,
+        FlickrConstants.Parameters.Keys.Metadata.safeSearch:      FlickrConstants.Parameters.Values.Metadata.safeSearch,
+        FlickrConstants.Parameters.Keys.Metadata.picturesPerPage: FlickrConstants.Parameters.Values.Metadata.picturesPerPage
     ]
     
     static func create(from dict: JSONDictionary) -> Result<FlickrPhotoMetadata> {
-        guard let id      = dict[FlickrConstants.ResponseKeys.id]        as? String,
-              let ownerId = dict[FlickrConstants.ResponseKeys.ownerID]   as? String,
-              let url     = dict[FlickrConstants.ResponseKeys.mediumURL] as? String,
-              let title   = dict[FlickrConstants.ResponseKeys.title]     as? String else { return Result(CreationError.flickrPhotoMetadata) }
+        guard let id      = dict[FlickrConstants.Response.Keys.Metadata.id]        as? String,
+              let ownerId = dict[FlickrConstants.Response.Keys.Metadata.ownerID]   as? String,
+              let url     = dict[FlickrConstants.Response.Keys.Metadata.url]       as? String,
+              let title   = dict[FlickrConstants.Response.Keys.Metadata.title]     as? String else { return Result(CreationError.flickrPhotoMetadata) }
         return curry(Result.init) <^> FlickrPhotoMetadata(id: id, ownerID: ownerId, url: url, title: title)
     }
 }
@@ -76,7 +67,6 @@ extension FlickrPhotoMetadata {
     }
 }
 
-
 // MARK: - Fileprivate Static API
 
 extension FlickrPhotoMetadata {
@@ -98,11 +88,8 @@ extension FlickrPhotoMetadata {
     }
     
     static func extract(from dict: JSONDictionary) -> Result<[FlickrPhotoMetadata]> {
-        guard let photosDict  = dict[FlickrConstants.ResponseKeys.photos]      as? JSONDictionary,
-              let photosArray = photosDict[FlickrConstants.ResponseKeys.photo] as? [JSONDictionary] else { return Result(CreationError.flickrPhotoMetadata) }
+        guard let photosDict  = dict[FlickrConstants.Response.Keys.Metadata.photos]      as? JSONDictionary,
+              let photosArray = photosDict[FlickrConstants.Response.Keys.Metadata.photo] as? [JSONDictionary] else { return Result(CreationError.flickrPhotoMetadata) }
         return photosArray.map(FlickrPhotoMetadata.create).invert()
     }
 }
-
-
-

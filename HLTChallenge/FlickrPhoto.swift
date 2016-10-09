@@ -10,13 +10,25 @@ import UIKit
 
 // MARK: - FlickrPhoto
 
-struct FlickrPhoto: ResultRepresentable {
+struct FlickrPhoto: ResultRepresentable, Equatable {
     let photo:    UIImage
     let metadata: FlickrPhotoMetadata
 }
 
+// MARK: - Equatable Conformance
+
+func ==(_ lhs: FlickrPhoto, _ rhs: FlickrPhoto) -> Bool {
+    return lhs.metadata == rhs.metadata
+}
+
 extension FlickrPhoto {
+//    static let urlQueryParameters = ["":""]
+    
     static func create(photo: UIImage, metadata: FlickrPhotoMetadata) -> Result<FlickrPhoto> {
         return curry(Result.init) <^> FlickrPhoto(photo: photo, metadata: metadata)
     }
+    
+//    static func create(from dictionary: JSONDictionary) -> Result<FlickrPhoto> {
+//        <#code#>
+//    }
 }
