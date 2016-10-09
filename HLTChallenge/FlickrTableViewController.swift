@@ -59,7 +59,12 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
     // MARK: - UITableView Delegate Conformance
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        didSelectPhoto()
+        
+        let row = indexPath.row
+        let metadataForRow = data[row].metadata
+        
+        didSelectPhoto(metadataForRow)
+        
         defer { animateCellHeightChange(withDuration: 0.3, at: indexPath) }
         guard let _selectedIndexPath = selectedIndexPath, _selectedIndexPath == indexPath else {
             selectedIndexPath = indexPath

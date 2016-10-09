@@ -42,7 +42,7 @@ final class FlickrCoordinator: SubCoordinator {
         }
     }
     
-    private func navigateToDetailView(for: FlickrPhotoMetadata) {
+    private func navigateToDetailView(for photo: FlickrPhotoMetadata) {
         
     }
 }
