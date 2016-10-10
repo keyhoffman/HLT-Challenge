@@ -29,8 +29,8 @@ extension RESTGetable {
 // MARK: - Module Static API
 
 extension RESTGetable {
-    static func get(withBlock block: @escaping ResultBlock<Self>) {
-        switch url() >>= urlRequest { // FIXME: GIT RID OF THIS SWITCH STATEMENT
+    static func get(withAdditionalQueryParameters queryParameters: URLParameters = [:], withBlock block: @escaping ResultBlock<Self>) {
+        switch url(withAdditionalQueryParameters: queryParameters) >>= urlRequest { // FIXME: GIT RID OF THIS SWITCH STATEMENT
         case let .error(error):   block <^> Result(error)
         case let .value(request): dataTask(request: request, withBlock: block)
         }
