@@ -24,7 +24,7 @@ extension Result {
     init(_ error: Error?, _ value: Value?) { 
              if let value = value { self = .value(value) }
         else if let error = error { self = .error(error) }
-        else { self = curry(Result.init) <^> OptionalError.nonExistantValue(ofType: value) }
+        else { self = Result.init <^> OptionalError.nonExistantValue(ofType: value) }
     }
 }
 
@@ -40,7 +40,7 @@ extension Result {
 extension Result {
     func toOptional() -> Value? {
         switch self {
-        case .error(_):         return nil
+        case .error:            return nil
         case .value(let value): return value
         }
     }

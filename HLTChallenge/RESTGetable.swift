@@ -45,11 +45,11 @@ extension RESTGetable {
     // MARK: URL Configuration
     
     static func urlRequest(from url: URL) -> Result<URLRequest> {
-        return curry(Result.init) <^> URLRequest(url: url)
+        return Result.init <^> URLRequest(url: url)
     }
     
     static func url(withAdditionalQueryParameters queryParameters: URLParameters = [:]) -> Result<URL> {
-        guard let compontentsPath = urlAddressParameters[path] else { return curry(Result.init) <^> URLRequestError.invalidURLPath(path: urlAddressParameters[path]) }
+        guard let compontentsPath = urlAddressParameters[path] else { return Result.init <^> URLRequestError.invalidURLPath(path: urlAddressParameters[path]) }
         
         var components        = URLComponents()
         components.path       = compontentsPath
@@ -73,7 +73,7 @@ extension RESTGetable {
     }
     
     static fileprivate func parse(response: Response) -> Result<Data> {
-        return Response.successRange.contains(response.statusCode) ? Result(response.data) : curry(Result.init) <^> URLRequestError.invalidResponseStatus(code: response.statusCode)
+        return Response.successRange.contains(response.statusCode) ? Result(response.data) : Result.init <^> URLRequestError.invalidResponseStatus(code: response.statusCode)
     }
     
     static fileprivate func decode(json data: Data) -> Result<JSONDictionary> {

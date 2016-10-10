@@ -10,7 +10,7 @@ import Foundation
 
 extension Optional where Wrapped: ResultRepresentable {
     func toResult() -> Result<Wrapped> {
-        guard let x = self else { return curry(Result.init) <^> OptionalError.nonExistantValue(ofType: self) }
+        guard let x = self else { return Result.init <^> OptionalError.nonExistantValue(ofType: self) }
         return Result(x)
     }
     
@@ -19,4 +19,3 @@ extension Optional where Wrapped: ResultRepresentable {
         return Result(x)
     }
 }
-

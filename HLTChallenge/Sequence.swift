@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - Sequence Extension
+
 // FIXME: Find a way to make this generic!!!!! Possibly with type erasure
 extension Sequence where Iterator.Element == Result<FlickrPhotoMetadata> {
     
@@ -18,23 +20,39 @@ extension Sequence where Iterator.Element == Result<FlickrPhotoMetadata> {
     ///
     /// - returns: A `Result` of an `Array` of `FlickrImageMetadata`
     func invert() -> Result<[FlickrPhotoMetadata]> {
-        return curry(Result.init) <^> self.flatMap { $0.toOptional() }
+        return Result.init <^> self.flatMap { $0.toOptional() }
     }
 }
+
+// MARK: - Sequence Extension
 
 // FIXME: Find a way to make this generic!!!!! Possibly with type erasure
 extension Sequence where Iterator.Element == Result<UIImage> {
     func invert() -> Result<[UIImage]> {
-        return curry(Result.init) <^> self.flatMap { $0.toOptional() }
+        return Result.init <^> self.flatMap { $0.toOptional() }
     }
 }
+
+// MARK: - Sequence Extension
 
 // FIXME: Find a way to make this generic!!!!! Possibly with type erasure
 extension Sequence where Iterator.Element == Result<FlickrPhotoComment> {
     func invert() -> Result<[FlickrPhotoComment]> {
-        return curry(Result.init) <^> self.flatMap { $0.toOptional() }
+        return Result.init <^> self.flatMap { $0.toOptional() }
     }
 }
+
+// MARK: - Sequence Extension
+
+extension Sequence {
+    static var empty: [Iterator.Element] {
+        return []
+    }
+}
+
+
+
+
 
 //typealias GenericResult<T: ResultRepresentable> = Result<T>
 //
@@ -48,6 +66,6 @@ extension Sequence where Iterator.Element == Result<FlickrPhotoComment> {
 //        
 //        return Result(faa)
 //        
-////        return curry(Result.init) <^> self.map { $0.toOptional() }.flatMap { $0 }
+////        return Result.init <^> self.map { $0.toOptional() }.flatMap { $0 }
 //    }
 //}

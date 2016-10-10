@@ -8,8 +8,10 @@
 
 import Foundation
 
-extension Array {
-    static var empty: [Iterator.Element] {
-        return []
-    }
-}
+// MARK: - Array Extension
+
+//extension Array {
+//    static var empty: [Iterator.Element] {
+//        return []
+//    }
+//}

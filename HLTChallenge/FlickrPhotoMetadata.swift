@@ -40,7 +40,7 @@ extension FlickrPhotoMetadata {
               let title   = dict[FlickrConstants.Response.Keys.Metadata.title]       >>= JSONString,
               let ownerId = dict[FlickrConstants.Response.Keys.Metadata.ownerID]     >>= JSONString,
               let ownerName = dict[FlickrConstants.Response.Keys.Metadata.ownerName] >>= JSONString else { return Result(CreationError.Flickr.metadata) }
-        return curry(Result.init) <^> FlickrPhotoMetadata(id: id, url: url, title: title, ownerID: ownerId, ownerName: ownerName)
+        return Result.init <^> FlickrPhotoMetadata(id: id, url: url, title: title, ownerID: ownerId, ownerName: ownerName)
     }
     
     static func extract(from dict: JSONDictionary) -> Result<[FlickrPhotoMetadata]> {
@@ -56,7 +56,7 @@ extension FlickrPhotoMetadata {
 
 extension FlickrPhotoMetadata {
     static func getPhotosStream(withBlock block: @escaping ResultBlock<FlickrPhoto>) {
-        getAll { allMetadataResults in _ = allMetadataResults >>= { allMetadata in curry(Result.init) <^> allMetadata.map { metadata in metadata.getFlickrPhoto <^> block } } }
+        getAll { allMetadataResults in _ = allMetadataResults >>= { allMetadata in Result.init <^> allMetadata.map { metadata in metadata.getFlickrPhoto <^> block } } }
     }
 }
 
@@ -69,67 +69,10 @@ extension FlickrPhotoMetadata {
             DispatchQueue.main.async {
                 switch data.flatMap(UIImage.init).toResult <^> CreationError.Flickr.photo(forURL: self.url) { // FIXME: GET RID OF THIS SWITCH STATEMENT
                 case let .error(error): block <^> Result(error)
-                case let .value(photo): block <^> (curry(Result.init) <^> FlickrPhoto(photo: photo, metadata: self))
+                case let .value(photo): block <^> (Result.init <^> FlickrPhoto(photo: photo, metadata: self))
                 }
             }
         }
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    fileprivate func url(withMethod method: String) -> Result<URL> {
-//        let path = FlickrPhotoMetadata.urlAddressParameters[FlickrPhotoMetadata.path]
-//
-//        guard let compontentsPath = path else { return curry(Result.init) <^> URLRequestError.invalidURLPath(path: path) }
-//
-//        var components        = URLComponents()
-//        components.path       = compontentsPath
-//        components.scheme     = FlickrPhotoMetadata.urlAddressParameters[FlickrPhotoMetadata.scheme]
-//        components.host       = FlickrPhotoMetadata.urlAddressParameters[FlickrPhotoMetadata.host]
-//        components.queryItems = FlickrPhotoMetadata.urlQueryParameters.map(URLQueryItem.init)
-//
-//        return components.url.toResult(withError:) <^> URLRequestError.invalidURL(parameters: FlickrPhotoMetadata.urlQueryParameters)
-//    }
-
-
-
-
-
-
-//    static fileprivate func getAllMetadata(withblock block: @escaping (Result<[FlickrPhotoMetadata]>) -> Void) {
-//        switch url() >>= urlRequest { // FIXME: GET RID OF THIS SWITCH STATEMENT
-//        case let .error(error):   block <^> Result(error)
-//        case let .value(request): dataTask(with: request, withBlock: block)
-//        }
-//    }
-
-//    static private func dataTask(request: URLRequest, withBlock block: @escaping (Result<[FlickrPhotoMetadata]>) -> Void) {
-//        URLSession.shared.dataTask(with: request) { data, response, error in
-//            DispatchQueue.main.async {
-//                block <^> (processDataTask(date: data, response: response, error: error) >>= FlickrPhotoMetadata.extract)
-//            }
-//        }.resume()
-//    }

@@ -20,3 +20,4 @@ protocol ResultType {
     init(_ error: Error)
     init(_ error: Error?, _ value: Value?)
 }
+

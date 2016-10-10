@@ -48,7 +48,7 @@ struct FlickrViewStyleSheet: ViewPreparer {
     }
     
     // MARK: - Label
-    
+
     enum Label: Int {
         case title = 1
         
