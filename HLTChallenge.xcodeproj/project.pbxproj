@@ -39,6 +39,7 @@
 		038899181DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038899171DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift */; };
 		0388991A1DAB76E500BB5BD9 /* FlickrCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038899191DAB76E500BB5BD9 /* FlickrCommentTableViewController.swift */; };
 		0388991C1DAB776F00BB5BD9 /* FlickrCommentTableViewControllerStyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0388991B1DAB776F00BB5BD9 /* FlickrCommentTableViewControllerStyleSheet.swift */; };
+		0388991E1DAB7A1700BB5BD9 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0388991D1DAB7A1700BB5BD9 /* UIStackView.swift */; };
 		039F28521DA9EFEA001EF113 /* ResultType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039F28511DA9EFEA001EF113 /* ResultType.swift */; };
 		039F28571DAA0643001EF113 /* Native.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039F28561DAA0643001EF113 /* Native.swift */; };
 		03B0272D1DA76CD0003FDA88 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B0272C1DA76CD0003FDA88 /* Sequence.swift */; };
@@ -102,6 +103,7 @@
 		038899171DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrCommentTableViewCellStyleSheet.swift; sourceTree = "<group>"; };
 		038899191DAB76E500BB5BD9 /* FlickrCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrCommentTableViewController.swift; sourceTree = "<group>"; };
 		0388991B1DAB776F00BB5BD9 /* FlickrCommentTableViewControllerStyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrCommentTableViewControllerStyleSheet.swift; sourceTree = "<group>"; };
+		0388991D1DAB7A1700BB5BD9 /* UIStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		039F28511DA9EFEA001EF113 /* ResultType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultType.swift; sourceTree = "<group>"; };
 		039F28561DAA0643001EF113 /* Native.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Native.swift; sourceTree = "<group>"; };
 		03B0272C1DA76CD0003FDA88 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				03B0272C1DA76CD0003FDA88 /* Sequence.swift */,
 				030E14681DAB576E008BC3B3 /* String.swift */,
 				030E146A1DAB579F008BC3B3 /* Array.swift */,
+				0388991D1DAB7A1700BB5BD9 /* UIStackView.swift */,
 			);
 			name = NativeExtensions;
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 				03DE2B321DA5EAA9008CE5B1 /* OptionalError.swift in Sources */,
 				039F28521DA9EFEA001EF113 /* ResultType.swift in Sources */,
 				0370ECE01DA46202008B8C5D /* Custom.swift in Sources */,
+				0388991E1DAB7A1700BB5BD9 /* UIStackView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
