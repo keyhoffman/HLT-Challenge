@@ -28,6 +28,7 @@ precedencegroup MonadicPrecedence {
 infix operator <^> : CurryPrecedence
 infix operator |>  : MonadicPrecedence
 infix operator >>= : MonadicPrecedence
+infix operator <*> : MonadicPrecedence
 
 // MARK: - Operator Implementations
 
@@ -35,16 +36,21 @@ func <^> <A, B>(_ f: (A) -> B, _ a: A) -> B {
     return f(a)
 }
 
-func |> <T, U>(x: T, f: (T) -> U) -> U {
+func |> <T, U>(_ x: T, _ f: (T) -> U) -> U {
     return f(x)
 }
 
-func >>= <A, B>(a: Result<A>, f: (A) -> Result<B>) -> Result<B> {
+func >>= <A, B>(_ a: Result<A>, _ f: (A) -> Result<B>) -> Result<B> { // >>>
     return a.flatMap(f)
 }
 
-func >>= <A, B>(a: A?, f: (A) -> B?) -> B? {
+func >>= <A, B>(_ a: A?, _ f: (A) -> B?) -> B? { // >>>
     return a.flatMap(f)
+}
+
+func <*> <A, B>(_ f: ((A) -> B)?, _ a: A?) -> B? {
+    guard let x = a, let fx = f else { return nil }
+    return fx(x)
 }
 
 

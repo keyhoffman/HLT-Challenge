@@ -36,6 +36,7 @@ extension FlickrPhotoComment {
         return Result.init <^> FlickrPhotoComment(id: id, author: author, content: content)
     }
 
+    // FIXME: MOVE THIS FUNCTIONALITY INSIDE `create` METHOD
     static func extract(from dict: JSONDictionary) -> Result<[FlickrPhotoComment]> {
         guard let commentsDict = dict[FlickrConstants.Response.Keys.PhotoComments.comments] >>= _JSONDictionary,
               let status       = dict[FlickrConstants.Response.Keys.General.status]         >>= JSONString,

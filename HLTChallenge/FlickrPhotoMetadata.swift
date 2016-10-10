@@ -43,6 +43,7 @@ extension FlickrPhotoMetadata {
         return Result.init <^> FlickrPhotoMetadata(id: id, url: url, title: title, ownerID: ownerId, ownerName: ownerName)
     }
     
+    // FIXME: MOVE THIS FUNCTIONALITY INSIDE `create` METHOD
     static func extract(from dict: JSONDictionary) -> Result<[FlickrPhotoMetadata]> {
         guard let photosDict  = dict[FlickrConstants.Response.Keys.Metadata.photos]      >>= _JSONDictionary,
               let status      = dict[FlickrConstants.Response.Keys.General.status]       >>= JSONString,
@@ -67,7 +68,7 @@ extension FlickrPhotoMetadata {
         DispatchQueue.global(qos: .userInitiated).async {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
             DispatchQueue.main.async {
-                switch data.flatMap(UIImage.init).toResult <^> CreationError.Flickr.photo(forURL: self.url) { // FIXME: GET RID OF THIS SWITCH STATEMENT
+                switch (data >>= UIImage.init).toResult <^> CreationError.Flickr.photo(forURL: self.url) { // FIXME: GET RID OF THIS SWITCH STATEMENT
                 case let .error(error): block <^> Result(error)
                 case let .value(photo): block <^> (Result.init <^> FlickrPhoto(photo: photo, metadata: self))
                 }

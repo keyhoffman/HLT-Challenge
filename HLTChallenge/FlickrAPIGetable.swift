@@ -34,6 +34,7 @@ extension FlickrAPIGetable {
     }
 }
 
+// FIXME: FIX RESPECTIVE `RESTGetable` methods
 extension FlickrAPIGetable {
     static func getAll(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<[Self]>) {
         switch (url <^> queryParameters) >>= urlRequest { // FIXME: GET RID OF THIS SWITCH STATEMENT!!!!

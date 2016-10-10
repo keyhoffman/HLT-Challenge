@@ -26,9 +26,31 @@ extension RESTGetable {
     static var path:   String { return "path" }
 }
 
+// MARK: - Module Static JSON Parsing Helper Methods
+
+extension RESTGetable {
+    static func JSONObject<A>(from object: AnyObject) -> A? {
+        return object as? A
+    }
+    
+    static func JSONString(from object: AnyObject) -> String? {
+        return object as? String
+    }
+    
+    // TODO: Find a better name for this function
+    static func _JSONDictionary(from object: AnyObject) -> JSONDictionary? {
+        return object as? JSONDictionary
+    }
+    
+    static func JSONArray(from object: AnyObject) -> [JSONDictionary]? {
+        return object as? [JSONDictionary]
+    }
+}
+
 // MARK: - Module Static API
 
 extension RESTGetable {
+    // FIXME: GENERALIZE THIS METHOD TO WORK WITH `FlickrAPIGetable`
     static func get(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) {
         switch url(withAdditionalQueryParameters: queryParameters) >>= urlRequest { // FIXME: GIT RID OF THIS SWITCH STATEMENT
         case let .error(error):   block <^> Result(error)
@@ -64,6 +86,7 @@ extension RESTGetable {
 // MARK: - Fileprivate Static API
 
 extension RESTGetable {
+    // FIXME: GENERALIZE THIS METHOD TO WORK WITH `FlickrAPIGetable`
     static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping ResultBlock<Self>) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
