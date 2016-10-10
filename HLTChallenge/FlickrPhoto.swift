@@ -22,13 +22,8 @@ func ==(_ lhs: FlickrPhoto, _ rhs: FlickrPhoto) -> Bool {
 }
 
 extension FlickrPhoto {
-//    static let urlQueryParameters = ["":""]
-    
     static func create(photo: UIImage, metadata: FlickrPhotoMetadata) -> Result<FlickrPhoto> {
         return curry(Result.init) <^> FlickrPhoto(photo: photo, metadata: metadata)
     }
-    
-//    static func create(from dictionary: JSONDictionary) -> Result<FlickrPhoto> {
-//        <#code#>
-//    }
 }
+

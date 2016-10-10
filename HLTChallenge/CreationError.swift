@@ -10,29 +10,35 @@ import Foundation
 
 // MARK: - CreationError
 
-enum CreationError: Error, CustomDebugStringConvertible, ErrorMessageSender {
-    case flickrPhotoMetadata
-    case flickrPhoto(forURL: String)
+enum CreationError {
+    
+    enum Flickr: Error, CustomDebugStringConvertible, ErrorMessageSender {
+        case metadata
+        case comment
+        case photo(forURL: String)
+    }
 }
 
 // MARK: - CustomStringConvertible Conformance
 
-extension CreationError {
+extension CreationError.Flickr {
     var description: String {
         switch self {
-        case .flickrPhotoMetadata: return messagePrefix + "Unable to retrieve photos!"
-        case .flickrPhoto(_):      return messagePrefix + "Unable to download photo"
+        case .metadata: return messagePrefix + "Unable to retrieve photos!"
+        case .comment:  return messagePrefix + "Unable to load comments!"
+        case .photo(_): return messagePrefix + "Unable to download photo"
         }
     }
 }
 
 // MARK: - CustomDebugStringConvertible Conformance
 
-extension CreationError {
+extension CreationError.Flickr {
     var debugDescription: String {
         switch self {
-        case .flickrPhotoMetadata:          return "ERROR: Invalid JSONDictionary"
-        case .flickrPhoto(forURL: let url): return "ERROR: Unable to load photo for URL:\n" + url
+        case .metadata:               return "ERROR: Invalid JSONDictionary for type FlickrPhotoMetadata"
+        case .comment:                return "ERROR: Invalid JSONDictionary for type FlickrPhotoComment"
+        case .photo(forURL: let url): return "ERROR: Unable to load photo for URL:\n" + url
         }
     }
 }

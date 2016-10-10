@@ -10,7 +10,9 @@ import Foundation
 
 // MARK: - FlickrAPIGetable Protocol
 
-protocol FlickrAPIGetable: RESTGetable {}
+protocol FlickrAPIGetable: RESTGetable {
+    static func extract(from dict: JSONDictionary) -> Result<[Self]>
+}
 
 extension FlickrAPIGetable {
     static var urlGeneralQueryParameters: URLParameters {
@@ -29,5 +31,23 @@ extension FlickrAPIGetable {
             path:   FlickrConstants.API.path,
             scheme: FlickrConstants.API.scheme
         ]
+    }
+}
+
+extension FlickrAPIGetable {
+    static func getAll(withAdditionalQueryParameters queryParameters: URLParameters = [:], withBlock block: @escaping (Result<[Self]>) -> Void) {
+        switch url(withAdditionalQueryParameters: queryParameters) >>= urlRequest(from:) {
+        case let .error(error):   block <^> Result(error)
+        case let .value(request): dataTask(with: request, withBlock: block)
+        }
+
+    }
+    
+    static func dataTask(with request: URLRequest, withBlock block: @escaping (Result<[Self]>) -> Void) {
+        URLSession.shared.dataTask(with: request) { data, repsonse, error in
+            DispatchQueue.main.async {
+                block <^> (processDataTask(date: data, response: repsonse, error: error) >>= Self.extract)
+            }
+        }.resume()
     }
 }

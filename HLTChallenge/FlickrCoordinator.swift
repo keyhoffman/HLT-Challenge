@@ -42,8 +42,12 @@ final class FlickrCoordinator: SubCoordinator {
         }
     }
     
-    private func navigateToDetailView(for photo: FlickrPhotoMetadata) {
-        
+    private func navigateToDetailView(for metadata: FlickrPhotoMetadata) {
+        FlickrPhotoComment.getAll(withAdditionalQueryParameters: [FlickrConstants.Parameters.Keys.PhotoComments.photoID: metadata.id]) { result in
+            switch result {
+            case let .error(error):    debugPrint(error)
+            case let .value(comments): print(comments)
+            }
+        }
     }
 }
-

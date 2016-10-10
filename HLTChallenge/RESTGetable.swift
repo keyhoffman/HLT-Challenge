@@ -48,14 +48,14 @@ extension RESTGetable {
         return curry(Result.init) <^> URLRequest(url: url)
     }
     
-    static func url() -> Result<URL> {
+    static func url(withAdditionalQueryParameters queryParameters: URLParameters = [:]) -> Result<URL> {
         guard let compontentsPath = urlAddressParameters[path] else { return curry(Result.init) <^> URLRequestError.invalidURLPath(path: urlAddressParameters[path]) }
         
         var components        = URLComponents()
         components.path       = compontentsPath
         components.scheme     = urlAddressParameters[scheme]
         components.host       = urlAddressParameters[host]
-        components.queryItems = urlQueryParameters.map(URLQueryItem.init)
+        components.queryItems = (urlQueryParameters + queryParameters).map(URLQueryItem.init)
         
         return components.url.toResult(withError:) <^> URLRequestError.invalidURL(parameters: urlQueryParameters)
     }

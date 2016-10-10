@@ -14,9 +14,10 @@ protocol ResultRepresentable {}
 
 // MARK: - ResultRepresentable Conformance -- Native Swift Types
 
-extension Array:      ResultRepresentable {}
-extension UIImage:    ResultRepresentable {}
-extension Data:       ResultRepresentable {}
-extension Dictionary: ResultRepresentable {}
-extension URLRequest: ResultRepresentable {}
-extension URL:        ResultRepresentable {}
+extension Array:         ResultRepresentable {}
+extension UIImage:       ResultRepresentable {}
+extension Data:          ResultRepresentable {}
+extension Dictionary:    ResultRepresentable {}
+extension URLRequest:    ResultRepresentable {}
+extension URL:           ResultRepresentable {}
+extension URLComponents: ResultRepresentable {}
