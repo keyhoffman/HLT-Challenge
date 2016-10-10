@@ -29,7 +29,7 @@ extension RESTGetable {
 // MARK: - Module Static API
 
 extension RESTGetable {
-    static func get(withBlock block: @escaping (Result<Self>) -> Void) {
+    static func get(withBlock block: @escaping ResultBlock<Self>) {
         switch url() >>= urlRequest { // FIXME: GIT RID OF THIS SWITCH STATEMENT
         case let .error(error):   block <^> Result(error)
         case let .value(request): dataTask(request: request, withBlock: block)
@@ -64,7 +64,7 @@ extension RESTGetable {
 // MARK: - Fileprivate Static API
 
 extension RESTGetable {
-    static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping (Result<Self>) -> Void) {
+    static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping ResultBlock<Self>) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 block <^> (processDataTask(date: data, response: response, error: error) >>= Self.create)

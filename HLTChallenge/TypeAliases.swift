@@ -15,3 +15,7 @@ typealias URLParameters = [String: String]
 // MARK: - JSONDictionary
 
 typealias JSONDictionary = [String: AnyObject]
+
+// MARK: - ResultBlock
+
+typealias ResultBlock<T: ResultRepresentable> = (Result<T>) -> Void

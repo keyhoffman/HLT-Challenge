@@ -55,7 +55,7 @@ extension FlickrPhotoMetadata {
 // MARK: - Module Static API
 
 extension FlickrPhotoMetadata {
-    static func getPhotosStream(withBlock block: @escaping (Result<FlickrPhoto>) -> Void) {
+    static func getPhotosStream(withBlock block: @escaping ResultBlock<FlickrPhoto>) {
         getAll { allMetadataResults in _ = allMetadataResults >>= { allMetadata in curry(Result.init) <^> allMetadata.map { metadata in metadata.getFlickrPhoto <^> block } } }
     }
 }
@@ -63,7 +63,7 @@ extension FlickrPhotoMetadata {
 // MARK: - Fileprivate Instance API {
 
 extension FlickrPhotoMetadata {
-    fileprivate func getFlickrPhoto(withBlock block: @escaping (Result<FlickrPhoto>) -> Void) {
+    fileprivate func getFlickrPhoto(withBlock block: @escaping ResultBlock<FlickrPhoto>) {
         DispatchQueue.global(qos: .userInitiated).async {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
             DispatchQueue.main.async {
