@@ -43,10 +43,11 @@ final class FlickrCoordinator: SubCoordinator {
     }
     
     private func navigateToDetailView(for metadata: FlickrPhotoMetadata) {
-        FlickrPhotoComment.getAll(withAdditionalQueryParameters: [FlickrConstants.Parameters.Keys.PhotoComments.photoID: metadata.id]) { result in
+        let photoID = FlickrPhotoComment.photoIDParameter(for: metadata) // FIXME: CLEAN THIS UPPPPP
+        FlickrPhotoComment.getAll(withAdditionalQueryParameters: photoID) { result in
             switch result {
             case let .error(error):    debugPrint(error)
-            case let .value(comments): print(comments)
+            case let .value(comments): print(comments.count, comments)
             }
         }
     }

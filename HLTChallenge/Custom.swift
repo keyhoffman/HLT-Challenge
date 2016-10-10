@@ -46,6 +46,7 @@ func >>= <A, B>(a: A?, f: (A) -> B?) -> B? {
     return a.flatMap(f)
 }
 
+
 //func >>= <A, B>(a: A?, f: (A) -> Result<B>) -> Result<B> {
 //    return a.toResult()
 //}

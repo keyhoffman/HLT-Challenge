@@ -60,18 +60,16 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let row = indexPath.row
-        let metadataForRow = data[row].metadata
+        didSelectPhoto <^> data[indexPath.row].metadata
         
-        didSelectPhoto(metadataForRow)
         
-        defer { animateCellHeightChange(withDuration: 0.3, at: indexPath) }
-        guard let _selectedIndexPath = selectedIndexPath, _selectedIndexPath == indexPath else {
-            selectedIndexPath = indexPath
-            return
-        }
-        tableView.deselectRow(at: indexPath, animated: true)
-        selectedIndexPath = nil
+//        defer { animateCellHeightChange(withDuration: 0.3, at: indexPath) }
+//        guard let _selectedIndexPath = selectedIndexPath, _selectedIndexPath == indexPath else {
+//            selectedIndexPath = indexPath
+//            return
+//        }
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        selectedIndexPath = nil
     }
     
     // TODO: Move to stylesheet

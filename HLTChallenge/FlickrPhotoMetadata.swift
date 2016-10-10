@@ -34,16 +34,18 @@ extension FlickrPhotoMetadata {
     ]
     
     static func create(from dict: JSONDictionary) -> Result<FlickrPhotoMetadata> {
-        guard let id      = dict[FlickrConstants.Response.Keys.Metadata.id]        as? String,
-              let ownerId = dict[FlickrConstants.Response.Keys.Metadata.ownerID]   as? String,
-              let url     = dict[FlickrConstants.Response.Keys.Metadata.url]       as? String,
-              let title   = dict[FlickrConstants.Response.Keys.Metadata.title]     as? String else { return Result(CreationError.Flickr.metadata) }
+        guard let id      = dict[FlickrConstants.Response.Keys.Metadata.id]        >>= JSONString,
+              let ownerId = dict[FlickrConstants.Response.Keys.Metadata.ownerID]   >>= JSONString,
+              let url     = dict[FlickrConstants.Response.Keys.Metadata.url]       >>= JSONString,
+              let title   = dict[FlickrConstants.Response.Keys.Metadata.title]     >>= JSONString else { return Result(CreationError.Flickr.metadata) }
         return curry(Result.init) <^> FlickrPhotoMetadata(id: id, ownerID: ownerId, url: url, title: title)
     }
     
     static func extract(from dict: JSONDictionary) -> Result<[FlickrPhotoMetadata]> {
-        guard let photosDict  = dict[FlickrConstants.Response.Keys.Metadata.photos]      as? JSONDictionary,
-              let photosArray = photosDict[FlickrConstants.Response.Keys.Metadata.photo] as? [JSONDictionary] else { return Result(CreationError.Flickr.metadata) }
+        guard let photosDict  = dict[FlickrConstants.Response.Keys.Metadata.photos]      >>= _JSONDictionary,
+              let status      = dict[FlickrConstants.Response.Keys.General.status]       >>= JSONString,
+              let photosArray = photosDict[FlickrConstants.Response.Keys.Metadata.photo] >>= JSONArray,
+              status == FlickrConstants.Response.Values.Status.success else { return Result(CreationError.Flickr.metadata) }
         return photosArray.map(FlickrPhotoMetadata.create).invert()
     }
 }
@@ -71,8 +73,6 @@ extension FlickrPhotoMetadata {
         }
     }
 }
-
-
 
 
 

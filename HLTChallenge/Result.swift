@@ -24,7 +24,7 @@ extension Result {
     init(_ error: Error?, _ value: Value?) { 
              if let value = value { self = .value(value) }
         else if let error = error { self = .error(error) }
-        else { self = curry(Result.init) <^> OptionalError.nonExistantValue(value) }
+        else { self = curry(Result.init) <^> OptionalError.nonExistantValue(ofType: value) }
     }
 }
 

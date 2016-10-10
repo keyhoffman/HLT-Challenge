@@ -149,17 +149,12 @@ struct FlickrConstants {
         // MARK: - Values
         
         struct Values {
-            
-            // MARK: General
-            
-            struct General {
                 
-                // MARK: Status
-                
-                struct Status {
-                    static let error   = "fail"
-                    static let success = "ok"
-                }
+            // MARK: Status
+            
+            struct Status {
+                static let error   = "fail"
+                static let success = "ok"
             }
         }
     }

@@ -19,7 +19,7 @@ enum FatalError: Error, CustomDebugStringConvertible {
 extension FatalError {
     var debugDescription: String {
         switch self {
-        case .couldNotDequeueCell(identifier: let id): return "Failed to dequeue resuable cell with identifier:" + id
+        case let .couldNotDequeueCell(id): return "Failed to dequeue resuable cell with identifier:" + id
         }
     }
 }

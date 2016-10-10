@@ -11,7 +11,7 @@ import Foundation
 // MARK: - OptionalError
 
 enum OptionalError<T>: Error, CustomDebugStringConvertible, ErrorMessageSender {
-    case nonExistantValue(T)
+    case nonExistantValue(ofType: T)
 }
 
 // MARK: - CustomStringConvertible Conformance
