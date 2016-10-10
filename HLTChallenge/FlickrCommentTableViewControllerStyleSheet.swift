@@ -16,7 +16,7 @@ struct FlickrCommentTableViewControllerStyleSheet: ViewPreparer {
         
         defer { tableVC.view.layoutSubviews() }
         
-        
+        tableVC.title = "comments"
     }
 }
 

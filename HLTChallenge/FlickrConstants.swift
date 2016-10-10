@@ -73,19 +73,23 @@ struct FlickrConstants {
                 static let apiKey         = "c9025518af10cb3bb1ec3fd80ea2fd52"
                 static let responseFormat = "json"
                 static let noJSONCallback = "1"
-                
             }
             
             // MARK: Metadata
             
             struct Metadata {
-                static let search          = "flickr.photos.search"
-                static let getRecent       = "flickr.photos.getRecent"
                 static let picturesPerPage = "20"
                 static let pageNumber      = "1"
-                static let extras          = "url_m"
-                static let safeSearch      = "1"
+                static let extras          = "url_m" + "," + "owner_name"
                 
+                enum Method: String {
+                    case search    = "flickr.photos.search"
+                    case getRecent = "flickr.photos.getRecent"
+                }
+                
+                enum SafeSearch: String {
+                    case safe = "1", moderate = "2", restricted = "3"
+                }
             }
             
             // MARK: PhotoInfo
@@ -119,12 +123,13 @@ struct FlickrConstants {
             // MARK: Metadata
             
             struct Metadata {
-                static let photos  = "photos"
-                static let photo   = "photo"
-                static let title   = "title"
-                static let id      = "id"
-                static let ownerID = "owner"
-                static let url     = "url_m"
+                static let photos    = "photos"
+                static let photo     = "photo"
+                static let title     = "title"
+                static let id        = "id"
+                static let ownerID   = "owner"
+                static let url       = "url_m"
+                static let ownerName = "ownername"
             }
             
             // MARK: PhotoInfo

@@ -16,16 +16,56 @@ struct FlickrCommentTableViewCellStyleSheet: ViewPreparer {
         
         defer { commentCell.layoutIfNeeded() }
         
-        let stackViewTop      = curry(NSLayoutConstraint.init) <^> commentCell.stackView <^> .top      <^> .equal <^> commentCell <^> .top      <^> 1 <^> 0
-        let stackViewBottom   = curry(NSLayoutConstraint.init) <^> commentCell.stackView <^> .bottom   <^> .equal <^> commentCell <^> .bottom   <^> 1 <^> 0
-        let stackViewLeading  = curry(NSLayoutConstraint.init) <^> commentCell.stackView <^> .leading  <^> .equal <^> commentCell <^> .leading  <^> 1 <^> 0
-        let stackViewTrailing = curry(NSLayoutConstraint.init) <^> commentCell.stackView <^> .trailing <^> .equal <^> commentCell <^> .trailing <^> 1 <^> 0
+        let stackViewTop      = curry(NSLayoutConstraint.init) <^> commentCell.mainStackView <^> .top      <^> .equal <^> commentCell <^> .top      <^> 1 <^> 0
+        let stackViewBottom   = curry(NSLayoutConstraint.init) <^> commentCell.mainStackView <^> .bottom   <^> .equal <^> commentCell <^> .bottom   <^> 1 <^> 0
+        let stackViewLeading  = curry(NSLayoutConstraint.init) <^> commentCell.mainStackView <^> .leading  <^> .equal <^> commentCell <^> .leading  <^> 1 <^> 0
+        let stackViewTrailing = curry(NSLayoutConstraint.init) <^> commentCell.mainStackView <^> .trailing <^> .equal <^> commentCell <^> .trailing <^> 1 <^> 0
         
         let stackViewConstraints = [stackViewTop, stackViewBottom, stackViewLeading, stackViewTrailing]
         
         let activeConstraints = stackViewConstraints
         
         NSLayoutConstraint.activate(activeConstraints)
+    }
+    
+    // MARK: - StackView
+    
+    enum StackView: Int {
+        case main = 1
+        
+        var stackView: UIStackView {
+            let sv                                       = UIStackView()
+            sv.tag                                       = rawValue
+            sv.axis                                      = axis
+            sv.distribution                              = distribution
+            sv.alignment                                 = alignment
+            sv.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
+            return sv
+        }
+        
+        private var axis: UILayoutConstraintAxis {
+            switch self {
+            case .main: return .vertical
+            }
+        }
+        
+        private var distribution: UIStackViewDistribution {
+            switch self {
+            case .main: return .fillProportionally
+            }
+        }
+        
+        private var alignment: UIStackViewAlignment {
+            switch self {
+            case .main: return .leading
+            }
+        }
+        
+        private var translatesAutoresizingMaskIntoConstraints: Bool {
+            switch self {
+            case .main: return false
+            }
+        }
     }
     
     // MARK: - Label
@@ -87,7 +127,6 @@ struct FlickrCommentTableViewCellStyleSheet: ViewPreparer {
             }
         }
     }
-
 }
 
 

@@ -12,10 +12,26 @@ import UIKit
 
 final class FlickrCommentTableViewController: TableViewContoller<FlickrCommentTableViewCell>, Preparable {
     
+    // MARK: - ViewController Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        defer { prepare() }
+    }
+    
     // MARK: - Preparable Conformance
     
     func prepare() {
         defer { FlickrCommentTableViewControllerStyleSheet.prepare(self) }
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+
 }
 

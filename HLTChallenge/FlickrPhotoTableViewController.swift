@@ -76,9 +76,14 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     private var defaultCellHeight:  CGFloat { return view.frame.height * 0.6 }
     private var selectedCellHeight: CGFloat { return view.frame.height * 0.9 }
     
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard selectedIndexPath == indexPath else { return defaultCellHeight }
-        return selectedCellHeight
+        return UITableViewAutomaticDimension
+//        guard selectedIndexPath == indexPath else { return defaultCellHeight }
+//        return selectedCellHeight
     }
     
     private func animateCellHeightChange(withDuration duration: TimeInterval, at indexPath: IndexPath) {

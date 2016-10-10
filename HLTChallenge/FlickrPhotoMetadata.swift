@@ -12,9 +12,10 @@ import UIKit
 
 struct FlickrPhotoMetadata: FlickrAPIGetable {
     let id:      String
-    let ownerID: String
     let url:     String
     let title:   String
+    let ownerID: String
+    let ownerName: String
 }
 
 // MARK: - Equatable Conformance
@@ -26,19 +27,20 @@ func ==(_ lhs: FlickrPhotoMetadata, _ rhs: FlickrPhotoMetadata) -> Bool {
 // MARK: - FlickrAPIGetable Conformance
 
 extension FlickrPhotoMetadata {
-    static let urlQueryParameters = urlGeneralQueryParameters + [
-        FlickrConstants.Parameters.Keys.Metadata.method:          FlickrConstants.Parameters.Values.Metadata.getRecent,
+    static let urlQueryParameters: URLParameters = urlGeneralQueryParameters + [
+        FlickrConstants.Parameters.Keys.Metadata.method:          FlickrConstants.Parameters.Values.Metadata.Method.getRecent.rawValue,
         FlickrConstants.Parameters.Keys.Metadata.extras:          FlickrConstants.Parameters.Values.Metadata.extras,
-        FlickrConstants.Parameters.Keys.Metadata.safeSearch:      FlickrConstants.Parameters.Values.Metadata.safeSearch,
+        FlickrConstants.Parameters.Keys.Metadata.safeSearch:      FlickrConstants.Parameters.Values.Metadata.SafeSearch.moderate.rawValue,
         FlickrConstants.Parameters.Keys.Metadata.picturesPerPage: FlickrConstants.Parameters.Values.Metadata.picturesPerPage
     ]
     
     static func create(from dict: JSONDictionary) -> Result<FlickrPhotoMetadata> {
-        guard let id      = dict[FlickrConstants.Response.Keys.Metadata.id]        >>= JSONString,
-              let ownerId = dict[FlickrConstants.Response.Keys.Metadata.ownerID]   >>= JSONString,
-              let url     = dict[FlickrConstants.Response.Keys.Metadata.url]       >>= JSONString,
-              let title   = dict[FlickrConstants.Response.Keys.Metadata.title]     >>= JSONString else { return Result(CreationError.Flickr.metadata) }
-        return curry(Result.init) <^> FlickrPhotoMetadata(id: id, ownerID: ownerId, url: url, title: title)
+        guard let id      = dict[FlickrConstants.Response.Keys.Metadata.id]          >>= JSONString,
+              let url     = dict[FlickrConstants.Response.Keys.Metadata.url]         >>= JSONString,
+              let title   = dict[FlickrConstants.Response.Keys.Metadata.title]       >>= JSONString,
+              let ownerId = dict[FlickrConstants.Response.Keys.Metadata.ownerID]     >>= JSONString,
+              let ownerName = dict[FlickrConstants.Response.Keys.Metadata.ownerName] >>= JSONString else { return Result(CreationError.Flickr.metadata) }
+        return curry(Result.init) <^> FlickrPhotoMetadata(id: id, url: url, title: title, ownerID: ownerId, ownerName: ownerName)
     }
     
     static func extract(from dict: JSONDictionary) -> Result<[FlickrPhotoMetadata]> {

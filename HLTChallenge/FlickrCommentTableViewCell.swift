@@ -12,10 +12,10 @@ import UIKit
 
 final class FlickrCommentTableViewCell: UITableViewCell, Preparable, Configurable {
     
-    private let authorLabel  = UILabel()
-    private let contentLabel = UILabel()
+    private let authorLabel  = FlickrCommentTableViewCellStyleSheet.Label.author.label
+    private let contentLabel = FlickrCommentTableViewCellStyleSheet.Label.content.label
     
-    let stackView = UIStackView()
+    let mainStackView = FlickrCommentTableViewCellStyleSheet.StackView.main.stackView
     
     // MARK: - Initialization
     
@@ -32,8 +32,8 @@ final class FlickrCommentTableViewCell: UITableViewCell, Preparable, Configurabl
     
     func prepare() {
         defer { FlickrCommentTableViewCellStyleSheet.prepare(self) }
-        stackView.addArrangedSubviews <^> [contentLabel, authorLabel]
-        addSubview(stackView)
+        mainStackView.addArrangedSubviews <^> [authorLabel, contentLabel]
+        addSubview(mainStackView)
     }
     
     // MARK: - Configurable Conformance

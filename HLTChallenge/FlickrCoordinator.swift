@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - FlickrCoordinator
 
-final class FlickrCoordinator: SubCoordinator {
+final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransitioningDelegate {
     
     // MARK: - Property Declarations
     
@@ -43,7 +43,12 @@ final class FlickrCoordinator: SubCoordinator {
     
     private func presentComments(for metadata: FlickrPhotoMetadata) {
         
-        let flickrCommentTableViewController = FlickrCommentTableViewController()
+        print("PHOTO OWNER:", metadata.ownerName)
+        
+        let flickrCommentTableViewController                    = FlickrCommentTableViewController()
+        flickrCommentTableViewController.modalPresentationStyle = .custom
+        flickrCommentTableViewController.transitioningDelegate  = self
+        
         rootNavigationController.present(flickrCommentTableViewController, animated: true, completion: nil)
         
         let photoIDParameter = FlickrPhotoComment.photoIDParameter(for: metadata) // FIXME: CLEAN THIS UPPPPP
@@ -54,4 +59,29 @@ final class FlickrCoordinator: SubCoordinator {
             }
         }
     }
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+    }
 }
+
+final class HalfSizePresentationController: UIPresentationController {
+    override var frameOfPresentedViewInContainerView: CGRect {
+        let height = containerView?.bounds.height ?? 0 / 2
+        let width  = containerView?.bounds.width ?? 0
+        print("HEIGHT:", height)
+        return CGRect(x: 0, y: 0, width: width, height: height)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -16,6 +16,7 @@ func JSONString(from object: AnyObject) -> String? {
     return object as? String
 }
 
+// TODO: Find a better name for this function
 func _JSONDictionary(from object: AnyObject) -> JSONDictionary? {
     return object as? JSONDictionary
 }

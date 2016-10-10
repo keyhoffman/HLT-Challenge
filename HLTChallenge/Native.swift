@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Dictionary Addition
 
-func +<A, B>(_ lhs: Dictionary<A,B>, _ rhs: Dictionary<A,B>) -> Dictionary<A,B> {
+func + <A, B>(_ lhs: Dictionary<A,B>, _ rhs: Dictionary<A,B>) -> Dictionary<A,B> {
     var dict = lhs // FIXME: GIT RID OF THIS MUTABLE VARIABLE
     for (key, value) in rhs { // FIXME: GIT RID OF THIS FOR-LOOP
         dict.updateValue(value, forKey: key)
