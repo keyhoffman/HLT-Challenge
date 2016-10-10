@@ -35,7 +35,7 @@ extension FlickrAPIGetable {
 }
 
 extension FlickrAPIGetable {
-    static func getAll(withAdditionalQueryParameters queryParameters: URLParameters = [:], withBlock block: @escaping ResultBlock<[Self]>) {
+    static func getAll(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<[Self]>) {
         switch (url <^> queryParameters) >>= urlRequest { // FIXME: GET RID OF THIS SWITCH STATEMENT!!!!
         case let .error(error):   block <^> Result(error)
         case let .value(request): dataTask(with: request, withBlock: block)

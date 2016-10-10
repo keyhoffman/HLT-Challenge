@@ -20,7 +20,7 @@ struct FlickrPhotoMetadata: FlickrAPIGetable {
 
 // MARK: - Equatable Conformance
 
-func ==(_ lhs: FlickrPhotoMetadata, _ rhs: FlickrPhotoMetadata) -> Bool {
+func == (_ lhs: FlickrPhotoMetadata, _ rhs: FlickrPhotoMetadata) -> Bool {
     return lhs.id == rhs.id && lhs.ownerID == rhs.ownerID && lhs.url == rhs.url && lhs.title == rhs.title
 }
 

@@ -18,7 +18,7 @@ struct FlickrPhotoComment: FlickrAPIGetable {
 
 // MARK: - Equatable Conformance
 
-func ==(_ lhs: FlickrPhotoComment, _ rhs: FlickrPhotoComment) -> Bool {
+func == (_ lhs: FlickrPhotoComment, _ rhs: FlickrPhotoComment) -> Bool {
     return lhs.id == rhs.id && lhs.author == rhs.author && lhs.content == rhs.content
 }
 

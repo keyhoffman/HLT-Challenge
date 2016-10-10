@@ -17,7 +17,7 @@ struct FlickrPhoto: ResultRepresentable, Equatable {
 
 // MARK: - Equatable Conformance
 
-func ==(_ lhs: FlickrPhoto, _ rhs: FlickrPhoto) -> Bool {
+func == (_ lhs: FlickrPhoto, _ rhs: FlickrPhoto) -> Bool {
     return lhs.metadata == rhs.metadata
 }
 
