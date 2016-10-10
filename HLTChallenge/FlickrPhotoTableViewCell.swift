@@ -8,9 +8,9 @@
 
 import UIKit
 
-// MARK: - FlickrTableViewCell
+// MARK: - FlickrPhotoTableViewCell
 
-final class FlickrTableViewCell: UITableViewCell, Configurable, Preparable {
+final class FlickrPhotoTableViewCell: UITableViewCell, Configurable, Preparable {
     
     // MARK: - Property Declarations
     
@@ -31,7 +31,7 @@ final class FlickrTableViewCell: UITableViewCell, Configurable, Preparable {
     // MARK: - Preparable Conformance
     
     func prepare() {
-        defer { FlickrTableViewCellStyleSheet.prepare(self) }
+        defer { FlickrPhotoTableViewCellStyleSheet.prepare(self) }
         addSubview(flickrView)
     }
     

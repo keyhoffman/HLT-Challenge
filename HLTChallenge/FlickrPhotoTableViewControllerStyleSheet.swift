@@ -8,13 +8,13 @@
 
 import UIKit
 
-// MARK: - FlickrTableViewControllerStyleSheet
+// MARK: - FlickrPhotoTableViewControllerStyleSheet
 
-struct FlickrTableViewControllerStyleSheet: ViewPreparer {
+struct FlickrPhotoTableViewControllerStyleSheet: ViewPreparer {
     
     // MARK: - ViewPreparer Conformance
     
-    static func prepare(_ flickrTVC: FlickrTableViewController) {
+    static func prepare(_ flickrTVC: FlickrPhotoTableViewController) {
         
         defer { flickrTVC.view.layoutSubviews() }
         

@@ -14,7 +14,7 @@ final class FlickrView: UIView, Preparable, Configurable {
 
     // MARK: - Property Declarations
     
-    let flickrImageView = FlickrViewStyleSheet.ImageView.flickr.imageView
+    let flickrPhotoView = FlickrViewStyleSheet.ImageView.flickr.imageView
     
     let titleLabel = FlickrViewStyleSheet.Label.title.label
     
@@ -22,7 +22,7 @@ final class FlickrView: UIView, Preparable, Configurable {
     
     func prepare() {
         defer { FlickrViewStyleSheet.prepare(self) }
-        addSubview(flickrImageView)
+        addSubview(flickrPhotoView)
         addSubview(titleLabel)
     }
     
@@ -30,7 +30,7 @@ final class FlickrView: UIView, Preparable, Configurable {
     
     func configure(withData flickrPhoto: FlickrPhoto) {
         defer { prepare() }
-        flickrImageView.image = flickrPhoto.photo
+        flickrPhotoView.image = flickrPhoto.photo
         titleLabel.text       = flickrPhoto.metadata.title
     }
 }

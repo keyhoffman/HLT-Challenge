@@ -27,10 +27,10 @@ struct FlickrViewStyleSheet: ViewPreparer {
         let titleLabelBottomToFlickrViewTopOffset = titleLabelBottomToFlickrViewTopOffsetByViewHeightFactor * flickrView.frame.height
         
         
-        let flickrImageViewTop      = curry(NSLayoutConstraint.init) <^> flickrView.flickrImageView <^> .top      <^> .equal <^> flickrView <^> .top      <^> 1 <^> 0
-        let flickrImageViewBottom   = curry(NSLayoutConstraint.init) <^> flickrView.flickrImageView <^> .bottom   <^> .equal <^> flickrView <^> .bottom   <^> 1 <^> 0
-        let flickrImageViewLeading  = curry(NSLayoutConstraint.init) <^> flickrView.flickrImageView <^> .leading  <^> .equal <^> flickrView <^> .leading  <^> 1 <^> 0
-        let flickrImageViewTrailing = curry(NSLayoutConstraint.init) <^> flickrView.flickrImageView <^> .trailing <^> .equal <^> flickrView <^> .trailing <^> 1 <^> 0
+        let flickrImageViewTop      = curry(NSLayoutConstraint.init) <^> flickrView.flickrPhotoView <^> .top      <^> .equal <^> flickrView <^> .top      <^> 1 <^> 0
+        let flickrImageViewBottom   = curry(NSLayoutConstraint.init) <^> flickrView.flickrPhotoView <^> .bottom   <^> .equal <^> flickrView <^> .bottom   <^> 1 <^> 0
+        let flickrImageViewLeading  = curry(NSLayoutConstraint.init) <^> flickrView.flickrPhotoView <^> .leading  <^> .equal <^> flickrView <^> .leading  <^> 1 <^> 0
+        let flickrImageViewTrailing = curry(NSLayoutConstraint.init) <^> flickrView.flickrPhotoView <^> .trailing <^> .equal <^> flickrView <^> .trailing <^> 1 <^> 0
         
         let flickrImageViewConstraints = [flickrImageViewTop, flickrImageViewBottom, flickrImageViewLeading, flickrImageViewTrailing]
         

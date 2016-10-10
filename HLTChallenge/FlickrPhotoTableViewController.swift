@@ -8,20 +8,20 @@
 
 import UIKit
 
-// MARK: - FlickrTableViewControllerConfiguration
+// MARK: - FlickrPhotoTableViewControllerConfiguration
 
-struct FlickrTableViewControllerConfiguration {
+struct FlickrPhotoTableViewControllerConfiguration {
     let didSelectPhoto: (FlickrPhotoMetadata) -> Void
 }
 
-// MARK: - FlickrTableViewController
+// MARK: - FlickrPhotoTableViewController
 
-final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, Preparable, UITextFieldDelegate {
+final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableViewCell>, Preparable, UITextFieldDelegate {
 
     // MARK: - Property Delcarations
     
     lazy var searchTextField: UITextField = {
-        let tf      = FlickrTableViewControllerStyleSheet.TextField.search.textField
+        let tf      = FlickrPhotoTableViewControllerStyleSheet.TextField.search.textField
         tf.isHidden = true
         tf.delegate = self
 //        tf.becomeFirstResponder()
@@ -29,7 +29,7 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
     }()
     
     lazy var displaySearchTextFieldButton: UIBarButtonItem = {
-        let bbi    = FlickrTableViewControllerStyleSheet.BarButtonItem.displaySearchTextField.barButtonItem
+        let bbi    = FlickrPhotoTableViewControllerStyleSheet.BarButtonItem.displaySearchTextField.barButtonItem
         bbi.target = self
         bbi.action = #selector(displaySearchTextField)
         return bbi
@@ -40,7 +40,7 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
     
     // MARK: - Initialization
     
-    init(configuration: FlickrTableViewControllerConfiguration) {
+    init(configuration: FlickrPhotoTableViewControllerConfiguration) {
         didSelectPhoto = configuration.didSelectPhoto
         super.init()
     }
@@ -94,7 +94,7 @@ final class FlickrTableViewController: TableViewContoller<FlickrTableViewCell>, 
     // MARK: - Preparable Conformance
     
     func prepare() {
-        defer { FlickrTableViewControllerStyleSheet.prepare(self) }
+        defer { FlickrPhotoTableViewControllerStyleSheet.prepare(self) }
     }
     
     dynamic private func displaySearchTextField() {

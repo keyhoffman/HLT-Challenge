@@ -29,22 +29,21 @@ final class FlickrCoordinator: SubCoordinator {
         window.rootViewController = rootNavigationController
         window.makeKeyAndVisible()
         
-        let flickrTableViewControllerConfig = FlickrTableViewControllerConfiguration(didSelectPhoto: navigateToDetailView)
-        
-        let flickrTableViewController = FlickrTableViewController(configuration: flickrTableViewControllerConfig)
-        rootNavigationController.pushViewController(flickrTableViewController, animated: false)
+        let flickrPhotoTableViewControllerConfig = FlickrPhotoTableViewControllerConfiguration(didSelectPhoto: navigateToDetailView)
+        let flickrPhotoTableViewController       = FlickrPhotoTableViewController(configuration: flickrPhotoTableViewControllerConfig)
+        rootNavigationController.pushViewController(flickrPhotoTableViewController, animated: false)
         
         FlickrPhotoMetadata.getPhotosStream { result in
             switch result {
-            case let .error(error): debugPrint(error)
-            case let .value(flickrPhoto): flickrTableViewController.data.append(flickrPhoto)
+            case let .error(error):       debugPrint(error)
+            case let .value(flickrPhoto): flickrPhotoTableViewController.data.append(flickrPhoto)
             }
         }
     }
     
     private func navigateToDetailView(for metadata: FlickrPhotoMetadata) {
-        let photoID = FlickrPhotoComment.photoIDParameter(for: metadata) // FIXME: CLEAN THIS UPPPPP
-        FlickrPhotoComment.getAll(withAdditionalQueryParameters: photoID) { result in
+        let photoIDParameter = FlickrPhotoComment.photoIDParameter(for: metadata) // FIXME: CLEAN THIS UPPPPP
+        FlickrPhotoComment.getAll(withAdditionalQueryParameters: photoIDParameter) { result in
             switch result {
             case let .error(error):    debugPrint(error)
             case let .value(comments): print(comments.count, comments)
