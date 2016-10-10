@@ -14,20 +14,20 @@ struct FlickrPhotoTableViewCellStyleSheet: ViewPreparer {
     
     // MARK: - ViewPreparer Conformance
     
-    static func prepare(_ flickrCell: FlickrPhotoTableViewCell) {
+    static func prepare(_ photoCell: FlickrPhotoTableViewCell) {
         
-        defer { flickrCell.layoutSubviews() }
+        defer { photoCell.layoutSubviews() }
         
-        flickrCell.backgroundColor = .blue
+        photoCell.backgroundColor = .blue
         
         // MARK: AutoLayout
         
-        flickrCell.flickrView.translatesAutoresizingMaskIntoConstraints = false
+        photoCell.flickrView.translatesAutoresizingMaskIntoConstraints = false
         
-        let flickrViewTop      = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .top      <^> .equal <^> flickrCell <^> .top      <^> 1 <^> 0
-        let flickrViewBottom   = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .bottom   <^> .equal <^> flickrCell <^> .bottom   <^> 1 <^> 0
-        let flickrViewLeading  = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .leading  <^> .equal <^> flickrCell <^> .leading  <^> 1 <^> 0
-        let flickrViewTrailing = curry(NSLayoutConstraint.init) <^> flickrCell.flickrView <^> .trailing <^> .equal <^> flickrCell <^> .trailing <^> 1 <^> 0
+        let flickrViewTop      = curry(NSLayoutConstraint.init) <^> photoCell.flickrView <^> .top      <^> .equal <^> photoCell <^> .top      <^> 1 <^> 0
+        let flickrViewBottom   = curry(NSLayoutConstraint.init) <^> photoCell.flickrView <^> .bottom   <^> .equal <^> photoCell <^> .bottom   <^> 1 <^> 0
+        let flickrViewLeading  = curry(NSLayoutConstraint.init) <^> photoCell.flickrView <^> .leading  <^> .equal <^> photoCell <^> .leading  <^> 1 <^> 0
+        let flickrViewTrailing = curry(NSLayoutConstraint.init) <^> photoCell.flickrView <^> .trailing <^> .equal <^> photoCell <^> .trailing <^> 1 <^> 0
         
         let flickrViewConstraints = [flickrViewTop, flickrViewBottom, flickrViewLeading, flickrViewTrailing]
         

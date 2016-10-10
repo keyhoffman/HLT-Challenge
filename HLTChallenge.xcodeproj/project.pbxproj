@@ -35,6 +35,10 @@
 		0370ECE01DA46202008B8C5D /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECDF1DA46202008B8C5D /* Custom.swift */; };
 		0370ECE21DA4705C008B8C5D /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECE11DA4705C008B8C5D /* General.swift */; };
 		037692721DA8EB6F009CDAA6 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037692711DA8EB6F009CDAA6 /* FlickrPhoto.swift */; };
+		038899161DAB6CBA00BB5BD9 /* FlickrCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038899151DAB6CBA00BB5BD9 /* FlickrCommentTableViewCell.swift */; };
+		038899181DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038899171DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift */; };
+		0388991A1DAB76E500BB5BD9 /* FlickrCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038899191DAB76E500BB5BD9 /* FlickrCommentTableViewController.swift */; };
+		0388991C1DAB776F00BB5BD9 /* FlickrCommentTableViewControllerStyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0388991B1DAB776F00BB5BD9 /* FlickrCommentTableViewControllerStyleSheet.swift */; };
 		039F28521DA9EFEA001EF113 /* ResultType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039F28511DA9EFEA001EF113 /* ResultType.swift */; };
 		039F28571DAA0643001EF113 /* Native.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039F28561DAA0643001EF113 /* Native.swift */; };
 		03B0272D1DA76CD0003FDA88 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B0272C1DA76CD0003FDA88 /* Sequence.swift */; };
@@ -94,6 +98,10 @@
 		0370ECDF1DA46202008B8C5D /* Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
 		0370ECE11DA4705C008B8C5D /* General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
 		037692711DA8EB6F009CDAA6 /* FlickrPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
+		038899151DAB6CBA00BB5BD9 /* FlickrCommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrCommentTableViewCell.swift; sourceTree = "<group>"; };
+		038899171DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrCommentTableViewCellStyleSheet.swift; sourceTree = "<group>"; };
+		038899191DAB76E500BB5BD9 /* FlickrCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrCommentTableViewController.swift; sourceTree = "<group>"; };
+		0388991B1DAB776F00BB5BD9 /* FlickrCommentTableViewControllerStyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrCommentTableViewControllerStyleSheet.swift; sourceTree = "<group>"; };
 		039F28511DA9EFEA001EF113 /* ResultType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultType.swift; sourceTree = "<group>"; };
 		039F28561DAA0643001EF113 /* Native.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Native.swift; sourceTree = "<group>"; };
 		03B0272C1DA76CD0003FDA88 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
@@ -195,6 +203,7 @@
 				0370ECBB1DA453AC008B8C5D /* Protocols */,
 				0370ECC41DA456AB008B8C5D /* FlickrView.swift */,
 				0370ECC61DA456D3008B8C5D /* FlickrPhotoTableViewCell.swift */,
+				038899151DAB6CBA00BB5BD9 /* FlickrCommentTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -204,6 +213,7 @@
 			children = (
 				0370ECDB1DA45CBE008B8C5D /* BaseTableViewController */,
 				0370ECC21DA455D5008B8C5D /* FlickrPhotoTableViewController.swift */,
+				038899191DAB76E500BB5BD9 /* FlickrCommentTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -256,6 +266,8 @@
 				0370ECD11DA458C8008B8C5D /* FlickrPhotoTableViewCellStyleSheet.swift */,
 				0370ECD61DA4598C008B8C5D /* FlickrPhotoTableViewControllerStyleSheet.swift */,
 				0370ECE11DA4705C008B8C5D /* General.swift */,
+				038899171DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift */,
+				0388991B1DAB776F00BB5BD9 /* FlickrCommentTableViewControllerStyleSheet.swift */,
 			);
 			name = StyleSheets;
 			sourceTree = "<group>";
@@ -492,12 +504,14 @@
 				037692721DA8EB6F009CDAA6 /* FlickrPhoto.swift in Sources */,
 				03B027301DA76DF8003FDA88 /* ErrorMessageSender.swift in Sources */,
 				0370ECCE1DA45817008B8C5D /* FlickrViewStyleSheet.swift in Sources */,
+				038899161DAB6CBA00BB5BD9 /* FlickrCommentTableViewCell.swift in Sources */,
 				0370ECD01DA45899008B8C5D /* Preparable.swift in Sources */,
 				030E146B1DAB579F008BC3B3 /* Array.swift in Sources */,
 				031396861DAA264A000E4A1E /* FlickrAPIGetable.swift in Sources */,
 				0370ECB51DA45303008B8C5D /* Configurable.swift in Sources */,
 				03DE2B371DA60906008CE5B1 /* Response.swift in Sources */,
 				0370ECCB1DA45763008B8C5D /* ViewPreparer.swift in Sources */,
+				0388991C1DAB776F00BB5BD9 /* FlickrCommentTableViewControllerStyleSheet.swift in Sources */,
 				033FAD7A1DA719F6001DB453 /* ResultRepresentable.swift in Sources */,
 				0370ECB31DA447E4008B8C5D /* Coordinator.swift in Sources */,
 				0308368C1DA4431E0046827D /* AppDelegate.swift in Sources */,
@@ -505,11 +519,13 @@
 				0370ECDA1DA45B1C008B8C5D /* FlickrConstants.swift in Sources */,
 				0370ECDD1DA461D7008B8C5D /* Curry.swift in Sources */,
 				03DE2B271DA5CAE3008CE5B1 /* URLRequestError.swift in Sources */,
+				0388991A1DAB76E500BB5BD9 /* FlickrCommentTableViewController.swift in Sources */,
 				0370ECC71DA456D3008B8C5D /* FlickrPhotoTableViewCell.swift in Sources */,
 				0370ECD71DA4598C008B8C5D /* FlickrPhotoTableViewControllerStyleSheet.swift in Sources */,
 				0370ECC01DA453FF008B8C5D /* FatalError.swift in Sources */,
 				0370ECD51DA45922008B8C5D /* BaseTableViewController.swift in Sources */,
 				0370ECB11DA447BF008B8C5D /* FlickrCoordinator.swift in Sources */,
+				038899181DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift in Sources */,
 				03DE2B411DA62072008CE5B1 /* TypeAliases.swift in Sources */,
 				030E146D1DAB623C008BC3B3 /* JSON.swift in Sources */,
 				0370ECD21DA458C8008B8C5D /* FlickrPhotoTableViewCellStyleSheet.swift in Sources */,
