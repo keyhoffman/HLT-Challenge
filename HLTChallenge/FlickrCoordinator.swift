@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - FlickrCoordinator
 
-final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransitioningDelegate {
+final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
     
     // MARK: - Property Declarations
     
@@ -46,7 +46,9 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
         print("PHOTO OWNER:", metadata.ownerName)
         
         let flickrCommentTableViewController                    = FlickrCommentTableViewController()
+//        flickrCommentTableViewController.anima
         flickrCommentTableViewController.modalPresentationStyle = .custom
+//        flickrCommentTableViewController.modalTransitionStyle   = .c
         flickrCommentTableViewController.transitioningDelegate  = self
         
         rootNavigationController.present(flickrCommentTableViewController, animated: true, completion: nil)
@@ -63,25 +65,17 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
     }
-}
-
-final class HalfSizePresentationController: UIPresentationController {
-    override var frameOfPresentedViewInContainerView: CGRect {
-        let height = containerView?.bounds.height ?? 0 / 2
-        let width  = containerView?.bounds.width ?? 0
-        print("HEIGHT:", height)
-        return CGRect(x: 0, y: 0, width: width, height: height)
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return CustomPresentAnimationController()
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        <#code#>
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        <#code#>
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 

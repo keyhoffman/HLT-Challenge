@@ -57,6 +57,7 @@ struct FlickrPhotoTableViewControllerStyleSheet: ViewPreparer {
             tf.clearButtonMode           = clearButtonMode
             tf.keyboardAppearance        = keyboardAppearance
             tf.returnKeyType             = returnKeyType
+            tf.clipsToBounds             = clipsToBounds
             return tf
         }
         
@@ -105,6 +106,12 @@ struct FlickrPhotoTableViewControllerStyleSheet: ViewPreparer {
         private var returnKeyType: UIReturnKeyType {
             switch self {
             case .search : return .search
+            }
+        }
+        
+        private var clipsToBounds: Bool {
+            switch self {
+            case .search: return true
             }
         }
     }

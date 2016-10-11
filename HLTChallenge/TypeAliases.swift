@@ -6,7 +6,7 @@
 //  Copyright © 2016 Key Hoffman. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // MARK: - URLParamters
 
@@ -19,3 +19,7 @@ typealias JSONDictionary = [String: AnyObject]
 // MARK: - ResultBlock
 
 typealias ResultBlock<T: ResultRepresentable> = (Result<T>) -> Void
+
+// MARK: - Percentage
+
+typealias Percentage = CGFloat

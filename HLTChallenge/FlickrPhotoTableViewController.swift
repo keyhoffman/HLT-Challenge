@@ -59,22 +59,8 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     // MARK: - UITableView Delegate Conformance
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         didSelectPhoto <^> data[indexPath.row].metadata
-        
-        
-//        defer { animateCellHeightChange(withDuration: 0.3, at: indexPath) }
-//        guard let _selectedIndexPath = selectedIndexPath, _selectedIndexPath == indexPath else {
-//            selectedIndexPath = indexPath
-//            return
-//        }
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        selectedIndexPath = nil
-    }
-    
-    // TODO: Move to stylesheet
-    private var defaultCellHeight:  CGFloat { return view.frame.height * 0.6 }
-    private var selectedCellHeight: CGFloat { return view.frame.height * 0.9 }
+     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
@@ -82,18 +68,6 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
-//        guard selectedIndexPath == indexPath else { return defaultCellHeight }
-//        return selectedCellHeight
-    }
-    
-    private func animateCellHeightChange(withDuration duration: TimeInterval, at indexPath: IndexPath) {
-        UIView.animate(withDuration: duration) { 
-            self.tableView.beginUpdates()
-            if let _ = self.selectedIndexPath {
-                self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-            }
-            self.tableView.endUpdates()
-        }
     }
     
     // MARK: - Preparable Conformance
