@@ -8,10 +8,6 @@
 
 import UIKit
 
-//class FOOTVC<TableView: FOOOO<UITableViewCell>>: UITableViewController where Cell: Configurable {
-//    
-//}
-
 // MARK: - TableViewController
 
 class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cell: Configurable {
@@ -22,11 +18,6 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     
     private let cellIdentifier = String(describing: Cell.self)
     
-    
-//    var fooTV: FOOOO<Cell> {
-//        return tableView as! FOOOO<Cell>
-//    }
-    
     var data: [DataType] = [] {
         didSet { tableView.reloadData() }
     }
@@ -35,7 +26,6 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     
     init() {
         super.init(nibName: nil, bundle: nil)
-//        tableView = tableView as! FOOOO<Cell>
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -59,41 +49,8 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? Cell else {
             fatalError(FatalError.couldNotDequeueCell(identifier: cellIdentifier).debugDescription)
         }
-        let row = indexPath.row
-        cell.configure(withData: data[row])
-        return cell
-    }
-}
-
-class FOOOO<Cell: UITableViewCell>: UITableView where Cell: Configurable {
-    
-    typealias DataType = Cell.DataType
-    
-    private let cellIdentifier = String(describing: Cell.self)
-    
-    var data: [DataType] = [] {
-        didSet { reloadData() }
-    }
-    
-    init() {
-        super.init(frame: .zero, style: .plain)
-        register(Cell.self, forCellReuseIdentifier: cellIdentifier)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func numberOfRows(inSection section: Int) -> Int {
-        return data.count
-    }
-    
-    override func cellForRow(at indexPath: IndexPath) -> UITableViewCell? {
-        guard let cell = dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? Cell else {
-            fatalError(FatalError.couldNotDequeueCell(identifier: cellIdentifier).debugDescription)
-        }
-        let row = indexPath.row
-        cell.configure(withData: data[row])
+        print("Regular rows:", indexPath.row)
+        cell.configure <^> data[indexPath.row]
         return cell
     }
 }

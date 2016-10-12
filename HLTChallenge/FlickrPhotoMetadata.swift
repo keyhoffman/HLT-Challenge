@@ -58,6 +58,10 @@ extension FlickrPhotoMetadata {
 extension FlickrPhotoMetadata {
     static func getPhotosStream(withBlock block: @escaping ResultBlock<FlickrPhoto>) {
         getAll { allMetadataResults in _ = allMetadataResults >>= { allMetadata in Result.init <^> allMetadata.map { metadata in metadata.getFlickrPhoto <^> block } } }
+        
+//        curry(getAll) <^> ["":""] <^> { (<#Result<[Self]>#>) in
+//            <#code#>
+//        }
     }
 }
 

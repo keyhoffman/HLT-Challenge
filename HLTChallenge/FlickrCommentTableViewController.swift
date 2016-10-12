@@ -32,6 +32,10 @@ final class FlickrCommentTableViewController: TableViewContoller<FlickrCommentTa
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
+    
+//    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+//        <#code#>
+//    }
 
 }
 

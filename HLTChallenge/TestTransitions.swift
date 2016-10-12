@@ -87,7 +87,7 @@ final class DismissTransitionAnimator: NSObject, UIViewControllerAnimatedTransit
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
             fromViewController.view.frame = curry(CGRect.init) <^> (CGPoint(x: 0, y: bounds.height)) <^> bounds.size
         }) { _ in
-            transitionContext.completeTransition <^> !transitionContext.transitionWasCancelled
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
         
     }
@@ -116,9 +116,10 @@ final class DismissInteractorTransition: UIPercentDrivenInteractiveTransition {
             inProgress = true
             navigationController.dismiss(animated: true, completion: nil)
         case .changed:
-            let const = CGFloat.init <^> (curry(fminf) <^> fmaxf(Float(viewTranslation.x / 200.0), 0.0) <^> 1.0)
-            shouldComplete = const > dismissalThreshold
-            update(const)
+            break
+//            let const = CGFloat.init <^> (curry(fminf) <^> fmaxf(Float(viewTranslation.x / 200.0), 0.0) <^> 1.0)
+//            shouldComplete = const > dismissalThreshold
+//            update(const)
         case .cancelled:
             inProgress = false
             cancel()
@@ -201,10 +202,10 @@ final class CustomInteractionController: UIPercentDrivenInteractiveTransition {
         case .began:
             transitionInProgress = true
             _ = navigationController?.popViewController(animated: true)
-        case .changed:
-            let const = CGFloat.init <^> (curry(fminf) <^> fmaxf(Float(viewTranslation.x / 200.0), 0.0) <^> 1.0)
-            shouldCompleteTransition = const > 0.5
-            update(const)
+        case .changed: break
+//            let const = CGFloat.init <^> (curry(fminf) <^> fmaxf(Float(viewTranslation.x / 200.0), 0.0) <^> 1.0)
+//            shouldCompleteTransition = const > 0.5
+//            update(const)
         case .cancelled:
             transitionInProgress = false
             cancel()
