@@ -13,7 +13,7 @@ import Foundation
 precedencegroup CurryPrecedence {
     associativity: left
     higherThan:    LogicalDisjunctionPrecedence
-    lowerThan:     NilCoalescingPrecedence
+    lowerThan:     MultiplicationPrecedence
 }
 
 // MARK: - MonadicPrecedence Group
@@ -26,6 +26,7 @@ precedencegroup MonadicPrecedence {
 // MARK: - Operator Declarations
 
 infix operator <^>  : CurryPrecedence
+//infix operator <^>>  : FooPrecedence
 infix operator |>   : MonadicPrecedence
 infix operator >>=  : MonadicPrecedence
 infix operator >>== : MonadicPrecedence
@@ -33,14 +34,18 @@ infix operator <*>  : MonadicPrecedence
 
 // MARK: - Operator Implementations
 
+//func <^>> <B, C>(_ f: @escaping (B) -> C, _ a: B) -> (B) -> C {
+//    return curry(f) <^> a
+//}
+
 /// (A -> B, A) -> B
 func <^> <A, B>(_ f: (A) -> B, _ a: A) -> B {
     return f(a)
 }
 
 /// (A, A -> B) -> B
-func |> <A, B>(_ x: A, _ f: (A) -> B) -> B {
-    return f(x)
+func |> <A, B>(_ a: A, _ f: (A) -> B) -> B {
+    return f(a)
 }
 
 /// (Result<A>, A -> Result<B>) -> Result<B>

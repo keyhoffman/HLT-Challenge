@@ -17,6 +17,13 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
     private let window: UIWindow
     private let rootNavigationController = UINavigationController()
     
+    var poo: [Int] = [] {
+        get { return poo }
+        set {
+//            let foo = 
+        }
+    }
+    
     // MARK: - Initialization
     
     init(window: UIWindow) {
@@ -29,12 +36,11 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
         window.rootViewController = rootNavigationController
         window.makeKeyAndVisible()
         
-//        let vc = ViewController()
-//        rootNavigationController.pushViewController(vc, animated: true)
-        
-        let flickrPhotoTableViewControllerConfig = FlickrPhotoTableViewControllerConfiguration(didSelectPhoto: presentComments, userHasReachedBottomOfTableView: loadMorePhotos)
+        let flickrPhotoTableViewControllerConfig = FlickrPhotoTableViewControllerConfiguration(didSelectPhoto: presentComments, hasRequestedDataRefreshForTableView: loadMorePhotos)
         let flickrPhotoTableViewController       = FlickrPhotoTableViewController(configuration: flickrPhotoTableViewControllerConfig)
         rootNavigationController.pushViewController(flickrPhotoTableViewController, animated: false)
+        
+        flickrPhotoTableViewController.handlePrefetch = preLoadPhotos
         
         FlickrPhotoMetadata.getPhotosStream { result in
             switch result {
@@ -46,7 +52,7 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
     
     private func presentComments(for metadata: FlickrPhotoMetadata) {
         
-        print("PHOTO OWNER:", metadata.ownerName)
+//        print("PHOTO OWNER:", metadata.ownerName)
         
         let flickrCommentTableViewController                    = FlickrCommentTableViewController()
 //        flickrCommentTableViewController.anima
@@ -65,8 +71,40 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
         }
     }
     
-    private func loadMorePhotos(startingAt row: Int) {
-        
+    private func preLoadPhotos(for flickrPhotoTableViewController: FlickrPhotoTableViewController, at rows: [Int]) {
+//        print("PRFETCHED ROWS", rows)
+        let count = flickrPhotoTableViewController.data.count
+//        let foo = data.map { data.contains($0) }
+//        print("CONTAINS ARRAY", foo)
+//        let corn = rows.max()
+        guard let picturesPerPage = Int(FlickrConstants.Parameters.Values.Metadata.picturesPerPage), let max = rows.max() else { print("NILLLL");return }
+        print("Prefetched rows:", rows, "---- data count:", count, "---- ppp:", picturesPerPage)
+        if max == count - 1 && max >= picturesPerPage - 1 {
+            print("yeeeeee")
+            FlickrPhotoMetadata.getPhotosStream(startingAt: count) { result in
+                switch result {
+                case let .error(error):       debugPrint(error)
+                case let .value(flickrPhoto): guard !flickrPhotoTableViewController.data.contains(flickrPhoto) else { return }
+                    
+                    if let i = flickrPhotoTableViewController.data.index(of: flickrPhoto) {
+                        print("Photo already at INDEX", i)
+                    }
+                    flickrPhotoTableViewController.data.append(flickrPhoto)
+                }
+            }
+
+        }
+    }
+    
+    private func loadMorePhotos(for flickrTableViewController: FlickrPhotoTableViewController) {
+        let index = flickrTableViewController.data.count
+//        print("COUNT", flickrTableViewController.data.count)
+        FlickrPhotoMetadata.getPhotosStream(startingAt: index) { result in
+            switch result {
+            case let .error(error):       debugPrint(error)
+            case let .value(flickrPhoto): flickrTableViewController.data.append(flickrPhoto)
+            }
+        }
     }
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {

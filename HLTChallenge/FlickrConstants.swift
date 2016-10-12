@@ -78,9 +78,9 @@ struct FlickrConstants {
             // MARK: Metadata
             
             struct Metadata {
-                static let picturesPerPage = "20"
-                static let pageNumber      = "1"
-                static let extras          = "url_m" + "," + "owner_name"
+                static let picturesPerPage = "10"
+//                static let pageNumber      = "1"
+                static let extras          = "url_m, owner_name"
                 
                 enum Method: String {
                     case search    = "flickr.photos.search"

@@ -11,8 +11,8 @@ import UIKit
 // MARK: - FlickrPhotoTableViewControllerConfiguration
 
 struct FlickrPhotoTableViewControllerConfiguration {
-    let didSelectPhoto: (FlickrPhotoMetadata) -> Void
-    let userHasReachedBottomOfTableView: (_ row: Int) -> Void
+    let didSelectPhoto:                      (FlickrPhotoMetadata) -> Void
+    let hasRequestedDataRefreshForTableView: (FlickrPhotoTableViewController) -> Void
 }
 
 // MARK: - FlickrPhotoTableViewController
@@ -36,15 +36,25 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
         return bbi
     }()
     
-    private let didSelectPhoto: (FlickrPhotoMetadata) -> Void
-    private let userHasReachedBottomOfTableView: (_ row: Int) -> Void
+    private lazy var refreshController: UIRefreshControl = {
+        let rc             = UIRefreshControl()
+        rc.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        rc.backgroundColor = .cyan
+        rc.tintColor       = .yellow
+        rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        return rc
+    }()
+    
+    private let didSelectPhoto:                      (FlickrPhotoMetadata) -> Void
+    private let hasRequestedDataRefreshForTableView: (FlickrPhotoTableViewController) -> Void
+    
+    var handlePrefetch: (FlickrPhotoTableViewController, [Int]) -> Void = { _ in }
     
     // MARK: - Initialization
     
     init(configuration: FlickrPhotoTableViewControllerConfiguration) {
-        defer { tableView.prefetchDataSource = self }
         didSelectPhoto = configuration.didSelectPhoto
-        userHasReachedBottomOfTableView = configuration.userHasReachedBottomOfTableView
+        hasRequestedDataRefreshForTableView = configuration.hasRequestedDataRefreshForTableView
         super.init()
     }
     
@@ -74,27 +84,29 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard indexPath.row == data.count - 1 else { return }
-        userHasReachedBottomOfTableView <^> indexPath.row
+//        guard indexPath.row == data.count - 1 else { return }
+//        curry(userHasReachedBottom) <^> self <^> indexPath.row
     }
     
     // MARK: - UITableViewDataSourcePrefetching Conformance
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        print("Prefetched rows:", indexPaths.map { $0.row })
-        
-        guard let row = indexPaths.last?.row, row == data.count - 1 else { return }
-        print("GET THIS ROW:", row)
+        handlePrefetch(self, indexPaths.map { $0.row })
     }
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        print("Cancelled rows:", indexPaths.map { $0.row })
     }
     
     // MARK: - Preparable Conformance
     
     func prepare() {
         defer { FlickrPhotoTableViewControllerStyleSheet.prepare(self) }
+        tableView.prefetchDataSource = self
+        self.refreshControl = refreshController
+    }
+    
+    dynamic private func handleRefresh() {
+        hasRequestedDataRefreshForTableView(self)
     }
     
     dynamic private func displaySearchTextField() {

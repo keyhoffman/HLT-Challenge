@@ -22,10 +22,10 @@ enum URLRequestError: Error, CustomDebugStringConvertible, ErrorMessageSender {
 extension URLRequestError {
     var description: String {
         switch self {
-        case .invalidURL(_):                         return messagePrefix + "Invalid URL Request"
+        case .invalidURL(_):                   return messagePrefix + "Invalid URL Request"
         case .invalidURLPath(let path):        return messagePrefix + "Invalid URL Path:\n" + String(describing: path)
         case .invalidResponseStatus(let code): return messagePrefix + "Invalid Response Code:\n" + String(code)
-        case .couldNotParseJSON:                     return messagePrefix + "Invalid data"
+        case .couldNotParseJSON:               return messagePrefix + "Invalid data"
         }
     }
 }
@@ -35,10 +35,10 @@ extension URLRequestError {
 extension URLRequestError {
     var debugDescription: String {
         switch self {
-        case .invalidURL(let parameters): return "ERROR: Invalid URL Request from parameters:\n" + String(describing: parameters)
+        case .invalidURL(let parameters):       return "ERROR: Invalid URL Request from parameters:\n" + String(describing: parameters)
         case .invalidURLPath(let path):         return "ERROR: Could not create `URLComponents` instance variable `path` with given path:\n" + String(describing: path)
         case .invalidResponseStatus(let code):  return "ERROR: Invalid Response Code:\n" + String(code)
-        case .couldNotParseJSON:                      return "ERROR: Could not parse JSON DATA"
+        case .couldNotParseJSON:                return "ERROR: Could not parse JSON DATA"
         }
     }
 }

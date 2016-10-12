@@ -56,12 +56,33 @@ extension FlickrPhotoMetadata {
 // MARK: - Module Static API
 
 extension FlickrPhotoMetadata {
-    static func getPhotosStream(withBlock block: @escaping ResultBlock<FlickrPhoto>) {
-        getAll { allMetadataResults in _ = allMetadataResults >>= { allMetadata in Result.init <^> allMetadata.map { metadata in metadata.getFlickrPhoto <^> block } } }
-        
-//        curry(getAll) <^> ["":""] <^> { (<#Result<[Self]>#>) in
-//            <#code#>
-//        }
+    static func getPhotosStream(startingAt index: Int = 1, withBlock block: @escaping ResultBlock<FlickrPhoto>) {
+        switch pageNumber(for: index) {
+        case let .error(error):      block <^> Result(error)
+        case let .value(pageNumber): print("NEWPAGE NUM:", pageNumber);curry(getAll) <^> [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
+                                               <^> { allMetadataResults in _ = allMetadataResults >>= { allMetadata in Result.init
+                                               <^> allMetadata.map { metadata in metadata.getFlickrPhoto
+                                               <^> block } } }
+
+        }
+    }
+}
+
+
+// MARK: - Int Extension
+
+extension Int:    ResultRepresentable {}
+extension String: ResultRepresentable {}
+
+// MARK: - Fileprivate Static API
+
+extension FlickrPhotoMetadata {
+    static fileprivate func pageNumber(for index: Int) -> Result<String> {
+        let picturesPerPageStr = FlickrConstants.Parameters.Values.Metadata.picturesPerPage
+        switch Int(picturesPerPageStr).toResult <^> URLRequestError.invalidURL(parameters: [FlickrConstants.Parameters.Keys.Metadata.picturesPerPage: picturesPerPageStr]) {
+        case let .error(error):           return Result(error)
+        case let .value(picturesPerPage): return Result.init <^> String((index + picturesPerPage) / picturesPerPage)
+        }
     }
 }
 

@@ -19,7 +19,12 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     private let cellIdentifier = String(describing: Cell.self)
     
     var data: [DataType] = [] {
-        didSet { tableView.reloadData() }
+        get { return data }
+        set {  }
+//        didSet {
+//            tableView.reloadData()
+//            refreshControl?.endRefreshing()
+//        }
     }
     
     // MARK: - Initialization
@@ -49,7 +54,6 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? Cell else {
             fatalError(FatalError.couldNotDequeueCell(identifier: cellIdentifier).debugDescription)
         }
-        print("Regular rows:", indexPath.row)
         cell.configure <^> data[indexPath.row]
         return cell
     }
