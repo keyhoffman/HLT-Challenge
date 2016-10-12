@@ -115,4 +115,57 @@ struct FlickrPhotoTableViewControllerStyleSheet: ViewPreparer {
             }
         }
     }
+    
+    enum RefreshControl: Int {
+        case tableViewTop = 1
+        
+        var refreshControl: UIRefreshControl {
+            let rc             = UIRefreshControl()
+            rc.tag             = rawValue
+            rc.attributedTitle = NSAttributedString(string: title)
+            rc.backgroundColor = backgroundColor
+            rc.tintColor       = tintColor
+            return rc
+        }
+        
+        private var title: String {
+            switch self {
+            case .tableViewTop: return "Pull to refresh"
+            }
+        }
+        
+        private var backgroundColor: UIColor {
+            switch self {
+            case .tableViewTop: return .cyan
+            }
+        }
+        
+        private var tintColor: UIColor {
+            switch self {
+            case .tableViewTop: return .red
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

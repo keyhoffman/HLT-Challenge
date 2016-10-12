@@ -12,9 +12,15 @@ import UIKit
 
 struct FlickrCommentTableViewControllerStyleSheet: ViewPreparer {
     
+    // MARK: - ViewPreparer Conformance
+    
     static func prepare(_ tableVC: FlickrCommentTableViewController) {
         
         defer { tableVC.view.layoutSubviews() }
+        
+        tableVC.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        tableVC.emptyMessageLabel.text = "This photo has no comments!"
         
         tableVC.title = "comments"
     }

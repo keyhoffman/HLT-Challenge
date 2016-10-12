@@ -56,14 +56,13 @@ extension FlickrPhotoMetadata {
 // MARK: - Module Static API
 
 extension FlickrPhotoMetadata {
-    static func getPhotosStream(startingAt index: Int = 1, withBlock block: @escaping ResultBlock<FlickrPhoto>) {
+    static func getPhotosStream(startingAt index: Int = 0, withBlock block: @escaping ResultBlock<FlickrPhoto>) {
         switch pageNumber(for: index) {
         case let .error(error):      block <^> Result(error)
-        case let .value(pageNumber): print("NEWPAGE NUM:", pageNumber);curry(getAll) <^> [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
-                                               <^> { allMetadataResults in _ = allMetadataResults >>= { allMetadata in Result.init
-                                               <^> allMetadata.map { metadata in metadata.getFlickrPhoto
-                                               <^> block } } }
-
+        case let .value(pageNumber): curry(getAll) <^> [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
+                                                   <^> { allMetadataResults in _ = allMetadataResults >>= { allMetadata in Result.init
+                                                   <^> allMetadata.map { metadata in metadata.getFlickrPhoto
+                                                   <^> block } } }
         }
     }
 }

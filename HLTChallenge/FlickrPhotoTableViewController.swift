@@ -37,10 +37,7 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     }()
     
     private lazy var refreshController: UIRefreshControl = {
-        let rc             = UIRefreshControl()
-        rc.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        rc.backgroundColor = .cyan
-        rc.tintColor       = .yellow
+        let rc = FlickrPhotoTableViewControllerStyleSheet.RefreshControl.tableViewTop.refreshControl
         rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         return rc
     }()
@@ -83,15 +80,10 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
         return UITableViewAutomaticDimension
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        guard indexPath.row == data.count - 1 else { return }
-//        curry(userHasReachedBottom) <^> self <^> indexPath.row
-    }
-    
     // MARK: - UITableViewDataSourcePrefetching Conformance
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        handlePrefetch(self, indexPaths.map { $0.row })
+//        handlePrefetch(self, indexPaths.map { $0.row })
     }
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
