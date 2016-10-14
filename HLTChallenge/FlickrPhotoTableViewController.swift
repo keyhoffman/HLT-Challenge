@@ -11,7 +11,7 @@ import UIKit
 // MARK: - FlickrPhotoTableViewControllerConfiguration
 
 struct FlickrPhotoTableViewControllerConfiguration {
-    let didSelectPhoto:                      (FlickrPhotoMetadata) -> Void
+    let didSelectPhoto:                      (FlickrPhoto) -> Void
     let hasRequestedDataRefreshForTableView: (FlickrPhotoTableViewController) -> Void
 }
 
@@ -42,7 +42,7 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
         return rc
     }()
     
-    private let didSelectPhoto:                      (FlickrPhotoMetadata) -> Void
+    private let didSelectPhoto:                      (FlickrPhoto) -> Void
     private let hasRequestedDataRefreshForTableView: (FlickrPhotoTableViewController) -> Void
     
     var handlePrefetch: (FlickrPhotoTableViewController, [Int]) -> Void = { _ in }
@@ -69,7 +69,7 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     // MARK: - UITableView Delegate Conformance
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        didSelectPhoto <^> data[indexPath.row].metadata
+        didSelectPhoto <^> data[indexPath.row]
      }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

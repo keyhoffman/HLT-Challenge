@@ -42,16 +42,16 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
         }
     }
     
-    private func presentComments(for metadata: FlickrPhotoMetadata) {
+    private func presentComments(for flickrPhoto: FlickrPhoto) {
         let flickrCommentTableViewController = FlickrCommentTableViewController { _ in self.rootNavigationController.dismiss(animated: true) }
         flickrCommentTableViewController.modalPresentationStyle = .custom
         flickrCommentTableViewController.transitioningDelegate  = self
         
-        halfPresController = HalfSizePresentationController(image: <#T##UIImage#>, presentedViewController: <#T##UIViewController#>, presenting: <#T##UIViewController?#>)
+        halfPresController = HalfSizePresentationController(flickrPhoto: flickrPhoto, presentedViewController: flickrCommentTableViewController, presenting: nil)
         
         rootNavigationController.present(flickrCommentTableViewController, animated: true)
         
-        let photoIDParameter = FlickrPhotoComment.photoIDParameter(for: metadata) // FIXME: CLEAN THIS UP!!!!!
+        let photoIDParameter = FlickrPhotoComment.photoIDParameter(for: flickrPhoto.metadata) // FIXME: CLEAN THIS UP!!!!!
         FlickrPhotoComment.getAll(withAdditionalQueryParameters: photoIDParameter) { result in
             switch result {
             case let .error(error):    debugPrint(error)
@@ -71,13 +71,38 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
     }
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-//        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+        print("presented", presented)
+        print("presenting", presenting)
+        print("source", source)
+        
         return halfPresController
     }
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return CustomPresentAnimationController()
     }
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        print("func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) CALLED", navigationController)
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        print("func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) CALLED", navigationController)
+    }
+    
+//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        
+//        
+//        print("func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? CALLED")
+//        
+//        switch operation {
+//        case .none: print("No operation for", navigationController)
+//        case .pop:  print("Pop operation for", navigationController)
+//        case .push: print("Push operation for", navigationController)
+//        }
+//        
+//        return CustomPresentAnimationController()
+//    }
 }
 
 

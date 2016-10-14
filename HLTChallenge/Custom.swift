@@ -13,7 +13,7 @@ import Foundation
 precedencegroup CurryPrecedence {
     associativity: left
     higherThan:    LogicalDisjunctionPrecedence
-    lowerThan:     MultiplicationPrecedence
+    lowerThan:     NilCoalescingPrecedence
 }
 
 // MARK: - MonadicPrecedence Group
