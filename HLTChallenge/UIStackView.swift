@@ -14,9 +14,16 @@ extension UIStackView {
     ///
     /// - parameter views: an array of UIView to be added
     func addArrangedSubviews(_ views: [UIView]) {
-        for view in views {
-            addArrangedSubview(view)
-        }
+        _ = views.map(addArrangedSubview)
+    }
+    
+    func addArrangedSubviews(_ views: [UIView?]) {
+        _ = views.flatMap { $0 }.map(addArrangedSubview)
+    }
+    
+    convenience init(withNullableSubViews views: [UIView?]) {
+        self.init()
+        _ = views.flatMap { $0 }.map(addArrangedSubview)
     }
 }
 

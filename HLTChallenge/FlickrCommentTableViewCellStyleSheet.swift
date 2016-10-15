@@ -14,6 +14,8 @@ struct FlickrCommentTableViewCellStyleSheet: ViewPreparer {
     
     static func prepare(_ commentCell: FlickrCommentTableViewCell) {
         
+        commentCell.backgroundColor = .darkText
+        
         defer { commentCell.layoutIfNeeded() }
         
         let stackViewTop      = curry(NSLayoutConstraint.init) <^> commentCell.mainStackView <^> .top      <^> .equal <^> commentCell <^> .top      <^> 1 <^> 0
@@ -39,6 +41,7 @@ struct FlickrCommentTableViewCellStyleSheet: ViewPreparer {
             sv.axis                                      = axis
             sv.distribution                              = distribution
             sv.alignment                                 = alignment
+            sv.spacing                                   = spacing
             sv.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
             return sv
         }
@@ -58,6 +61,12 @@ struct FlickrCommentTableViewCellStyleSheet: ViewPreparer {
         private var alignment: UIStackViewAlignment {
             switch self {
             case .main: return .leading
+            }
+        }
+        
+        private var spacing: CGFloat {
+            switch self {
+            case .main: return 5
             }
         }
         
@@ -87,7 +96,7 @@ struct FlickrCommentTableViewCellStyleSheet: ViewPreparer {
         
         private var backgroundColor: UIColor {
             switch self {
-            case .content: return .blue
+            case .content: return .clear
             case .author:  return .red
             }
         }

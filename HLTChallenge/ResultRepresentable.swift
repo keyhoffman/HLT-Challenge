@@ -21,3 +21,5 @@ extension Dictionary:    ResultRepresentable {}
 extension URLRequest:    ResultRepresentable {}
 extension URL:           ResultRepresentable {}
 extension URLComponents: ResultRepresentable {}
+extension Int:           ResultRepresentable {}
+extension String:        ResultRepresentable {}

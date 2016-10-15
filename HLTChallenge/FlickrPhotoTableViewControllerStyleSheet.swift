@@ -16,7 +16,7 @@ struct FlickrPhotoTableViewControllerStyleSheet: ViewPreparer {
     
     static func prepare(_ flickrTVC: FlickrPhotoTableViewController) {
         
-        defer { flickrTVC.view.layoutSubviews() }
+        defer { flickrTVC.view.layoutIfNeeded() }
         
         flickrTVC.navigationItem.titleView = flickrTVC.searchTextField
         flickrTVC.navigationItem.rightBarButtonItem = flickrTVC.displaySearchTextFieldButton

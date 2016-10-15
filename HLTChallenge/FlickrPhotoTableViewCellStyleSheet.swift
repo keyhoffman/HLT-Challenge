@@ -16,7 +16,7 @@ struct FlickrPhotoTableViewCellStyleSheet: ViewPreparer {
     
     static func prepare(_ photoCell: FlickrPhotoTableViewCell) {
         
-        defer { photoCell.layoutSubviews() }
+        defer { photoCell.layoutIfNeeded() }
         
         photoCell.backgroundColor = .blue
         

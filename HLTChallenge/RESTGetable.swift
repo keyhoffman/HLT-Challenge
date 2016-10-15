@@ -52,7 +52,7 @@ extension RESTGetable {
 extension RESTGetable {
     // FIXME: GENERALIZE THIS METHOD TO WORK WITH `FlickrAPIGetable`
     static func get(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) {
-        switch url(withAdditionalQueryParameters: queryParameters) >>= urlRequest { // FIXME: GIT RID OF THIS SWITCH STATEMENT
+        switch (url <^> queryParameters) >>= urlRequest { // FIXME: GIT RID OF THIS SWITCH STATEMENT
         case let .error(error):   block <^> Result(error)
         case let .value(request): dataTask(request: request, withBlock: block)
         }
@@ -71,15 +71,12 @@ extension RESTGetable {
     }
     
     static func url(withAdditionalQueryParameters queryParameters: URLParameters = .empty) -> Result<URL> {
-        guard let compontentsPath = urlAddressParameters[path] else { return Result.init <^> URLRequestError.invalidURLPath(path: urlAddressParameters[path]) }
+        let componentsURL = URLComponents(path:       urlAddressParameters[path],
+                                          scheme:     urlAddressParameters[scheme],
+                                          host:       urlAddressParameters[host],
+                                          queryItems: (urlQueryParameters + queryParameters).map(URLQueryItem.init))?.url
         
-        var components        = URLComponents()
-        components.path       = compontentsPath
-        components.scheme     = urlAddressParameters[scheme]
-        components.host       = urlAddressParameters[host]
-        components.queryItems = (urlQueryParameters + queryParameters).map(URLQueryItem.init)
-        
-        return components.url.toResult(withError:) <^> URLRequestError.invalidURL(parameters: urlQueryParameters)
+        return componentsURL.toResult(withError:) <^> URLRequestError.invalidURL(parameters: urlQueryParameters)
     }
 }
 
@@ -104,3 +101,5 @@ extension RESTGetable {
         catch { return Result(error) }
     }
 }
+
+

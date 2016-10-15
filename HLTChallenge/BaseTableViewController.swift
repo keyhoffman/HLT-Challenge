@@ -18,8 +18,8 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     
     private let cellIdentifier = String(describing: Cell.self)
     
-    lazy var emptyMessageLabel: UILabel = {
-        let l           = UILabel.init <^> CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+    lazy var emptyMessageLabel: UILabel = { [weak self] in
+        let l           = UILabel.init <^> CGRect(x: 0, y: 0, width: self?.view.bounds.width ?? 0, height: self?.view.bounds.height ?? 0)
         l.tag           = 0
         l.text          = "No data available"
         l.textColor     = .red
@@ -28,13 +28,20 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
         return l
     }()
     
-    private var num = 0
+    lazy var spinner: UIActivityIndicatorView = { [weak self] in
+        let s = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        s.hidesWhenStopped = true
+        s.center = self?.tableView.center ?? CGPoint(x: 0, y: 0)
+        return s
+    }()
+
     
     var data: [DataType] = [] {
-        didSet(oldData) {
+        didSet {
             defer {
                 tableView.reloadData()
                 refreshControl?.endRefreshing()
+                spinner.stopAnimating()
             }
             guard data.count > 0 else {
                 setEmptyBackgroundLabel()
@@ -49,17 +56,19 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        if data.count < 1 { setEmptyBackgroundLabel() }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Empty Dataset Handling
+    
     func setEmptyBackgroundLabel() {
         tableView.backgroundView = emptyMessageLabel
         tableView.separatorStyle = .none
     }
+    
     func removeEmptyBackgroundLabel() {
         tableView.backgroundView = nil
         tableView.separatorStyle = .singleLine
@@ -70,6 +79,9 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.addSubview(spinner)
+        spinner.startAnimating()
+        if data.count < 1 { setEmptyBackgroundLabel() }
     }
     
      // MARK: - UITableViewDatasource Conformance Methods

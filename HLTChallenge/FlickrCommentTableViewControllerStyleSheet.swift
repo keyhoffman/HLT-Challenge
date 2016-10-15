@@ -14,15 +14,12 @@ struct FlickrCommentTableViewControllerStyleSheet: ViewPreparer {
     
     // MARK: - ViewPreparer Conformance
     
-    static func prepare(_ tableVC: FlickrCommentTableViewController) {
+    static func prepare(_ commentsTVC: FlickrCommentTableViewController) {
         
-        defer { tableVC.view.layoutSubviews() }
+        defer { commentsTVC.view.layoutIfNeeded() }
         
-        tableVC.tableView.rowHeight = UITableViewAutomaticDimension
-        
-        tableVC.emptyMessageLabel.text = "This photo has no comments!"
-        
-        tableVC.title = "comments"
+        commentsTVC.view.backgroundColor = .clear
+        commentsTVC.tableView.allowsSelection = false
     }
 }
 

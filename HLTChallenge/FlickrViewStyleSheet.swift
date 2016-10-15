@@ -18,7 +18,7 @@ struct FlickrViewStyleSheet: ViewPreparer {
     
     static func prepare(_ flickrView: FlickrView) {
         
-        defer { flickrView.layoutSubviews() }
+        defer { flickrView.layoutIfNeeded() }
         
         flickrView.backgroundColor = .green
         

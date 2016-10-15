@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Response
 
-struct Response: ResultRepresentable {
+struct Response: ResultRepresentable, Equatable {
     let data:       Data
     let statusCode: Int
 }
@@ -25,4 +25,10 @@ extension Response {
 
 extension Response {
     static let successRange = 200..<300
+}
+
+// MARK: - Equatable Conformance
+
+func == (_ lhs: Response, _ rhs: Response) -> Bool {
+    return lhs.statusCode == rhs.statusCode && lhs.data == rhs.data
 }

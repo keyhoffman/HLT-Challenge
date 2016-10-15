@@ -45,3 +45,12 @@ extension Result {
         }
     }
 }
+
+extension Result {
+    func unwrap() -> Value {
+        switch self {
+        case .error:            fatalError(FatalError.couldNotUnwrapResult.debugDescription)
+        case .value(let value): return value
+        }
+    }
+}
