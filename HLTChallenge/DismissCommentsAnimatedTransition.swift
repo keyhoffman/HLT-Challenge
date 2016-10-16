@@ -19,10 +19,13 @@ final class DismissCommentsAnimatedTransition: NSObject, UIViewControllerAnimate
         
         let containerView = transitionContext.containerView
         
+        
+        containerView.layoutIfNeeded()
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
             toViewController.view.alpha   = .oneHundred
             containerView.alpha           = .zero
             fromViewController.view.frame = CGRect(origin: CGPoint(x: 0, y: containerView.frame.height), size: fromViewController.view.bounds.size)
+            containerView.layoutIfNeeded()
         }) { transitionContext.completeTransition($0) }
     }
 }

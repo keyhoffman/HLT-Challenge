@@ -23,7 +23,7 @@ final class FlickrView: UIView, Preparable, Configurable {
     func prepare() {
         defer { FlickrViewStyleSheet.prepare(self) }
         addSubview(flickrPhotoView)
-        addSubview(titleLabel)
+        addSubview(titleLabel)        
     }
     
     // MARK: - Configurable Conformance

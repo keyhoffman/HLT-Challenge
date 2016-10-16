@@ -31,7 +31,6 @@
 		0370ECDA1DA45B1C008B8C5D /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECD91DA45B1C008B8C5D /* FlickrConstants.swift */; };
 		0370ECDD1DA461D7008B8C5D /* Curry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECDC1DA461D7008B8C5D /* Curry.swift */; };
 		0370ECE01DA46202008B8C5D /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECDF1DA46202008B8C5D /* Custom.swift */; };
-		0370ECE21DA4705C008B8C5D /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370ECE11DA4705C008B8C5D /* General.swift */; };
 		037692721DA8EB6F009CDAA6 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037692711DA8EB6F009CDAA6 /* FlickrPhoto.swift */; };
 		038899161DAB6CBA00BB5BD9 /* FlickrCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038899151DAB6CBA00BB5BD9 /* FlickrCommentTableViewCell.swift */; };
 		038899181DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038899171DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift */; };
@@ -98,7 +97,6 @@
 		0370ECD91DA45B1C008B8C5D /* FlickrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConstants.swift; sourceTree = "<group>"; };
 		0370ECDC1DA461D7008B8C5D /* Curry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Curry.swift; sourceTree = "<group>"; };
 		0370ECDF1DA46202008B8C5D /* Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
-		0370ECE11DA4705C008B8C5D /* General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
 		037692711DA8EB6F009CDAA6 /* FlickrPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
 		038899151DAB6CBA00BB5BD9 /* FlickrCommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrCommentTableViewCell.swift; sourceTree = "<group>"; };
 		038899171DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrCommentTableViewCellStyleSheet.swift; sourceTree = "<group>"; };
@@ -278,12 +276,8 @@
 			isa = PBXGroup;
 			children = (
 				0370ECCC1DA45768008B8C5D /* Protocols */,
-				0370ECCD1DA45817008B8C5D /* FlickrViewStyleSheet.swift */,
-				0370ECD11DA458C8008B8C5D /* FlickrPhotoTableViewCellStyleSheet.swift */,
-				0370ECD61DA4598C008B8C5D /* FlickrPhotoTableViewControllerStyleSheet.swift */,
-				0370ECE11DA4705C008B8C5D /* General.swift */,
-				038899171DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift */,
-				0388991B1DAB776F00BB5BD9 /* FlickrCommentTableViewControllerStyleSheet.swift */,
+				03DFAD0F1DB3599D00C66679 /* Views */,
+				03DFAD101DB359A700C66679 /* ViewControllers */,
 			);
 			name = StyleSheets;
 			sourceTree = "<group>";
@@ -426,6 +420,25 @@
 				03DE2B401DA62072008CE5B1 /* TypeAliases.swift */,
 			);
 			name = TypeAliases;
+			sourceTree = "<group>";
+		};
+		03DFAD0F1DB3599D00C66679 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0370ECCD1DA45817008B8C5D /* FlickrViewStyleSheet.swift */,
+				0370ECD11DA458C8008B8C5D /* FlickrPhotoTableViewCellStyleSheet.swift */,
+				038899171DAB6D1500BB5BD9 /* FlickrCommentTableViewCellStyleSheet.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		03DFAD101DB359A700C66679 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0370ECD61DA4598C008B8C5D /* FlickrPhotoTableViewControllerStyleSheet.swift */,
+				0388991B1DAB776F00BB5BD9 /* FlickrCommentTableViewControllerStyleSheet.swift */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -571,7 +584,6 @@
 				038B135B1DACCAFD009A1918 /* Percentage.swift in Sources */,
 				03DE2B291DA5CD3B008CE5B1 /* Result.swift in Sources */,
 				03C80EE91DAB49D100979BC9 /* FlickrPhotoComment.swift in Sources */,
-				0370ECE21DA4705C008B8C5D /* General.swift in Sources */,
 				03DE2B321DA5EAA9008CE5B1 /* OptionalError.swift in Sources */,
 				039459641DB227A300D6A4D4 /* ShowCommentsPresentationController.swift in Sources */,
 				032205241DAC42C800BB2B7C /* Dictionary.swift in Sources */,

@@ -20,7 +20,7 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
         defer { flickrView.layoutIfNeeded() }
         
-        flickrView.backgroundColor = .green
+        flickrView.backgroundColor = .clear
         
         // MARK: AutoLayout
         
@@ -41,9 +41,7 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
         let titleLabelConstraints = [titleLabelTop, titleLabelBottom, titleLabelLeading, titleLabelTrailing]
         
-        let activeConstraints = titleLabelConstraints + flickrImageViewConstraints
-        
-        NSLayoutConstraint.activate(activeConstraints)
+        NSLayoutConstraint.activate <^> titleLabelConstraints + flickrImageViewConstraints
         
     }
     

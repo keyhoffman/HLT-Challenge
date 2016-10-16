@@ -25,9 +25,7 @@ struct FlickrCommentTableViewCellStyleSheet: ViewPreparer {
         
         let stackViewConstraints = [stackViewTop, stackViewBottom, stackViewLeading, stackViewTrailing]
         
-        let activeConstraints = stackViewConstraints
-        
-        NSLayoutConstraint.activate(activeConstraints)
+        NSLayoutConstraint.activate <^> stackViewConstraints
     }
     
     // MARK: - StackView

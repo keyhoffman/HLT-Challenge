@@ -49,7 +49,7 @@ extension FlickrPhotoComment {
 
 extension FlickrPhotoComment {
     static func photoIDParameter(for metadata: FlickrPhotoMetadata) -> URLParameters {
-        return [FlickrConstants.Parameters.Keys.PhotoComments.photoID: "25768216394"] // NOTE: This is a test id that has several comments
-//        return [FlickrConstants.Parameters.Keys.PhotoComments.photoID: metadata.id]
+//        return [FlickrConstants.Parameters.Keys.PhotoComments.photoID: "25768216394"] // NOTE: This is a test id that has several comments
+        return [FlickrConstants.Parameters.Keys.PhotoComments.photoID: metadata.id]
     }
 }

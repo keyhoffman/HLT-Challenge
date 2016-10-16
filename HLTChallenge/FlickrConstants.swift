@@ -79,7 +79,6 @@ struct FlickrConstants {
             
             struct Metadata {
                 static let picturesPerPage = "10"
-//                static let pageNumber      = "1"
                 static let extras          = "url_m, owner_name"
                 
                 enum Method: String {

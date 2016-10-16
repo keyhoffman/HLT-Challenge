@@ -31,7 +31,7 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
         window.makeKeyAndVisible()
         rootNavigationController.transitioningDelegate = self
         
-        let flickrPhotoTableViewControllerConfig = FlickrPhotoTableViewControllerConfiguration(didSelectPhoto: presentComments, hasRequestedDataRefreshForTableView: loadPhotos)
+        let flickrPhotoTableViewControllerConfig = FlickrPhotoTableViewControllerConfiguration(didSelectPhoto: presentComments, loadPhotosForNextPage: loadPhotos)
         let flickrPhotoTableViewController       = FlickrPhotoTableViewController(configuration: flickrPhotoTableViewControllerConfig)
         rootNavigationController.pushViewController(flickrPhotoTableViewController, animated: false)
         
@@ -65,9 +65,12 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
         }
     }
     
-    private func loadPhotos(for flickrPhotoTableViewController: FlickrPhotoTableViewController) {
-        let index = flickrPhotoTableViewController.data.count
-        FlickrPhotoMetadata.getPhotosStream(at: index) { result in
+    private func loadPhotos(for flickrPhotoTableViewController: FlickrPhotoTableViewController, at index: Int = 0) {
+        let dataCount = flickrPhotoTableViewController.data.count
+        guard let picturesPerPage = Int(FlickrConstants.Parameters.Values.Metadata.picturesPerPage),
+              (index >= dataCount - 2 && index >= picturesPerPage - 1) || dataCount == 0  else { return }
+        
+        FlickrPhotoMetadata.getPhotosStream(startingAt: flickrPhotoTableViewController.data.count) { result in
             switch result {
             case let .error(error):       debugPrint(error)
             case let .value(flickrPhoto): flickrPhotoTableViewController.data.append(flickrPhoto)

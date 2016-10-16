@@ -22,7 +22,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
 
     private lazy var mainStackView: UIStackView? = { [weak self] in
         guard let `self` = self else { return nil }
-        let sv           = UIStackView.init(withNullableSubViews:) <^> [self.ownerNameLabel, self.photoView]
+        let sv           = UIStackView.init(withNullableSubViews:) <^> [self.ownerNameLabel, self.flickrPhotoView]
         sv.axis          = .vertical
         sv.alignment     = .center
         sv.distribution  = .fillProportionally
@@ -31,11 +31,11 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         return sv
     }()
     
-    private lazy var photoView: UIImageView? = { [weak self] in
+    private lazy var flickrPhotoView: UIImageView? = { [weak self] in
         guard let `self` = self else { return nil }
         let pv         = UIImageView(image: self.flickrPhoto.photo)
         pv.alpha       = .zero
-        pv.contentMode = .scaleToFill
+        pv.contentMode = .scaleAspectFit
         return pv
     }()
     
@@ -52,7 +52,21 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         return l
     }()
     
-    private lazy var dismissTapGesture: UITapGestureRecognizer = { UITapGestureRecognizer(target: self, action: #selector(tapDismiss)) }()
+    private lazy var mainStackViewLayoutGuide: UILayoutGuide? = { [weak self] in
+        guard let `self` = self, let containerView = self.containerView else { return nil }
+        let lg = UILayoutGuide()
+        containerView.addLayoutGuide(lg)
+        lg.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive                              = true
+        lg.bottomAnchor.constraint(equalTo: self.presentedViewController.view.topAnchor).isActive               = true
+        lg.heightAnchor.constraint(greaterThanOrEqualTo: containerView.heightAnchor, multiplier: 0.03).isActive = true
+        return lg
+    }()
+    
+    private lazy var dismissTapGesture: UITapGestureRecognizer? = { [weak self] in
+        guard let `self` = self else { return nil }
+        return UITapGestureRecognizer(target: self, action: #selector(tapDismiss))
+    }()
+    
     
     private let flickrPhoto: FlickrPhoto
     private let dismiss: (Void) -> Void
@@ -66,21 +80,25 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     override func presentationTransitionWillBegin() {
         containerView?.addSubview <*> blurView
         containerView?.addSubview <*> mainStackView
-        containerView?.addGestureRecognizer(dismissTapGesture)
+        containerView?.addGestureRecognizer <*> dismissTapGesture
         
         setConstraints()
         
         presentedViewController.view.frame = frameOfPresentedViewInContainerView.offsetBy(dx: 0, dy: UIScreen.main.bounds.height)
         
+        containerView?.layoutIfNeeded()
+        
         presentingViewController.transitionCoordinator?.animate(alongsideTransition: { [weak self] _ in
             guard let `self` = self else { return }
-            self.blurView?.alpha       = .oneHundred
-            self.photoView?.alpha      = .oneHundred
-            self.ownerNameLabel?.alpha = .oneHundred
+            self.blurView?.alpha        = .oneHundred
+            self.flickrPhotoView?.alpha = .oneHundred
+            self.ownerNameLabel?.alpha  = .oneHundred
             
             self.presentingViewController.view.alpha = .thirty
             self.presentedViewController.view.frame  = self.frameOfPresentedViewInContainerView
-            })
+            
+            self.containerView?.layoutIfNeeded()
+        })
     }
     
     override func presentationTransitionDidEnd(_ completed: Bool) {
@@ -89,9 +107,11 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
-        let width      = containerView?.bounds.width ?? 0
-        let halfHeight = (containerView?.bounds.height ?? 0) / 2
-        return CGRect(x: 0, y: halfHeight, width: width, height: halfHeight)
+        guard let containerView = containerView else { return .zero }
+        let width  = containerView.bounds.width
+        let height = containerView.bounds.height / 3
+        let y      = containerView.bounds.height - height
+        return CGRect(x: 0, y: y, width: width, height: height)
     }
     
     override var shouldPresentInFullscreen: Bool {
@@ -102,20 +122,25 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         removeAllViewsAndResetPresentingViewController()
     }
     
+    override func dismissalTransitionWillBegin() {
+        mainStackViewLayoutGuide?.heightAnchor.constraint(lessThanOrEqualTo: presentedViewController.view.heightAnchor, multiplier: 1).isActive = true
+    }
+    
     private func setConstraints() {
-        guard let mainStackView = mainStackView, let containerView = containerView else { return }
+        guard let mainStackView = mainStackView, let containerView = containerView, let mainStackViewLayoutGuide = mainStackViewLayoutGuide else { return }
         
-        let verticalMarginOffset = containerView.frame.height * 0.03
+        let topMarginOffset = containerView.frame.height * 0.03
         
-        let mainStackViewTop    = curry(NSLayoutConstraint.init) <^> mainStackView <^> .top     <^> .equal <^> containerView <^> .topMargin <^> 1    <^> verticalMarginOffset
-        let mainStackViewBottom = curry(NSLayoutConstraint.init) <^> mainStackView <^> .bottom  <^> .equal <^> containerView <^> .centerY   <^> 1    <^> -verticalMarginOffset
-        let mainStackViewCenter = curry(NSLayoutConstraint.init) <^> mainStackView <^> .centerX <^> .equal <^> containerView <^> .centerX   <^> 1    <^> 0
-        let mainStackViewWidth  = curry(NSLayoutConstraint.init) <^> mainStackView <^> .width   <^> .equal <^> containerView <^> .width     <^> 0.90 <^> 0
+        let mainStackViewTop    = curry(NSLayoutConstraint.init) <^> mainStackView <^> .top     <^> .equal <^> containerView            <^> .topMargin <^> 1    <^> topMarginOffset
+        let mainStackViewBottom = curry(NSLayoutConstraint.init) <^> mainStackView <^> .bottom  <^> .equal <^> mainStackViewLayoutGuide <^> .top       <^> 1    <^> 0
+        let mainStackViewCenter = curry(NSLayoutConstraint.init) <^> mainStackView <^> .centerX <^> .equal <^> containerView            <^> .centerX   <^> 1    <^> 0
+        let mainStackViewWidth  = curry(NSLayoutConstraint.init) <^> mainStackView <^> .width   <^> .equal <^> containerView            <^> .width     <^> 0.90 <^> 0
         
-        NSLayoutConstraint.activate <^> [mainStackViewTop, mainStackViewBottom, mainStackViewCenter, mainStackViewWidth]
+        NSLayoutConstraint.activate <^> [mainStackViewTop, mainStackViewCenter, mainStackViewWidth, mainStackViewBottom]
     }
     
     dynamic private func tapDismiss() {
+        guard let dismissTapGesture = dismissTapGesture else { return }
         switch dismissTapGesture.state {
         case .ended: dismiss()
         default: break
@@ -124,9 +149,11 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     
     private func removeAllViewsAndResetPresentingViewController() {
         ownerNameLabel? .removeFromSuperview()
-        photoView?      .removeFromSuperview()
+        flickrPhotoView?.removeFromSuperview()
         mainStackView?  .removeFromSuperview()
         blurView?       .removeFromSuperview()
+        containerView?.removeLayoutGuide <*> mainStackViewLayoutGuide
+        containerView?.removeGestureRecognizer <*> dismissTapGesture
         presentingViewController.view.alpha = .oneHundred
     }
     

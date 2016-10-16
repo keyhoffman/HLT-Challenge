@@ -18,7 +18,7 @@ struct FlickrPhotoTableViewCellStyleSheet: ViewPreparer {
         
         defer { photoCell.layoutIfNeeded() }
         
-        photoCell.backgroundColor = .blue
+        photoCell.backgroundColor = .darkText
         
         // MARK: AutoLayout
         
@@ -31,9 +31,7 @@ struct FlickrPhotoTableViewCellStyleSheet: ViewPreparer {
         
         let flickrViewConstraints = [flickrViewTop, flickrViewBottom, flickrViewLeading, flickrViewTrailing]
         
-        let activeConstraints = flickrViewConstraints
-        
-        NSLayoutConstraint.activate(activeConstraints)
+        NSLayoutConstraint.activate <^> flickrViewConstraints
     }
     
     // MARK: - View

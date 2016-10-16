@@ -18,6 +18,9 @@ struct FlickrPhotoTableViewControllerStyleSheet: ViewPreparer {
         
         defer { flickrTVC.view.layoutIfNeeded() }
         
+        
+        flickrTVC.tableView.backgroundColor = .darkText
+        
         flickrTVC.navigationItem.titleView = flickrTVC.searchTextField
         flickrTVC.navigationItem.rightBarButtonItem = flickrTVC.displaySearchTextFieldButton
     }

@@ -30,8 +30,8 @@ final class FlickrCommentTableViewController: TableViewContoller<FlickrCommentTa
     
     override func setEmptyBackgroundLabel() {
         emptyMessageLabel.text            = "This photo has no comments"
-        emptyMessageLabel.textColor       = .white
-        emptyMessageLabel.backgroundColor = .darkText
+        emptyMessageLabel.textColor       = .lightGray
+        emptyMessageLabel.backgroundColor = .clear
         
         tableView.backgroundView = emptyMessageLabel
         tableView.separatorStyle = .none

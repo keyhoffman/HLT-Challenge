@@ -11,14 +11,14 @@ import UIKit
 // MARK: - FlickrPhotoTableViewControllerConfiguration
 
 struct FlickrPhotoTableViewControllerConfiguration {
-    let didSelectPhoto:                      (FlickrPhoto) -> Void
-    let hasRequestedDataRefreshForTableView: (FlickrPhotoTableViewController) -> Void
+    let didSelectPhoto:        (FlickrPhoto) -> Void
+    let loadPhotosForNextPage: (FlickrPhotoTableViewController, Int) -> Void
 }
 
 // MARK: - FlickrPhotoTableViewController
 
 final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableViewCell>, UITableViewDataSourcePrefetching, Preparable, UITextFieldDelegate {
-
+    
     // MARK: - Property Delcarations
     
     lazy var searchTextField: UITextField = { [weak self] in
@@ -42,14 +42,14 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
         return rc
     }()
     
-    private let didSelectPhoto:                      (FlickrPhoto) -> Void
-    private let hasRequestedDataRefreshForTableView: (FlickrPhotoTableViewController) -> Void
+    private let didSelectPhoto:        (FlickrPhoto) -> Void
+    private let loadPhotosForNextPage: (FlickrPhotoTableViewController, Int) -> Void
     
     // MARK: - Initialization
     
     init(configuration: FlickrPhotoTableViewControllerConfiguration) {
-        didSelectPhoto = configuration.didSelectPhoto
-        hasRequestedDataRefreshForTableView = configuration.hasRequestedDataRefreshForTableView
+        didSelectPhoto        = configuration.didSelectPhoto
+        loadPhotosForNextPage = configuration.loadPhotosForNextPage
         super.init()
     }
     
@@ -78,6 +78,13 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
         return UITableViewAutomaticDimension
     }
     
+    // MARK: - UIScrollViewDelegate Conformance
+    
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard tableView.contentOffset.y >= (tableView.contentSize.height - tableView.frame.height) else { return }
+        loadPhotosForNextPage(self, tableView.numberOfRows(inSection: 0) - 1)        
+    }
+    
     // MARK: - UITableViewDataSourcePrefetching Conformance
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
@@ -96,7 +103,8 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     }
     
     dynamic private func handleRefresh() {
-        hasRequestedDataRefreshForTableView(self)
+        print("Refresh requested")
+//        loadPhotosForNextPage(self)
     }
     
     dynamic private func displaySearchTextField() {
