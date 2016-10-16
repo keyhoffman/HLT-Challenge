@@ -84,5 +84,9 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return showCommentsPresentationController
     }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissCommentsAnimatedTransition()
+    }
 }
 

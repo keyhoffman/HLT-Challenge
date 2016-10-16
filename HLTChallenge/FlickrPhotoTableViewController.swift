@@ -36,7 +36,7 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
         return bbi
     }()
     
-    private lazy var refreshController: UIRefreshControl = {
+    private lazy var refreshController: UIRefreshControl = { [weak self] in
         let rc = FlickrPhotoTableViewControllerStyleSheet.RefreshControl.tableViewTop.refreshControl
         rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         return rc

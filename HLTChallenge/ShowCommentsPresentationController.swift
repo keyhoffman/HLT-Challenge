@@ -133,11 +133,11 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     // MARK: - UIViewControllerAnimatedTransitioning Conformance
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 2.0
+        return 1.75
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .curveLinear, animations: {  }) {
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .curveLinear, animations: {}) { 
             transitionContext.completeTransition($0)
         }
     }

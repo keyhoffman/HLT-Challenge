@@ -56,6 +56,7 @@
 		03DE2B371DA60906008CE5B1 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B361DA60906008CE5B1 /* Response.swift */; };
 		03DE2B3A1DA60BA7008CE5B1 /* RESTGetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B391DA60BA7008CE5B1 /* RESTGetable.swift */; };
 		03DE2B411DA62072008CE5B1 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE2B401DA62072008CE5B1 /* TypeAliases.swift */; };
+		03DFAD0D1DB3197200C66679 /* DismissCommentsAnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DFAD0C1DB3197200C66679 /* DismissCommentsAnimatedTransition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,7 @@
 		03DE2B361DA60906008CE5B1 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		03DE2B391DA60BA7008CE5B1 /* RESTGetable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTGetable.swift; sourceTree = "<group>"; };
 		03DE2B401DA62072008CE5B1 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
+		03DFAD0C1DB3197200C66679 /* DismissCommentsAnimatedTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissCommentsAnimatedTransition.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -337,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				039459631DB227A300D6A4D4 /* ShowCommentsPresentationController.swift */,
+				03DFAD0C1DB3197200C66679 /* DismissCommentsAnimatedTransition.swift */,
 			);
 			name = "Presentation + Transitions";
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				03DE2B321DA5EAA9008CE5B1 /* OptionalError.swift in Sources */,
 				039459641DB227A300D6A4D4 /* ShowCommentsPresentationController.swift in Sources */,
 				032205241DAC42C800BB2B7C /* Dictionary.swift in Sources */,
+				03DFAD0D1DB3197200C66679 /* DismissCommentsAnimatedTransition.swift in Sources */,
 				039F28521DA9EFEA001EF113 /* ResultType.swift in Sources */,
 				0370ECE01DA46202008B8C5D /* Custom.swift in Sources */,
 				0388991E1DAB7A1700BB5BD9 /* UIStackView.swift in Sources */,
