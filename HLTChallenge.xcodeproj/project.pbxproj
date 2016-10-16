@@ -166,6 +166,7 @@
 				0370ECBD1DA453C6008B8C5D /* Utility */,
 				0370ECBE1DA453D4008B8C5D /* StyleSheets */,
 				0370ECB81DA45375008B8C5D /* Views */,
+				037966D41DB2F56200CC4448 /* Presentation + Transitions */,
 				0370ECB91DA4537B008B8C5D /* ViewControllers */,
 				03DE2B2B1DA5D1BB008CE5B1 /* Models */,
 				0370ECBA1DA45389008B8C5D /* Coordinators */,
@@ -228,7 +229,6 @@
 				0370ECDB1DA45CBE008B8C5D /* BaseTableViewController */,
 				0370ECC21DA455D5008B8C5D /* FlickrPhotoTableViewController.swift */,
 				038899191DAB76E500BB5BD9 /* FlickrCommentTableViewController.swift */,
-				039459631DB227A300D6A4D4 /* ShowCommentsPresentationController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -331,6 +331,14 @@
 				039F28561DAA0643001EF113 /* Native.swift */,
 			);
 			name = Operators;
+			sourceTree = "<group>";
+		};
+		037966D41DB2F56200CC4448 /* Presentation + Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				039459631DB227A300D6A4D4 /* ShowCommentsPresentationController.swift */,
+			);
+			name = "Presentation + Transitions";
 			sourceTree = "<group>";
 		};
 		039459621DB20BA300D6A4D4 /* Support */ = {

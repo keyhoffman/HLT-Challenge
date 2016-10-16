@@ -31,16 +31,11 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
         window.makeKeyAndVisible()
         rootNavigationController.transitioningDelegate = self
         
-        let flickrPhotoTableViewControllerConfig = FlickrPhotoTableViewControllerConfiguration(didSelectPhoto: presentComments, hasRequestedDataRefreshForTableView: loadMorePhotos)
+        let flickrPhotoTableViewControllerConfig = FlickrPhotoTableViewControllerConfiguration(didSelectPhoto: presentComments, hasRequestedDataRefreshForTableView: loadPhotos)
         let flickrPhotoTableViewController       = FlickrPhotoTableViewController(configuration: flickrPhotoTableViewControllerConfig)
         rootNavigationController.pushViewController(flickrPhotoTableViewController, animated: false)
         
-        FlickrPhotoMetadata.getPhotosStream { result in
-            switch result {
-            case let .error(error):       debugPrint(error)
-            case let .value(flickrPhoto): flickrPhotoTableViewController.data.append(flickrPhoto)
-            }
-        }
+        loadPhotos(for: flickrPhotoTableViewController)
     }
     
     private func presentComments(for flickrPhoto: FlickrPhoto) {
@@ -48,13 +43,20 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
         flickrCommentTableViewController.modalPresentationStyle = .custom
         flickrCommentTableViewController.transitioningDelegate  = self
         
-        showCommentsPresentationController = ShowCommentsPresentationController(flickrPhoto: flickrPhoto, presentedViewController: flickrCommentTableViewController, presenting: nil)
         
-        showCommentsPresentationController?.dismiss = { _ in self.rootNavigationController.dismiss(animated: true) }
+        showCommentsPresentationController = ShowCommentsPresentationController(flickrPhoto: flickrPhoto, presentedViewController: flickrCommentTableViewController, presenting: nil) {
+            self.rootNavigationController.dismiss(animated: true)
+        }
         
         rootNavigationController.present(flickrCommentTableViewController, animated: true)
         
-        let photoIDParameter = FlickrPhotoComment.photoIDParameter(for: flickrPhoto.metadata) // FIXME: CLEAN THIS UP!!!!!
+        loadComments(for: flickrCommentTableViewController, with: flickrPhoto)
+    }
+    
+    // MARK: - FlickrAPIGetable API Calls
+    
+    private func loadComments(for flickrCommentTableViewController: FlickrCommentTableViewController, with photo: FlickrPhoto) {
+        let photoIDParameter = FlickrPhotoComment.photoIDParameter(for: photo.metadata)
         FlickrPhotoComment.getAll(withAdditionalQueryParameters: photoIDParameter) { result in
             switch result {
             case let .error(error):    debugPrint(error)
@@ -63,15 +65,17 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
         }
     }
     
-    private func loadMorePhotos(for flickrTableViewController: FlickrPhotoTableViewController) {
-        let index = flickrTableViewController.data.count
-        FlickrPhotoMetadata.getPhotosStream(startingAt: index) { result in
+    private func loadPhotos(for flickrPhotoTableViewController: FlickrPhotoTableViewController) {
+        let index = flickrPhotoTableViewController.data.count
+        FlickrPhotoMetadata.getPhotosStream(at: index) { result in
             switch result {
             case let .error(error):       debugPrint(error)
-            case let .value(flickrPhoto): flickrTableViewController.data.append(flickrPhoto)
+            case let .value(flickrPhoto): flickrPhotoTableViewController.data.append(flickrPhoto)
             }
         }
     }
+    
+    // MARK: - UIViewControllerTransitioningDelegate Conformance
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return showCommentsPresentationController
@@ -81,3 +85,4 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
         return showCommentsPresentationController
     }
 }
+

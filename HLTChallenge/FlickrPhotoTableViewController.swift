@@ -45,8 +45,6 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     private let didSelectPhoto:                      (FlickrPhoto) -> Void
     private let hasRequestedDataRefreshForTableView: (FlickrPhotoTableViewController) -> Void
     
-    var handlePrefetch: (FlickrPhotoTableViewController, [Int]) -> Void = { _ in }
-    
     // MARK: - Initialization
     
     init(configuration: FlickrPhotoTableViewControllerConfiguration) {

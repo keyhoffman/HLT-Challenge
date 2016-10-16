@@ -56,7 +56,7 @@ extension FlickrPhotoMetadata {
 // MARK: - Module Static API
 
 extension FlickrPhotoMetadata {
-    static func getPhotosStream(startingAt index: Int = 0, withBlock block: @escaping ResultBlock<FlickrPhoto>) {
+    static func getPhotosStream(at index: Int = 0, withBlock block: @escaping ResultBlock<FlickrPhoto>) {
         switch pageNumber(for: index) { // FIXME: GET RID OF THIS SWITCH STATEMENT
         case let .error(error):      block <^> Result(error)
         case let .value(pageNumber): curry(getAll) <^> [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
