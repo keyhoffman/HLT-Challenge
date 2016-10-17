@@ -22,5 +22,6 @@ extension Percentage {
     static var ten:        Percentage { return 0.10 }
     static var seven:      Percentage { return 0.07 }
     static var five:       Percentage { return 0.05 }
+    static var four:       Percentage { return 0.04 }
     static var zero:       Percentage { return 0.00 }
 }

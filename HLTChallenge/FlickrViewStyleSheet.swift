@@ -31,14 +31,21 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
         let flickrImageViewConstraints = [flickrImageViewTop, flickrImageViewBottom, flickrImageViewLeading, flickrImageViewTrailing]
         
-        let titleLabelCenterX = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .centerX <^> .equal <^> flickrView.blurView <^> .centerX <^> 1 <^> 0
-        let titleLabelCenterY = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .centerY <^> .equal <^> flickrView.blurView <^> .centerY <^> 1 <^> 0
-        let titleLabelHeight  = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .height  <^> .equal <^> flickrView.blurView <^> .height  <^> 1 <^> 0
-        let titleLabelWidth   = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .width   <^> .equal <^> flickrView.blurView <^> .width   <^> 1 <^> 0
+        let titleLabelCenterX = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .centerX <^> .equal <^> flickrView.vibrancyView <^> .centerX <^> 1 <^> 0
+        let titleLabelCenterY = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .centerY <^> .equal <^> flickrView.vibrancyView <^> .centerY <^> 1 <^> 0
+        let titleLabelHeight  = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .height  <^> .equal <^> flickrView.vibrancyView <^> .height  <^> 1 <^> 0
+        let titleLabelWidth   = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .width   <^> .equal <^> flickrView.vibrancyView <^> .width   <^> 1 <^> 0
         
         let titleLabelConstraints = [titleLabelCenterX, titleLabelCenterY, titleLabelHeight, titleLabelWidth]
         
-        NSLayoutConstraint.activate <^> flickrImageViewConstraints + titleLabelConstraints
+        let vibrancyViewCenterX = curry(NSLayoutConstraint.init) <^> flickrView.vibrancyView <^> .centerX <^> .equal <^> flickrView.blurView <^> .centerX <^> 1 <^> 0
+        let vibrancyViewCenterY = curry(NSLayoutConstraint.init) <^> flickrView.vibrancyView <^> .centerY <^> .equal <^> flickrView.blurView <^> .centerY <^> 1 <^> 0
+        let vibrancyViewHeight  = curry(NSLayoutConstraint.init) <^> flickrView.vibrancyView <^> .height  <^> .equal <^> flickrView.blurView <^> .height  <^> 1 <^> 0
+        let vibrancyViewWidth   = curry(NSLayoutConstraint.init) <^> flickrView.vibrancyView <^> .width   <^> .equal <^> flickrView.blurView <^> .width   <^> 1 <^> 0
+        
+        let vibrancyViewConstraints = [vibrancyViewCenterX, vibrancyViewCenterY, vibrancyViewHeight, vibrancyViewWidth]
+        
+        NSLayoutConstraint.activate <^> flickrImageViewConstraints + titleLabelConstraints + vibrancyViewConstraints
     }
     
     // MARK: - Label
@@ -54,6 +61,7 @@ struct FlickrViewStyleSheet: ViewPreparer {
             l.textAlignment                             = textAlignment
             l.numberOfLines                             = numberOfLines
             l.adjustsFontSizeToFitWidth                 = adjustsFontSizeToFitWidth
+            l.font                                      = font
             l.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
             l.sizeToFit()
             return l
@@ -67,7 +75,7 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
         private var textColor: UIColor {
             switch self {
-            case .title: return UIColor.black.withAlphaComponent(.seventy)
+            case .title: return UIColor.darkText.withAlphaComponent(.seventy)
             }
         }
         
@@ -89,6 +97,12 @@ struct FlickrViewStyleSheet: ViewPreparer {
             }
         }
         
+        private var font: UIFont {
+            switch self {
+            case .title: return UIFont.monospacedDigitSystemFont(ofSize: 25, weight: UIFontWeightSemibold)
+            }
+        }
+        
         private var translatesAutoresizingMaskIntoConstraints: Bool {
             switch self {
             case .title: return false
@@ -99,7 +113,7 @@ struct FlickrViewStyleSheet: ViewPreparer {
     // MARK: - VisualEffectView
     
     enum VisualEffectView: Int {
-        case titleBlur = 1
+        case titleBlur = 1, titleVibrancy
         
         var visualEffectView: UIVisualEffectView {
             let bv                                       = UIVisualEffectView(effect: effect)
@@ -113,45 +127,52 @@ struct FlickrViewStyleSheet: ViewPreparer {
             return bv
         }
         
-        private var effect: UIVisualEffect {
+        private var effect: UIVisualEffect? {
             switch self {
-            case .titleBlur: return UIBlurEffect(style: .light)
+            case .titleBlur:     return UIBlurEffect(style: .light)
+            case .titleVibrancy: return UIVibrancyEffect.init <*> (VisualEffectView.titleBlur.effect as? UIBlurEffect)
             }
         }
         
-        private var backgroundColor: UIColor {
+        private var backgroundColor: UIColor? {
             switch self {
-            case .titleBlur: return UIColor.white.withAlphaComponent(.fifty)
+            case .titleBlur:     return UIColor.white.withAlphaComponent(.fifty)
+            case .titleVibrancy: return nil
             }
         }
         
-        private var borderColor: CGColor {
+        private var borderColor: CGColor? {
             switch self {
-            case .titleBlur: return UIColor.darkText.withAlphaComponent(.sixty).cgColor
+            case .titleBlur:     return UIColor.darkText.withAlphaComponent(.forty).cgColor
+            case .titleVibrancy: return nil
             }
         }
         
         private var borderWidth: CGFloat {
             switch self {
-            case .titleBlur: return 1.0
+            case .titleBlur:     return 0.5
+            case .titleVibrancy: return 0.0
             }
         }
         
         private var cornerRadius: CGFloat {
             switch self {
-            case .titleBlur: return 4.0
+            case .titleBlur:     return 4.0
+            case .titleVibrancy: return 0.0
             }
         }
         
         private var clipsToBounds: Bool {
             switch self {
-            case .titleBlur: return true
+            case .titleBlur:     return true
+            case .titleVibrancy: return true
             }
         }
         
         private var translatesAutoresizingMaskIntoConstraints: Bool {
             switch self {
-            case .titleBlur: return false
+            case .titleBlur:     return false
+            case .titleVibrancy: return false
             }
         }
     }
