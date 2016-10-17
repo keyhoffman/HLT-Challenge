@@ -20,9 +20,7 @@ final class FlickrView: UIView, Preparable, Configurable {
     
     let blurView = FlickrViewStyleSheet.VisualEffectView.titleBlur.visualEffectView
     
-    private lazy var blurViewWidth: NSLayoutConstraint = {
-        return curry(NSLayoutConstraint.init) <^> self.blurView <^> .width <^> .equal <^> self <^> .width <^> .twenty <^> 0
-    }()
+    private lazy var blurViewWidth: NSLayoutConstraint = { curry(NSLayoutConstraint.init) <^> self.blurView <^> .width <^> .equal <^> self <^> .width <^> .twenty <^> 0 }()
 
     // MARK: - Preparable Conformance
     
@@ -61,7 +59,7 @@ final class FlickrView: UIView, Preparable, Configurable {
     dynamic private func displayPhotoTitle() {
         layoutIfNeeded()
         UIView.animate(withDuration: 2.0, delay: 0.0, usingSpringWithDamping: .ninety, initialSpringVelocity: 0.0, options: .curveEaseOut, animations: { [weak self] in
-            self?.blurViewWidth.constant = self?.blurViewWidth.constant == 0 ? 275 : 0
+            self?.blurViewWidth.constant = self?.blurViewWidth.constant == 0 ? 275 : 0 // FIXME: REMOVE MAGIC NUMBER
             self?.titleLabel.text        = self?.blurViewWidth.constant == 0 ? "title" : self?.flickrPhotoMetadata?.title
             self?.layoutIfNeeded()
         })
