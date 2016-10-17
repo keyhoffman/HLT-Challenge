@@ -10,7 +10,7 @@ import UIKit
 
 final class ShowCommentsPresentationController: UIPresentationController, UIViewControllerAnimatedTransitioning {
     
-    private lazy var blurView: UIVisualEffectView? = { [weak self] in
+    private lazy var backgroundBlurView: UIVisualEffectView? = { [weak self] in
         guard let `self` = self else { return nil }
         let bv           = UIVisualEffectView.init <^> UIBlurEffect(style: .dark)
         bv.frame         = self.containerView?.frame ?? .zero
@@ -63,7 +63,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     }()
     
     private lazy var dismissTapGesture: UITapGestureRecognizer? = { [weak self] in
-        guard let `self` = self else { return nil }
+//        guard let `self` = self else { return nil }
         return UITapGestureRecognizer(target: self, action: #selector(tapDismiss))
     }()
     
@@ -78,7 +78,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     }
     
     override func presentationTransitionWillBegin() {
-        containerView?.addSubview <*> blurView
+        containerView?.addSubview <*> backgroundBlurView
         containerView?.addSubview <*> mainStackView
         containerView?.addGestureRecognizer <*> dismissTapGesture
         
@@ -90,9 +90,9 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         
         presentingViewController.transitionCoordinator?.animate(alongsideTransition: { [weak self] _ in
             guard let `self` = self else { return }
-            self.blurView?.alpha        = .oneHundred
-            self.flickrPhotoView?.alpha = .oneHundred
-            self.ownerNameLabel?.alpha  = .oneHundred
+            self.backgroundBlurView?.alpha = .oneHundred
+            self.flickrPhotoView?.alpha    = .oneHundred
+            self.ownerNameLabel?.alpha     = .oneHundred
             
             self.presentingViewController.view.alpha = .thirty
             self.presentedViewController.view.frame  = self.frameOfPresentedViewInContainerView
@@ -148,10 +148,10 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     }
     
     private func removeAllViewsAndResetPresentingViewController() {
-        ownerNameLabel? .removeFromSuperview()
-        flickrPhotoView?.removeFromSuperview()
-        mainStackView?  .removeFromSuperview()
-        blurView?       .removeFromSuperview()
+        ownerNameLabel?    .removeFromSuperview()
+        flickrPhotoView?   .removeFromSuperview()
+        mainStackView?     .removeFromSuperview()
+        backgroundBlurView?.removeFromSuperview()
         containerView?.removeLayoutGuide <*> mainStackViewLayoutGuide
         containerView?.removeGestureRecognizer <*> dismissTapGesture
         presentingViewController.view.alpha = .oneHundred

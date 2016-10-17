@@ -29,7 +29,7 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     }()
     
     lazy var spinner: UIActivityIndicatorView = { [weak self] in
-        let s = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        let s = UIActivityIndicatorView(activityIndicatorStyle: .white)
         s.hidesWhenStopped = true
         s.center = self?.tableView.center ?? CGPoint(x: 0, y: 0)
         return s
@@ -65,11 +65,13 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     // MARK: - Empty Dataset Handling
     
     func setEmptyBackgroundLabel() {
+        print("added label")
         tableView.backgroundView = emptyMessageLabel
         tableView.separatorStyle = .none
     }
     
     func removeEmptyBackgroundLabel() {
+        print("removed label")
         tableView.backgroundView = nil
         tableView.separatorStyle = .singleLine
     }
@@ -80,8 +82,10 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
         super.viewDidLoad()
         tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.addSubview(spinner)
+//        tableView.backgroundView = spinner
+        tableView.separatorStyle = .none
         spinner.startAnimating()
-        if data.count < 1 { setEmptyBackgroundLabel() }
+//        if data.count < 1 { setEmptyBackgroundLabel() }
     }
     
      // MARK: - UITableViewDatasource Conformance Methods

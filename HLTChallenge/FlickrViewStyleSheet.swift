@@ -22,10 +22,7 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
         flickrView.backgroundColor = .clear
         
-        // MARK: AutoLayout
-        
-        let titleLabelBottomToFlickrViewTopOffset = titleLabelBottomToFlickrViewTopOffsetByViewHeightFactor * flickrView.frame.height
-        
+        // MARK: - AutoLayout
         
         let flickrImageViewTop      = curry(NSLayoutConstraint.init) <^> flickrView.flickrPhotoView <^> .top      <^> .equal <^> flickrView <^> .top      <^> 1 <^> 0
         let flickrImageViewBottom   = curry(NSLayoutConstraint.init) <^> flickrView.flickrPhotoView <^> .bottom   <^> .equal <^> flickrView <^> .bottom   <^> 1 <^> 0
@@ -34,15 +31,14 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
         let flickrImageViewConstraints = [flickrImageViewTop, flickrImageViewBottom, flickrImageViewLeading, flickrImageViewTrailing]
         
-        let titleLabelTop      = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .top      <^> .equal <^> flickrView <^> .topMargin      <^> 1 <^> 0
-        let titleLabelBottom   = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .bottom   <^> .equal <^> flickrView <^> .top            <^> 1 <^> titleLabelBottomToFlickrViewTopOffset
-        let titleLabelLeading  = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .leading  <^> .equal <^> flickrView <^> .leadingMargin  <^> 1 <^> 0
-        let titleLabelTrailing = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .trailing <^> .equal <^> flickrView <^> .trailingMargin <^> 1 <^> 0
+        let titleLabelCenterX = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .centerX <^> .equal <^> flickrView.blurView <^> .centerX <^> 1 <^> 0
+        let titleLabelCenterY = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .centerY <^> .equal <^> flickrView.blurView <^> .centerY <^> 1 <^> 0
+        let titleLabelHeight  = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .height  <^> .equal <^> flickrView.blurView <^> .height  <^> 1 <^> 0
+        let titleLabelWidth   = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .width   <^> .equal <^> flickrView.blurView <^> .width   <^> 1 <^> 0
         
-        let titleLabelConstraints = [titleLabelTop, titleLabelBottom, titleLabelLeading, titleLabelTrailing]
+        let titleLabelConstraints = [titleLabelCenterX, titleLabelCenterY, titleLabelHeight, titleLabelWidth]
         
-        NSLayoutConstraint.activate <^> titleLabelConstraints + flickrImageViewConstraints
-        
+        NSLayoutConstraint.activate <^> flickrImageViewConstraints + titleLabelConstraints
     }
     
     // MARK: - Label
@@ -59,18 +55,19 @@ struct FlickrViewStyleSheet: ViewPreparer {
             l.numberOfLines                             = numberOfLines
             l.adjustsFontSizeToFitWidth                 = adjustsFontSizeToFitWidth
             l.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
+            l.sizeToFit()
             return l
         }
         
-        private var backgroundColor: UIColor {
+        private var backgroundColor: UIColor? {
             switch self {
-            case .title: return #colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 0.470515839)
+            case .title: return .clear
             }
         }
         
         private var textColor: UIColor {
             switch self {
-            case .title: return .black
+            case .title: return UIColor.black.withAlphaComponent(.seventy)
             }
         }
         
@@ -95,6 +92,66 @@ struct FlickrViewStyleSheet: ViewPreparer {
         private var translatesAutoresizingMaskIntoConstraints: Bool {
             switch self {
             case .title: return false
+            }
+        }
+    }
+    
+    // MARK: - VisualEffectView
+    
+    enum VisualEffectView: Int {
+        case titleBlur = 1
+        
+        var visualEffectView: UIVisualEffectView {
+            let bv                                       = UIVisualEffectView(effect: effect)
+            bv.tag                                       = rawValue
+            bv.backgroundColor                           = backgroundColor
+            bv.layer.borderColor                         = borderColor
+            bv.layer.borderWidth                         = borderWidth
+            bv.layer.cornerRadius                        = cornerRadius
+            bv.clipsToBounds                             = clipsToBounds
+            bv.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
+            return bv
+        }
+        
+        private var effect: UIVisualEffect {
+            switch self {
+            case .titleBlur: return UIBlurEffect(style: .light)
+            }
+        }
+        
+        private var backgroundColor: UIColor {
+            switch self {
+            case .titleBlur: return UIColor.white.withAlphaComponent(.fifty)
+            }
+        }
+        
+        private var borderColor: CGColor {
+            switch self {
+            case .titleBlur: return UIColor.darkText.withAlphaComponent(.sixty).cgColor
+            }
+        }
+        
+        private var borderWidth: CGFloat {
+            switch self {
+            case .titleBlur: return 1.0
+            }
+        }
+        
+        private var cornerRadius: CGFloat {
+            switch self {
+            case .titleBlur: return 4.0
+            }
+        }
+        
+        private var clipsToBounds: Bool {
+            switch self {
+            case .titleBlur: return true
+            }
+        }
+        
+        private var translatesAutoresizingMaskIntoConstraints: Bool {
+            switch self {
+            case .titleBlur: return false
             }
         }
     }

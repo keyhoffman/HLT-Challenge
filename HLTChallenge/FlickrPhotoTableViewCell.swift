@@ -14,7 +14,6 @@ final class FlickrPhotoTableViewCell: UITableViewCell, Configurable, Preparable 
     
     // MARK: - Property Declarations
     
-    // FIXEME: FlickrTableViewCellStyleSheet.View.flickr.view
     let flickrView = FlickrView()
     
     // MARK: - Initialization

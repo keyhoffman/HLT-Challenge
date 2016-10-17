@@ -19,6 +19,7 @@ struct FlickrPhotoTableViewCellStyleSheet: ViewPreparer {
         defer { photoCell.layoutIfNeeded() }
         
         photoCell.backgroundColor = .darkText
+        photoCell.selectionStyle  = .none
         
         // MARK: AutoLayout
         
@@ -32,31 +33,5 @@ struct FlickrPhotoTableViewCellStyleSheet: ViewPreparer {
         let flickrViewConstraints = [flickrViewTop, flickrViewBottom, flickrViewLeading, flickrViewTrailing]
         
         NSLayoutConstraint.activate <^> flickrViewConstraints
-    }
-    
-    // MARK: - View
-    
-    enum View: Int {
-        case flickr = 1
-        
-        var view: UIView {
-            let v                                       = _view
-            v.tag                                       = rawValue
-            v.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
-            return v
-        }
-        
-        private var _view: UIView {
-            switch self {
-            case .flickr: return FlickrView()
-            }
-        }
-        
-        private var translatesAutoresizingMaskIntoConstraints: Bool {
-            switch self {
-            case .flickr: return false
-            }
-        }
-        
     }
 }

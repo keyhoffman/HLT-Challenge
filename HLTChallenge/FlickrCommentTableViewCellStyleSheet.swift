@@ -14,7 +14,7 @@ struct FlickrCommentTableViewCellStyleSheet: ViewPreparer {
     
     static func prepare(_ commentCell: FlickrCommentTableViewCell) {
         
-        commentCell.backgroundColor = .darkText
+        commentCell.backgroundColor = .clear
         
         defer { commentCell.layoutIfNeeded() }
         

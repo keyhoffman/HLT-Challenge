@@ -43,7 +43,6 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
         flickrCommentTableViewController.modalPresentationStyle = .custom
         flickrCommentTableViewController.transitioningDelegate  = self
         
-        
         showCommentsPresentationController = ShowCommentsPresentationController(flickrPhoto: flickrPhoto, presentedViewController: flickrCommentTableViewController, presenting: nil) {
             self.rootNavigationController.dismiss(animated: true)
         }

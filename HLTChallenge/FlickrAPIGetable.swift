@@ -23,7 +23,7 @@ extension FlickrAPIGetable {
         ]
     }
     
-    // MARK: RESTGetable Conformance
+    // MARK: - RESTGetable Conformance
     
     static var urlAddressParameters: URLParameters {
         return [
