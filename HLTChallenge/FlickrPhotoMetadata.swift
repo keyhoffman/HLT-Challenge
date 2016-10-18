@@ -35,19 +35,19 @@ extension FlickrPhotoMetadata {
     ]
     
     static func create(from dict: JSONDictionary) -> Result<FlickrPhotoMetadata> {
-        guard let id      = dict[FlickrConstants.Response.Keys.Metadata.id]          >>= JSONString,
-              let url     = dict[FlickrConstants.Response.Keys.Metadata.url]         >>= JSONString,
-              let title   = dict[FlickrConstants.Response.Keys.Metadata.title]       >>= JSONString,
-              let ownerId = dict[FlickrConstants.Response.Keys.Metadata.ownerID]     >>= JSONString,
-              let ownerName = dict[FlickrConstants.Response.Keys.Metadata.ownerName] >>= JSONString else { return Result(CreationError.Flickr.metadata) }
+        guard let id      = dict[FlickrConstants.Response.Keys.Metadata.id]          >>- JSONString,
+              let url     = dict[FlickrConstants.Response.Keys.Metadata.url]         >>- JSONString,
+              let title   = dict[FlickrConstants.Response.Keys.Metadata.title]       >>- JSONString,
+              let ownerId = dict[FlickrConstants.Response.Keys.Metadata.ownerID]     >>- JSONString,
+              let ownerName = dict[FlickrConstants.Response.Keys.Metadata.ownerName] >>- JSONString else { return Result(CreationError.Flickr.metadata) }
         return Result.init <^> FlickrPhotoMetadata(id: id, url: url, title: title, ownerID: ownerId, ownerName: ownerName)
     }
     
     // FIXME: MOVE THIS FUNCTIONALITY INSIDE `create` METHOD
     static func extract(from dict: JSONDictionary) -> Result<[FlickrPhotoMetadata]> {
-        guard let photosDict  = dict[FlickrConstants.Response.Keys.Metadata.photos]      >>= _JSONDictionary,
-              let status      = dict[FlickrConstants.Response.Keys.General.status]       >>= JSONString,
-              let photosArray = photosDict[FlickrConstants.Response.Keys.Metadata.photo] >>= JSONArray,
+        guard let photosDict  = dict[FlickrConstants.Response.Keys.Metadata.photos]      >>- _JSONDictionary,
+              let status      = dict[FlickrConstants.Response.Keys.General.status]       >>- JSONString,
+              let photosArray = photosDict[FlickrConstants.Response.Keys.Metadata.photo] >>- JSONArray,
               status == FlickrConstants.Response.Values.Status.success else { return Result(CreationError.Flickr.metadata) }
         return photosArray.map(FlickrPhotoMetadata.create).invert()
     }
@@ -60,7 +60,7 @@ extension FlickrPhotoMetadata {
         switch pageNumber(for: index) { // FIXME: GET RID OF THIS SWITCH STATEMENT
         case let .error(error):      block <^> Result(error)
         case let .value(pageNumber): curry(getAll) <^> [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
-                                                   <^> { allMetadataResults in _ = allMetadataResults >>= { allMetadata in Result.init
+                                                   <^> { allMetadataResults in _ = allMetadataResults >>- { allMetadata in Result.init
                                                    <^> allMetadata.map { metadata in metadata.getFlickrPhoto
                                                    <^> block } } }
         }
@@ -86,7 +86,7 @@ extension FlickrPhotoMetadata {
         DispatchQueue.global(qos: .userInitiated).async {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
             DispatchQueue.main.async {
-                switch (data >>= UIImage.init).toResult <^> CreationError.Flickr.photo(forURL: self.url) { // FIXME: GET RID OF THIS SWITCH STATEMENT
+                switch (data >>- UIImage.init).toResult <^> CreationError.Flickr.photo(forURL: self.url) { // FIXME: GET RID OF THIS SWITCH STATEMENT
                 case let .error(error): block <^> Result(error)
                 case let .value(photo): block <^> (Result.init <^> FlickrPhoto(photo: photo, metadata: self))
                 }

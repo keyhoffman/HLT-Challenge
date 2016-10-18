@@ -79,7 +79,7 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
     
     // MARK: - UIViewControllerTransitioningDelegate Conformance
     
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {        
         return showCommentsPresentationController
     }
     

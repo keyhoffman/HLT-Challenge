@@ -20,17 +20,14 @@ precedencegroup CurryPrecedence {
 
 precedencegroup MonadicPrecedence {
     associativity: left
-    higherThan: DefaultPrecedence
+    higherThan:    DefaultPrecedence
 }
 
 // MARK: - Operator Declarations
 
-infix operator <^>  : CurryPrecedence
-//infix operator <^>>  : FooPrecedence
-infix operator |>   : MonadicPrecedence
-infix operator >>=  : MonadicPrecedence
-infix operator >>== : MonadicPrecedence
-infix operator <*>  : MonadicPrecedence
+infix operator <^> : CurryPrecedence
+infix operator >>- : MonadicPrecedence
+infix operator <*> : MonadicPrecedence
 
 // MARK: - Operator Implementations
 
@@ -43,18 +40,13 @@ func <^> <A, B>(_ f: (A) -> B, _ a: A) -> B {
     return f(a)
 }
 
-/// (A, A -> B) -> B
-func |> <A, B>(_ a: A, _ f: (A) -> B) -> B {
-    return f(a)
-}
-
 /// (Result<A>, A -> Result<B>) -> Result<B>
-func >>= <A, B>(_ a: Result<A>, _ f: (A) -> Result<B>) -> Result<B> { // >>>
+func >>- <A, B>(_ a: Result<A>, _ f: (A) -> Result<B>) -> Result<B> { // >>>
     return a.flatMap(f)
 }
 
 /// (A, A -> B?) -> B?
-func >>= <A, B>(_ a: A?, _ f: (A) -> B?) -> B? { // >>>
+func >>- <A, B>(_ a: A?, _ f: (A) -> B?) -> B? { // >>>
     return a.flatMap(f)
 }
 
@@ -64,6 +56,6 @@ func <*> <A, B>(_ f: ((A) -> B)?, _ a: A?) -> B? {
     return fx(x)
 }
 
-//func >>= <A, B>(a: A?, f: (A) -> Result<B>) -> Result<B> {
+//func >>- <A, B>(a: A?, f: (A) -> Result<B>) -> Result<B> {
 //    return a.toResult()
 //}

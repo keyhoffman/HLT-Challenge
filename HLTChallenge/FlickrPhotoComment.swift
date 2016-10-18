@@ -30,19 +30,19 @@ extension FlickrPhotoComment {
     ]
     
     static func create(from dict: JSONDictionary) -> Result<FlickrPhotoComment> {
-        guard let id      = dict[FlickrConstants.Response.Keys.PhotoComments.id]      >>= JSONString,
-              let author  = dict[FlickrConstants.Response.Keys.PhotoComments.author]  >>= JSONString,
-              let content = dict[FlickrConstants.Response.Keys.PhotoComments.content] >>= JSONString else { return Result(CreationError.Flickr.comment) }
+        guard let id      = dict[FlickrConstants.Response.Keys.PhotoComments.id]      >>- JSONString,
+              let author  = dict[FlickrConstants.Response.Keys.PhotoComments.author]  >>- JSONString,
+              let content = dict[FlickrConstants.Response.Keys.PhotoComments.content] >>- JSONString else { return Result(CreationError.Flickr.comment) }
         return Result.init <^> FlickrPhotoComment(id: id, author: author, content: content)
     }
 
     // FIXME: MOVE THIS FUNCTIONALITY INSIDE `create` METHOD
     static func extract(from dict: JSONDictionary) -> Result<[FlickrPhotoComment]> {
-        guard let commentsDict = dict[FlickrConstants.Response.Keys.PhotoComments.comments] >>= _JSONDictionary,
-              let status       = dict[FlickrConstants.Response.Keys.General.status]         >>= JSONString,
+        guard let commentsDict = dict[FlickrConstants.Response.Keys.PhotoComments.comments] >>- _JSONDictionary,
+              let status       = dict[FlickrConstants.Response.Keys.General.status]         >>- JSONString,
               status == FlickrConstants.Response.Values.Status.success else { return Result(CreationError.Flickr.comment) }
         
-        guard let commentsArray = commentsDict[FlickrConstants.Response.Keys.PhotoComments.comment] >>= JSONArray else { return Result(.empty) }
+        guard let commentsArray = commentsDict[FlickrConstants.Response.Keys.PhotoComments.comment] >>- JSONArray else { return Result(.empty) }
         return commentsArray.map(FlickrPhotoComment.create).invert()
     }
 }

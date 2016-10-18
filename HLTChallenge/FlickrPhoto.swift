@@ -23,7 +23,7 @@ func == (_ lhs: FlickrPhoto, _ rhs: FlickrPhoto) -> Bool {
 
 //extension FlickrPhoto {
 ////    static func create(photo: UIImage?, metadata: FlickrPhotoMetadata) -> Result<FlickrPhoto> {
-////        Result.init <^> ((photo >>= curry(FlickrPhoto.init))! <^> metadata)
+////        Result.init <^> ((photo >>- curry(FlickrPhoto.init))! <^> metadata)
 //////        return Result.init <^> FlickrPhoto(photo: photo, metadata: metadata)
 ////    }
 //}

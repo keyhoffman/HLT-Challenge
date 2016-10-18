@@ -82,7 +82,7 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard tableView.contentOffset.y >= (tableView.contentSize.height - tableView.frame.height) else { return }
-        loadPhotosForNextPage(self, tableView.numberOfRows(inSection: 0) - 1)        
+        loadPhotosForNextPage(self, tableView.numberOfRows(inSection: 0) - 1) // FIXME: THIS IS GROSS
     }
     
     // MARK: - UITableViewDataSourcePrefetching Conformance
@@ -103,11 +103,10 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     }
     
     dynamic private func handleRefresh() {
-        print("Refresh requested")
-//        loadPhotosForNextPage(self)
+        loadPhotosForNextPage(self, tableView.numberOfRows(inSection: 0) - 1) // FIXME: THIS IS GROSS
     }
     
     dynamic private func displaySearchTextField() {
-        print("display search text field")
+        fatalError()
     }
 }

@@ -52,7 +52,7 @@ extension RESTGetable {
 extension RESTGetable {
     // FIXME: GENERALIZE THIS METHOD TO WORK WITH `FlickrAPIGetable`
     static func get(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) {
-        switch (url <^> queryParameters) >>= urlRequest { // FIXME: GIT RID OF THIS SWITCH STATEMENT
+        switch (url <^> queryParameters) >>- urlRequest { // FIXME: GIT RID OF THIS SWITCH STATEMENT
         case let .error(error):   block <^> Result(error)
         case let .value(request): dataTask(request: request, withBlock: block)
         }
@@ -61,7 +61,7 @@ extension RESTGetable {
     // MARK: Data Processing
     
     static func processDataTask(date: Data?, response: URLResponse?, error: Error?) -> Result<JSONDictionary> {
-        return (Result(error, Response(data: date, urlResponse: response)) >>= parse(response:)) >>= decode(json:)
+        return (Result(error, Response(data: date, urlResponse: response)) >>- parse(response:)) >>- decode(json:)
     }
     
     // MARK: URL Configuration
@@ -87,7 +87,7 @@ extension RESTGetable {
     static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping ResultBlock<Self>) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
-                block <^> (processDataTask(date: data, response: response, error: error) >>= Self.create)
+                block <^> (processDataTask(date: data, response: response, error: error) >>- Self.create)
             }
         }.resume()
     }

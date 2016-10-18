@@ -91,7 +91,7 @@ class FlickrPhotoMetadataTests: XCTestCase {
         waitForExpectations(timeout: 6) { error in
             defer { task.cancel() }
             guard let error = error else { return }
-            print("Error:", error.localizedDescription)
+            debugPrint("Error:", error.localizedDescription)
         }
         
     }
