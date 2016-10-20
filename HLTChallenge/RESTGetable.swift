@@ -29,20 +29,20 @@ extension RESTGetable {
 // MARK: - Module Static JSON Parsing Helper Methods
 
 extension RESTGetable {
-    static func JSONObject<A>(from object: AnyObject) -> A? {
+    static func JSONObject<A>(from object: Any) -> A? {
         return object as? A
     }
     
-    static func JSONString(from object: AnyObject) -> String? {
+    static func JSONString(from object: Any) -> String? {
         return object as? String
     }
     
     // TODO: Find a better name for this function
-    static func _JSONDictionary(from object: AnyObject) -> JSONDictionary? {
+    static func _JSONDictionary(from object: Any) -> JSONDictionary? {
         return object as? JSONDictionary
     }
     
-    static func JSONArray(from object: AnyObject) -> [JSONDictionary]? {
+    static func JSONArray(from object: Any) -> [JSONDictionary]? {
         return object as? [JSONDictionary]
     }
 }

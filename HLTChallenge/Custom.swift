@@ -31,9 +31,6 @@ infix operator <*> : MonadicPrecedence
 
 // MARK: - Operator Implementations
 
-//func <^>> <B, C>(_ f: @escaping (B) -> C, _ a: B) -> (B) -> C {
-//    return curry(f) <^> a
-//}
 
 /// (A -> B, A) -> B
 func <^> <A, B>(_ f: (A) -> B, _ a: A) -> B {
@@ -56,6 +53,3 @@ func <*> <A, B>(_ f: ((A) -> B)?, _ a: A?) -> B? {
     return fx(x)
 }
 
-//func >>- <A, B>(a: A?, f: (A) -> Result<B>) -> Result<B> {
-//    return a.toResult()
-//}

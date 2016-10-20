@@ -29,7 +29,7 @@ struct FlickrPhotoTableViewCellStyleSheet: ViewPreparer {
         let flickrViewBottom   = curry(NSLayoutConstraint.init) <^> photoCell.flickrView <^> .bottom   <^> .equal <^> photoCell <^> .bottom   <^> 1 <^> 0
         let flickrViewLeading  = curry(NSLayoutConstraint.init) <^> photoCell.flickrView <^> .leading  <^> .equal <^> photoCell <^> .leading  <^> 1 <^> 0
         let flickrViewTrailing = curry(NSLayoutConstraint.init) <^> photoCell.flickrView <^> .trailing <^> .equal <^> photoCell <^> .trailing <^> 1 <^> 0
-        
+                
         let flickrViewConstraints = [flickrViewTop, flickrViewBottom, flickrViewLeading, flickrViewTrailing]
         
         NSLayoutConstraint.activate <^> flickrViewConstraints

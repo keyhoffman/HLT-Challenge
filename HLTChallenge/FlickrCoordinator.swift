@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - FlickrCoordinator
 
-final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransitioningDelegate {
+final class FlickrCoordinator: NSObject, SubCoordinator {
     
     // MARK: - Property Declarations
     
@@ -29,7 +29,7 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
     func start() {
         window.rootViewController = rootNavigationController
         window.makeKeyAndVisible()
-        rootNavigationController.transitioningDelegate = self
+//        rootNavigationController.transitioningDelegate = self
         
         let flickrPhotoTableViewControllerConfig = FlickrPhotoTableViewControllerConfiguration(didSelectPhoto: presentComments, loadPhotosForNextPage: loadPhotos)
         let flickrPhotoTableViewController       = FlickrPhotoTableViewController(configuration: flickrPhotoTableViewControllerConfig)
@@ -40,12 +40,13 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
     
     private func presentComments(for flickrPhoto: FlickrPhoto) {
         let flickrCommentTableViewController = FlickrCommentTableViewController()
-        flickrCommentTableViewController.modalPresentationStyle = .custom
-        flickrCommentTableViewController.transitioningDelegate  = self
         
-        showCommentsPresentationController = ShowCommentsPresentationController(flickrPhoto: flickrPhoto, presentedViewController: flickrCommentTableViewController, presenting: nil) {
+        let transitioner = Transitioner.init <^> ShowCommentsPresentationController(flickrPhoto: flickrPhoto, presentedViewController: flickrCommentTableViewController, presenting: nil) {
             self.rootNavigationController.dismiss(animated: true)
         }
+        
+        flickrCommentTableViewController.modalPresentationStyle = .custom
+        flickrCommentTableViewController.transitioningDelegate  =  transitioner
         
         rootNavigationController.present(flickrCommentTableViewController, animated: true)
         
@@ -76,10 +77,18 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
             }
         }
     }
+}
+
+final class Transitioner: NSObject, UIViewControllerTransitioningDelegate {
     
-    // MARK: - UIViewControllerTransitioningDelegate Conformance
+    private let showCommentsPresentationController: ShowCommentsPresentationController
+    private let dismissTrans = DismissCommentsAnimatedTransition()
     
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {        
+    init(showPre: ShowCommentsPresentationController) {
+        self.showCommentsPresentationController = showPre
+    }
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return showCommentsPresentationController
     }
     
@@ -88,7 +97,12 @@ final class FlickrCoordinator: NSObject, SubCoordinator, UIViewControllerTransit
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return DismissCommentsAnimatedTransition()
+        return dismissTrans // FIXME: Y THO
     }
 }
+
+
+
+
+
 

@@ -14,7 +14,7 @@ typealias URLParameters = [String: String]
 
 // MARK: - JSONDictionary
 
-typealias JSONDictionary = [String: AnyObject]
+typealias JSONDictionary = [String: Any]
 
 // MARK: - ResultBlock
 
