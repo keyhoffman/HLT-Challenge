@@ -24,28 +24,28 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
         // MARK: - AutoLayout
         
-        let flickrImageViewTop      = curry(NSLayoutConstraint.init) <^> flickrView.flickrPhotoView <^> .top      <^> .equal <^> flickrView <^> .top      <^> 1 <^> 0
-        let flickrImageViewBottom   = curry(NSLayoutConstraint.init) <^> flickrView.flickrPhotoView <^> .bottom   <^> .equal <^> flickrView <^> .bottom   <^> 1 <^> 0
-        let flickrImageViewLeading  = curry(NSLayoutConstraint.init) <^> flickrView.flickrPhotoView <^> .leading  <^> .equal <^> flickrView <^> .leading  <^> 1 <^> 0
-        let flickrImageViewTrailing = curry(NSLayoutConstraint.init) <^> flickrView.flickrPhotoView <^> .trailing <^> .equal <^> flickrView <^> .trailing <^> 1 <^> 0
+        let flickrImageViewTop      = curry(NSLayoutConstraint.init) <| flickrView.flickrPhotoView <| .top      <| .equal <| flickrView <| .top      <| 1 <| 0
+        let flickrImageViewBottom   = curry(NSLayoutConstraint.init) <| flickrView.flickrPhotoView <| .bottom   <| .equal <| flickrView <| .bottom   <| 1 <| 0
+        let flickrImageViewLeading  = curry(NSLayoutConstraint.init) <| flickrView.flickrPhotoView <| .leading  <| .equal <| flickrView <| .leading  <| 1 <| 0
+        let flickrImageViewTrailing = curry(NSLayoutConstraint.init) <| flickrView.flickrPhotoView <| .trailing <| .equal <| flickrView <| .trailing <| 1 <| 0
         
         let flickrImageViewConstraints = [flickrImageViewTop, flickrImageViewBottom, flickrImageViewLeading, flickrImageViewTrailing]
         
-        let titleLabelCenterX = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .centerX <^> .equal <^> flickrView.vibrancyView <^> .centerX <^> 1 <^> 0
-        let titleLabelCenterY = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .centerY <^> .equal <^> flickrView.vibrancyView <^> .centerY <^> 1 <^> 0
-        let titleLabelHeight  = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .height  <^> .equal <^> flickrView.vibrancyView <^> .height  <^> 1 <^> 0
-        let titleLabelWidth   = curry(NSLayoutConstraint.init) <^> flickrView.titleLabel <^> .width   <^> .equal <^> flickrView.vibrancyView <^> .width   <^> 1 <^> 0
+        let titleLabelCenterX = curry(NSLayoutConstraint.init) <| flickrView.titleLabel <| .centerX <| .equal <| flickrView.vibrancyView <| .centerX <| 1 <| 0
+        let titleLabelCenterY = curry(NSLayoutConstraint.init) <| flickrView.titleLabel <| .centerY <| .equal <| flickrView.vibrancyView <| .centerY <| 1 <| 0
+        let titleLabelHeight  = curry(NSLayoutConstraint.init) <| flickrView.titleLabel <| .height  <| .equal <| flickrView.vibrancyView <| .height  <| 1 <| 0
+        let titleLabelWidth   = curry(NSLayoutConstraint.init) <| flickrView.titleLabel <| .width   <| .equal <| flickrView.vibrancyView <| .width   <| 1 <| 0
         
         let titleLabelConstraints = [titleLabelCenterX, titleLabelCenterY, titleLabelHeight, titleLabelWidth]
         
-        let vibrancyViewCenterX = curry(NSLayoutConstraint.init) <^> flickrView.vibrancyView <^> .centerX <^> .equal <^> flickrView.blurView <^> .centerX <^> 1 <^> 0
-        let vibrancyViewCenterY = curry(NSLayoutConstraint.init) <^> flickrView.vibrancyView <^> .centerY <^> .equal <^> flickrView.blurView <^> .centerY <^> 1 <^> 0
-        let vibrancyViewHeight  = curry(NSLayoutConstraint.init) <^> flickrView.vibrancyView <^> .height  <^> .equal <^> flickrView.blurView <^> .height  <^> 1 <^> 0
-        let vibrancyViewWidth   = curry(NSLayoutConstraint.init) <^> flickrView.vibrancyView <^> .width   <^> .equal <^> flickrView.blurView <^> .width   <^> 1 <^> 0
+        let vibrancyViewCenterX = curry(NSLayoutConstraint.init) <| flickrView.vibrancyView <| .centerX <| .equal <| flickrView.blurView <| .centerX <| 1 <| 0
+        let vibrancyViewCenterY = curry(NSLayoutConstraint.init) <| flickrView.vibrancyView <| .centerY <| .equal <| flickrView.blurView <| .centerY <| 1 <| 0
+        let vibrancyViewHeight  = curry(NSLayoutConstraint.init) <| flickrView.vibrancyView <| .height  <| .equal <| flickrView.blurView <| .height  <| 1 <| 0
+        let vibrancyViewWidth   = curry(NSLayoutConstraint.init) <| flickrView.vibrancyView <| .width   <| .equal <| flickrView.blurView <| .width   <| 1 <| 0
         
         let vibrancyViewConstraints = [vibrancyViewCenterX, vibrancyViewCenterY, vibrancyViewHeight, vibrancyViewWidth]
         
-        NSLayoutConstraint.activate <^> flickrImageViewConstraints + titleLabelConstraints + vibrancyViewConstraints
+        NSLayoutConstraint.activate <| flickrImageViewConstraints + titleLabelConstraints + vibrancyViewConstraints
     }
     
     // MARK: - Label

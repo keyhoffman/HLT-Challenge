@@ -16,7 +16,6 @@ final class FlickrCoordinator: NSObject, SubCoordinator {
     
     private let window: UIWindow
     private let rootNavigationController = UINavigationController()
-    private var showCommentsPresentationController: ShowCommentsPresentationController?
     
     // MARK: - Initialization
     
@@ -41,7 +40,7 @@ final class FlickrCoordinator: NSObject, SubCoordinator {
     private func presentComments(for flickrPhoto: FlickrPhoto) {
         let flickrCommentTableViewController = FlickrCommentTableViewController()
         
-        let transitioner = Transitioner.init <^> ShowCommentsPresentationController(flickrPhoto: flickrPhoto, presentedViewController: flickrCommentTableViewController, presenting: nil) {
+        let transitioner = Transitioner.init <| ShowCommentsPresentationController(flickrPhoto: flickrPhoto, presentedViewController: flickrCommentTableViewController, presenting: nil) {
             self.rootNavigationController.dismiss(animated: true)
         }
         

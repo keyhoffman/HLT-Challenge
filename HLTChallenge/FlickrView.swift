@@ -22,7 +22,7 @@ final class FlickrView: UIView, Preparable, Configurable {
     
     let vibrancyView = FlickrViewStyleSheet.VisualEffectView.titleVibrancy.visualEffectView
 
-    private lazy var blurViewWidth: NSLayoutConstraint = { curry(NSLayoutConstraint.init) <^> self.blurView <^> .width <^> .equal <^> self <^> .width <^> .ten <^> 0 }()
+    private lazy var blurViewWidth: NSLayoutConstraint = { curry(NSLayoutConstraint.init) <| self.blurView <| .width <| .equal <| self <| .width <| .ten <| 0 }()
     
     // MARK: - Preparable Conformance
     
@@ -36,13 +36,13 @@ final class FlickrView: UIView, Preparable, Configurable {
         addSubview(blurView)
         blurView.contentView.addSubview(vibrancyView)
         vibrancyView.contentView.addSubview(titleLabel)
-        blurView.addGestureRecognizer <^> UITapGestureRecognizer(target: self, action: #selector(displayPhotoTitle))
+        blurView.addGestureRecognizer <| UITapGestureRecognizer(target: self, action: #selector(displayPhotoTitle))
     }
     
     private func setInitialBlurViewConstraints() {
-        let blurViewTop      = curry(NSLayoutConstraint.init) <^> blurView <^> .top      <^> .equal <^> self <^> .topMargin      <^> 1       <^> 0
-        let blurViewHeight   = curry(NSLayoutConstraint.init) <^> blurView <^> .height   <^> .equal <^> self <^> .height         <^> .ten    <^> 0
-        let blurViewLeading  = curry(NSLayoutConstraint.init) <^> blurView <^> .leading  <^> .equal <^> self <^> .leadingMargin  <^> 1       <^> 0
+        let blurViewTop      = curry(NSLayoutConstraint.init) <| blurView <| .top      <| .equal <| self <| .topMargin      <| 1       <| 0
+        let blurViewHeight   = curry(NSLayoutConstraint.init) <| blurView <| .height   <| .equal <| self <| .height         <| .ten    <| 0
+        let blurViewLeading  = curry(NSLayoutConstraint.init) <| blurView <| .leading  <| .equal <| self <| .leadingMargin  <| 1       <| 0
         
         let blurViewConstraints = [blurViewTop, blurViewHeight, blurViewLeading, blurViewWidth]
         

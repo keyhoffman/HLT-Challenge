@@ -20,7 +20,7 @@ extension Sequence where Iterator.Element == Result<FlickrPhotoMetadata> {
     ///
     /// - returns: A `Result` of an `Array` of `FlickrImageMetadata`
     func invert() -> Result<[FlickrPhotoMetadata]> {
-        return Result.init <^> self.flatMap { $0.toOptional() }
+        return Result.init <| self.flatMap { $0.toOptional() }
     }
 }
 
@@ -29,7 +29,7 @@ extension Sequence where Iterator.Element == Result<FlickrPhotoMetadata> {
 // FIXME: Find a way to make this generic!!!!! Possibly with type erasure
 extension Sequence where Iterator.Element == Result<UIImage> {
     func invert() -> Result<[UIImage]> {
-        return Result.init <^> self.flatMap { $0.toOptional() }
+        return Result.init <| self.flatMap { $0.toOptional() }
     }
 }
 
@@ -38,7 +38,7 @@ extension Sequence where Iterator.Element == Result<UIImage> {
 // FIXME: Find a way to make this generic!!!!! Possibly with type erasure
 extension Sequence where Iterator.Element == Result<FlickrPhotoComment> {
     func invert() -> Result<[FlickrPhotoComment]> {
-        return Result.init <^> self.flatMap { $0.toOptional() }
+        return Result.init <| self.flatMap { $0.toOptional() }
     }
 }
 
@@ -66,6 +66,6 @@ extension Sequence {
 //        
 //        return Result(faa)
 //        
-////        return Result.init <^> self.map { $0.toOptional() }.flatMap { $0 }
+////        return Result.init <| self.map { $0.toOptional() }.flatMap { $0 }
 //    }
 //}

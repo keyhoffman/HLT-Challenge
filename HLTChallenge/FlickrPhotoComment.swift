@@ -33,7 +33,7 @@ extension FlickrPhotoComment {
         guard let id      = dict[FlickrConstants.Response.Keys.PhotoComments.id]      >>- JSONString,
               let author  = dict[FlickrConstants.Response.Keys.PhotoComments.author]  >>- JSONString,
               let content = dict[FlickrConstants.Response.Keys.PhotoComments.content] >>- JSONString else { return Result(CreationError.Flickr.comment) }
-        return Result.init <^> FlickrPhotoComment(id: id, author: author, content: content)
+        return Result.init <| FlickrPhotoComment(id: id, author: author, content: content)
     }
 
     // FIXME: MOVE THIS FUNCTIONALITY INSIDE `create` METHOD

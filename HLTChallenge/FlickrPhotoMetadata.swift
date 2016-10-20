@@ -40,7 +40,7 @@ extension FlickrPhotoMetadata {
               let title   = dict[FlickrConstants.Response.Keys.Metadata.title]       >>- JSONString,
               let ownerId = dict[FlickrConstants.Response.Keys.Metadata.ownerID]     >>- JSONString,
               let ownerName = dict[FlickrConstants.Response.Keys.Metadata.ownerName] >>- JSONString else { return Result(CreationError.Flickr.metadata) }
-        return Result.init <^> FlickrPhotoMetadata(id: id, url: url, title: title, ownerID: ownerId, ownerName: ownerName)
+        return Result.init <| FlickrPhotoMetadata(id: id, url: url, title: title, ownerID: ownerId, ownerName: ownerName)
     }
     
     // FIXME: MOVE THIS FUNCTIONALITY INSIDE `create` METHOD
@@ -58,11 +58,11 @@ extension FlickrPhotoMetadata {
 extension FlickrPhotoMetadata {
     static func getPhotosStream(startingAt index: Int = 0, withBlock block: @escaping ResultBlock<FlickrPhoto>) {
         switch pageNumber(for: index) { // FIXME: GET RID OF THIS SWITCH STATEMENT
-        case let .error(error):      block <^> Result(error)
-        case let .value(pageNumber): curry(getAll) <^> [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
-                                                   <^> { allMetadataResults in _ = allMetadataResults >>- { allMetadata in Result.init
-                                                   <^> allMetadata.map { metadata in metadata.getFlickrPhoto
-                                                   <^> block } } }
+        case let .error(error):      block <| Result(error)
+        case let .value(pageNumber): curry(getAll) <| [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
+                                                   <| { allMetadataResults in _ = allMetadataResults >>- { allMetadata in Result.init
+                                                   <| allMetadata.map { metadata in metadata.getFlickrPhoto
+                                                   <| block } } }
         }
     }
 }
@@ -72,9 +72,9 @@ extension FlickrPhotoMetadata {
 extension FlickrPhotoMetadata {
     static fileprivate func pageNumber(for index: Int) -> Result<String> {
         let picturesPerPageStr = FlickrConstants.Parameters.Values.Metadata.picturesPerPage
-        switch Int(picturesPerPageStr).toResult <^> URLRequestError.invalidURL(parameters: [FlickrConstants.Parameters.Keys.Metadata.picturesPerPage: picturesPerPageStr]) {
+        switch Int(picturesPerPageStr).toResult <| URLRequestError.invalidURL(parameters: [FlickrConstants.Parameters.Keys.Metadata.picturesPerPage: picturesPerPageStr]) {
         case let .error(error):           return Result(error)
-        case let .value(picturesPerPage): return Result.init <^> String((index + picturesPerPage) / picturesPerPage)
+        case let .value(picturesPerPage): return Result.init <| String((index + picturesPerPage) / picturesPerPage)
         }
     }
 }
@@ -86,9 +86,9 @@ extension FlickrPhotoMetadata {
         DispatchQueue.global(qos: .userInitiated).async {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
             DispatchQueue.main.async {
-                switch (data >>- UIImage.init).toResult <^> CreationError.Flickr.photo(forURL: self.url) { // FIXME: GET RID OF THIS SWITCH STATEMENT
-                case let .error(error): block <^> Result(error)
-                case let .value(photo): block <^> (Result.init <^> FlickrPhoto(photo: photo, metadata: self))
+                switch (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url) { // FIXME: GET RID OF THIS SWITCH STATEMENT
+                case let .error(error): block <| Result(error)
+                case let .value(photo): block <| (Result.init <| FlickrPhoto(photo: photo, metadata: self))
                 }
             }
         }

@@ -18,14 +18,14 @@ struct FlickrCommentTableViewCellStyleSheet: ViewPreparer {
         
         defer { commentCell.layoutIfNeeded() }
         
-        let stackViewTop      = curry(NSLayoutConstraint.init) <^> commentCell.mainStackView <^> .top      <^> .equal <^> commentCell <^> .top      <^> 1 <^> 0
-        let stackViewBottom   = curry(NSLayoutConstraint.init) <^> commentCell.mainStackView <^> .bottom   <^> .equal <^> commentCell <^> .bottom   <^> 1 <^> 0
-        let stackViewLeading  = curry(NSLayoutConstraint.init) <^> commentCell.mainStackView <^> .leading  <^> .equal <^> commentCell <^> .leading  <^> 1 <^> 0
-        let stackViewTrailing = curry(NSLayoutConstraint.init) <^> commentCell.mainStackView <^> .trailing <^> .equal <^> commentCell <^> .trailing <^> 1 <^> 0
+        let stackViewTop      = curry(NSLayoutConstraint.init) <| commentCell.mainStackView <| .top      <| .equal <| commentCell <| .top      <| 1 <| 0
+        let stackViewBottom   = curry(NSLayoutConstraint.init) <| commentCell.mainStackView <| .bottom   <| .equal <| commentCell <| .bottom   <| 1 <| 0
+        let stackViewLeading  = curry(NSLayoutConstraint.init) <| commentCell.mainStackView <| .leading  <| .equal <| commentCell <| .leading  <| 1 <| 0
+        let stackViewTrailing = curry(NSLayoutConstraint.init) <| commentCell.mainStackView <| .trailing <| .equal <| commentCell <| .trailing <| 1 <| 0
         
         let stackViewConstraints = [stackViewTop, stackViewBottom, stackViewLeading, stackViewTrailing]
         
-        NSLayoutConstraint.activate <^> stackViewConstraints
+        NSLayoutConstraint.activate <| stackViewConstraints
     }
     
     // MARK: - StackView

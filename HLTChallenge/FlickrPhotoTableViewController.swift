@@ -67,7 +67,7 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     // MARK: - UITableView Delegate Conformance
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        didSelectPhoto <^> data[indexPath.row]
+        didSelectPhoto <| data[indexPath.row]
      }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -52,8 +52,8 @@ extension RESTGetable {
 extension RESTGetable {
     // FIXME: GENERALIZE THIS METHOD TO WORK WITH `FlickrAPIGetable`
     static func get(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) {
-        switch (url <^> queryParameters) >>- urlRequest { // FIXME: GIT RID OF THIS SWITCH STATEMENT
-        case let .error(error):   block <^> Result(error)
+        switch (url <| queryParameters) >>- urlRequest { // FIXME: GIT RID OF THIS SWITCH STATEMENT
+        case let .error(error):   block <| Result(error)
         case let .value(request): dataTask(request: request, withBlock: block)
         }
     }
@@ -67,7 +67,7 @@ extension RESTGetable {
     // MARK: URL Configuration
     
     static func urlRequest(from url: URL) -> Result<URLRequest> {
-        return Result.init <^> URLRequest(url: url)
+        return Result.init <| URLRequest(url: url)
     }
     
     static func url(withAdditionalQueryParameters queryParameters: URLParameters = .empty) -> Result<URL> {
@@ -76,7 +76,7 @@ extension RESTGetable {
                                           host:       urlAddressParameters[host],
                                           queryItems: (urlQueryParameters + queryParameters).map(URLQueryItem.init))?.url
         
-        return componentsURL.toResult(withError:) <^> URLRequestError.invalidURL(parameters: urlQueryParameters)
+        return componentsURL.toResult(withError:) <| URLRequestError.invalidURL(parameters: urlQueryParameters)
     }
 }
 
@@ -87,17 +87,17 @@ extension RESTGetable {
     static fileprivate func dataTask(request: URLRequest, withBlock block: @escaping ResultBlock<Self>) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
-                block <^> (processDataTask(date: data, response: response, error: error) >>- Self.create)
+                block <| (processDataTask(date: data, response: response, error: error) >>- Self.create)
             }
         }.resume()
     }
     
     static fileprivate func parse(response: Response) -> Result<Data> {
-        return Response.successRange.contains(response.statusCode) ? Result(response.data) : Result.init <^> URLRequestError.invalidResponseStatus(code: response.statusCode)
+        return Response.successRange.contains(response.statusCode) ? Result(response.data) : Result.init <| URLRequestError.invalidResponseStatus(code: response.statusCode)
     }
     
     static fileprivate func decode(json data: Data) -> Result<JSONDictionary> {
-        do    { return (try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? JSONDictionary).toResult(withError:) <^> URLRequestError.couldNotParseJSON }
+        do    { return (try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? JSONDictionary).toResult(withError:) <| URLRequestError.couldNotParseJSON }
         catch { return Result(error) }
     }
 }

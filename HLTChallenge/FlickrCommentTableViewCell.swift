@@ -32,7 +32,7 @@ final class FlickrCommentTableViewCell: UITableViewCell, Preparable, Configurabl
     
     func prepare() {
         defer { FlickrCommentTableViewCellStyleSheet.prepare(self) }
-        mainStackView.addArrangedSubviews <^> [authorLabel, contentLabel]
+        mainStackView.addArrangedSubviews <| [authorLabel, contentLabel]
         addSubview(mainStackView)
     }
     

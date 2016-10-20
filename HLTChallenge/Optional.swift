@@ -10,12 +10,18 @@ import Foundation
 
 extension Optional where Wrapped: ResultRepresentable {
     func toResult() -> Result<Wrapped> {
-        guard let x = self else { return Result.init <^> OptionalError.nonExistantValue(ofType: self) }
+        guard let x = self else { return Result.init <| OptionalError.nonExistantValue(ofType: self) }
         return Result(x)
     }
     
     func toResult(withError error: Error) -> Result<Wrapped> {
         guard let x = self else { return Result(error) }
         return Result(x)
+    }
+}
+
+extension Optional {
+    func apply<T>(_ f: ((Wrapped) -> T)?) -> T? {
+        return f.flatMap { self.map($0) }
     }
 }

@@ -12,17 +12,17 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     
     private lazy var backgroundBlurView: UIVisualEffectView? = { [weak self] in
         guard let `self` = self else { return nil }
-        let bv           = UIVisualEffectView.init <^> UIBlurEffect(style: .dark)
+        let bv           = UIVisualEffectView.init <| UIBlurEffect(style: .dark)
         bv.frame         = self.containerView?.frame ?? .zero
         bv.alpha         = .zero
         bv.clipsToBounds = true
-        bv.addSubview <^> self.presentedViewController.view
+        bv.addSubview <| self.presentedViewController.view
         return bv
     }()
 
     private lazy var mainStackView: UIStackView? = { [weak self] in
         guard let `self` = self else { return nil }
-        let sv           = UIStackView.init(withNullableSubViews:) <^> [self.ownerNameLabel, self.flickrPhotoView]
+        let sv           = UIStackView.init(withNullableSubViews:) <| [self.ownerNameLabel, self.flickrPhotoView]
         sv.axis          = .vertical
         sv.alignment     = .center
         sv.distribution  = .fillProportionally
@@ -89,15 +89,14 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         containerView?.layoutIfNeeded()
         
         presentingViewController.transitionCoordinator?.animate(alongsideTransition: { [weak self] _ in
-            guard let `self` = self else { return }
-            self.backgroundBlurView?.alpha = .oneHundred
-            self.flickrPhotoView?.alpha    = .oneHundred
-            self.ownerNameLabel?.alpha     = .oneHundred
+            self?.backgroundBlurView?.alpha = .oneHundred
+            self?.flickrPhotoView?.alpha    = .oneHundred
+            self?.ownerNameLabel?.alpha     = .oneHundred
             
-            self.presentingViewController.view.alpha = .thirty
-            self.presentedViewController.view.frame  = self.frameOfPresentedViewInContainerView
+            self?.presentingViewController.view.alpha = .thirty
+            self?.presentedViewController.view.frame  = self?.frameOfPresentedViewInContainerView ?? .zero
             
-            self.containerView?.layoutIfNeeded()
+            self?.containerView?.layoutIfNeeded()
         })
     }
     
@@ -131,12 +130,12 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         
         let topMarginOffset = containerView.frame.height * 0.03
         
-        let mainStackViewTop    = curry(NSLayoutConstraint.init) <^> mainStackView <^> .top     <^> .equal <^> containerView            <^> .topMargin <^> 1    <^> topMarginOffset
-        let mainStackViewBottom = curry(NSLayoutConstraint.init) <^> mainStackView <^> .bottom  <^> .equal <^> mainStackViewLayoutGuide <^> .top       <^> 1    <^> 0
-        let mainStackViewCenter = curry(NSLayoutConstraint.init) <^> mainStackView <^> .centerX <^> .equal <^> containerView            <^> .centerX   <^> 1    <^> 0
-        let mainStackViewWidth  = curry(NSLayoutConstraint.init) <^> mainStackView <^> .width   <^> .equal <^> containerView            <^> .width     <^> 0.90 <^> 0
+        let mainStackViewTop    = curry(NSLayoutConstraint.init) <| mainStackView <| .top     <| .equal <| containerView            <| .topMargin <| 1    <| topMarginOffset
+        let mainStackViewBottom = curry(NSLayoutConstraint.init) <| mainStackView <| .bottom  <| .equal <| mainStackViewLayoutGuide <| .top       <| 1    <| 0
+        let mainStackViewCenter = curry(NSLayoutConstraint.init) <| mainStackView <| .centerX <| .equal <| containerView            <| .centerX   <| 1    <| 0
+        let mainStackViewWidth  = curry(NSLayoutConstraint.init) <| mainStackView <| .width   <| .equal <| containerView            <| .width     <| 0.90 <| 0
         
-        NSLayoutConstraint.activate <^> [mainStackViewTop, mainStackViewCenter, mainStackViewWidth, mainStackViewBottom]
+        NSLayoutConstraint.activate <| [mainStackViewTop, mainStackViewCenter, mainStackViewWidth, mainStackViewBottom]
     }
     
     dynamic private func tapDismiss() {

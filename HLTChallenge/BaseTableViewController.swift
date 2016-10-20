@@ -19,7 +19,7 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     private let cellIdentifier = String(describing: Cell.self)
     
     lazy var emptyMessageLabel: UILabel = { [weak self] in
-        let l           = UILabel.init <^> CGRect(x: 0, y: 0, width: self?.view.bounds.width ?? 0, height: self?.view.bounds.height ?? 0)
+        let l           = UILabel.init <| CGRect(x: 0, y: 0, width: self?.view.bounds.width ?? 0, height: self?.view.bounds.height ?? 0)
         l.tag           = 0
         l.text          = "No data available"
         l.textColor     = .red
@@ -94,7 +94,7 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? Cell else {
             fatalError(FatalError.couldNotDequeueCell(identifier: cellIdentifier).debugDescription)
         }
-        cell.configure <^> data[indexPath.row]
+        cell.configure <| data[indexPath.row]
         return cell
     }
 }

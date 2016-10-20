@@ -8,48 +8,77 @@
 
 import Foundation
 
-// MARK: - CurryPrecedence Group
+// MARK: - MonadicPrecedence Group
 
-precedencegroup CurryPrecedence {
+precedencegroup MonadicPrecedenceLeft {
+    associativity: left
+    lowerThan:     LogicalDisjunctionPrecedence
+    higherThan:    AssignmentPrecedence
+}
+
+precedencegroup ApplicativePrecedence {
+    associativity: left
+    higherThan:    LogicalConjunctionPrecedence
+    lowerThan:     NilCoalescingPrecedence
+}
+
+// MARK: - Operator Declarations
+
+infix operator >>- : MonadicPrecedenceLeft
+infix operator <*> : ApplicativePrecedence
+
+
+// MARK: - Operator Implementations
+
+func >>- <A, B>(_ a: Result<A>, _ f: (A) -> Result<B>) -> Result<B> {
+    return a.flatMap(f)
+}
+
+func >>- <A, B>(_ a: A?, _ f: (A) -> B?) -> B? {
+    return a.flatMap(f)
+}
+
+func <*> <A, B>(_ f: ((A) -> B)?, _ a: A?) -> B? {
+    return a.apply(f)
+}
+
+// MARK: - Non-Monadic Operators
+
+precedencegroup PipePrecedenceLeft {
     associativity: left
     higherThan:    LogicalDisjunctionPrecedence
     lowerThan:     NilCoalescingPrecedence
 }
 
-// MARK: - MonadicPrecedence Group
-
-precedencegroup MonadicPrecedence {
-    associativity: left
-    higherThan:    DefaultPrecedence
+precedencegroup PipePrecedenceRight {
+    associativity: right
+    higherThan:    LogicalDisjunctionPrecedence
+    lowerThan:     NilCoalescingPrecedence
 }
 
-// MARK: - Operator Declarations
+precedencegroup CompositionPrecedence {
+    associativity: right
+    higherThan:    BitwiseShiftPrecedence
+}
 
-infix operator <^> : CurryPrecedence
-infix operator >>- : MonadicPrecedence
-infix operator <*> : MonadicPrecedence
+infix operator •  : CompositionPrecedence
+infix operator <| : PipePrecedenceLeft
+infix operator |> : PipePrecedenceLeft
 
-// MARK: - Operator Implementations
-
-
-/// (A -> B, A) -> B
-func <^> <A, B>(_ f: (A) -> B, _ a: A) -> B {
+public func <| <A, B>(_ f: (A) -> B, _ a: A) -> B {
     return f(a)
 }
 
-/// (Result<A>, A -> Result<B>) -> Result<B>
-func >>- <A, B>(_ a: Result<A>, _ f: (A) -> Result<B>) -> Result<B> { // >>>
-    return a.flatMap(f)
+public func |> <A, B>(_ a: A, _ f: (A) -> B) -> B {
+    return f(a)
 }
 
-/// (A, A -> B?) -> B?
-func >>- <A, B>(_ a: A?, _ f: (A) -> B?) -> B? { // >>>
-    return a.flatMap(f)
+public func • <T, U, V>(f: @escaping (U) -> V, g: @escaping (T) -> U) -> (T) -> V {
+    return compose(f, g)
 }
 
-/// ((A -> B)?, A?) -> B?
-func <*> <A, B>(_ f: ((A) -> B)?, _ a: A?) -> B? {
-    guard let x = a, let fx = f else { return nil }
-    return fx(x)
+public func compose<T, U, V>(_ f: @escaping (U) -> V, _ g: @escaping (T) -> U) -> (T) -> V {
+    return { x in f(g(x)) }
 }
+
 
