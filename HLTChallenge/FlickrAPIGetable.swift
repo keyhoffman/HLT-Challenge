@@ -42,9 +42,7 @@ extension FlickrAPIGetable {
         let faa = (queryParameters |> (url >-> urlRequest), block)
         let foo = dataTask
         
-        
-        
-        
+                
         switch faa.0 {
         case .error(let e): faa.1 <| Result(e)
         case .value(let v): foo(v, faa.1)
@@ -61,9 +59,9 @@ extension FlickrAPIGetable {
     }
     
     static func dataTask(for request: URLRequest, with block: @escaping ResultBlock<[Self]>) {
-        URLSession.shared.dataTask(with: request) { data, repsonse, error in
+        URLSession.shared.dataTask(with: request) { data, urlResponse, error in
             DispatchQueue.main.async {
-                (data, repsonse, error) |> (processDataTask >-> extract >-> block)
+                (Response(data: data, urlResponse: urlResponse), error) |> (Result.init >-> parse >-> decode >-> extract >-> block)
             }
         }.resume()
     }

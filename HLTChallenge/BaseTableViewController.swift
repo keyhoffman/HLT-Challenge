@@ -93,6 +93,7 @@ class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cel
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? Cell else {
             fatalError(FatalError.couldNotDequeueCell(identifier: cellIdentifier).debugDescription)
+
         }
         cell.configure <| data[indexPath.row]
         return cell

@@ -50,6 +50,14 @@ extension Sequence {
     }
 }
 
+// MARK: - Sequence Extension
+
+extension Sequence {
+    func apply<T>(_ fs: [(Iterator.Element) -> T]) -> [T] {
+        return fs.flatMap { self.map($0) }
+    }
+}
+
 
 
 

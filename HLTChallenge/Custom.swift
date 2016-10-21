@@ -18,13 +18,22 @@ precedencegroup ApplicativePrecedence {
 
 infix operator <*> : ApplicativePrecedence
 infix operator <^> : ApplicativePrecedence
+infix operator <*>> : ApplicativePrecedence
 
 func <*> <A, B>(_ f: ((A) -> B)?, _ a: A?) -> B? {
     return a.apply(f)
 }
 
+func <*> <A, B>(_ fs: [((A) -> B)], _ `as`: [A]) -> [B] {
+    return `as`.apply(fs)
+}
+
 func <^> <A, B>(_ f: (A) -> B, _ a: A?) -> B? {
     return a.flatMap(f)
+}
+
+func <^> <A, B>(_ f: ((A) -> B), _ `as`: [A]) -> [B] {
+    return `as`.flatMap(f)
 }
 
 // MARK: - Monadic Operators
@@ -62,6 +71,12 @@ func >-> <A, B, C>(_ f: @escaping (A) -> B?, _ g: @escaping (B) -> C?) -> (A) ->
 
 func <-< <A, B, C>(_ f: @escaping (B) -> C?, _ g: @escaping (A) -> B?) -> (A) -> C? {
     return { a in g(a) >>- f }
+}
+
+// MARK: Array
+
+func >>- <A, B>(_ a: [A], _ f: (A) -> [B]) -> [B] {
+    return a.flatMap(f)
 }
 
 // MARK: Result
