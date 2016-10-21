@@ -37,18 +37,35 @@ extension FlickrAPIGetable {
 // FIXME: FIX RESPECTIVE `RESTGetable` methods
 extension FlickrAPIGetable {
     static func getAll(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<[Self]>) {
-        switch (url <| queryParameters) >>- urlRequest { // FIXME: GET RID OF THIS SWITCH STATEMENT!!!!
-        case let .error(error):   block <| Result(error)
-        case let .value(request): dataTask(with: request, withBlock: block)
+        
+//        let foo = url >-> urlRequest
+        let faa = (queryParameters |> (url >-> urlRequest), block)
+        let foo = dataTask
+        
+        
+        
+        
+        switch faa.0 {
+        case .error(let e): faa.1 <| Result(e)
+        case .value(let v): foo(v, faa.1)
+            
+            
         }
-
+        
+        
+        switch queryParameters |> (url >-> urlRequest) {
+        case let .error(error):   block <| Result(error)
+        case let .value(request): dataTask(for: request, with: block)
+        }
+        
     }
     
-    static func dataTask(with request: URLRequest, withBlock block: @escaping ResultBlock<[Self]>) {
+    static func dataTask(for request: URLRequest, with block: @escaping ResultBlock<[Self]>) {
         URLSession.shared.dataTask(with: request) { data, repsonse, error in
             DispatchQueue.main.async {
-                block <| (processDataTask(date: data, response: repsonse, error: error) >>- Self.extract)
+                (data, repsonse, error) |> (processDataTask >-> extract >-> block)
             }
         }.resume()
     }
+    
 }

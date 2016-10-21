@@ -35,6 +35,28 @@ extension FlickrPhotoMetadata {
     ]
     
     static func create(from dict: JSONDictionary) -> Result<FlickrPhotoMetadata> {
+        
+        func _extract_(_ _dict_: JSONDictionary) -> Result<[JSONDictionary]> {
+            guard let photosDict  = _dict_[FlickrConstants.Response.Keys.Metadata.photos]    >>- _JSONDictionary,
+                  let status      = _dict_[FlickrConstants.Response.Keys.General.status]     >>- JSONString,
+                  let photosArray = photosDict[FlickrConstants.Response.Keys.Metadata.photo] >>- JSONArray,
+                  status == FlickrConstants.Response.Values.Status.success else { return Result(CreationError.Flickr.metadata) }
+            return Result.init <| photosArray
+        }
+        
+        func make(from __dict__: JSONDictionary) -> Result<FlickrPhotoMetadata> {
+            guard let id      = __dict__[FlickrConstants.Response.Keys.Metadata.id]          >>- JSONString,
+                let url       = __dict__[FlickrConstants.Response.Keys.Metadata.url]         >>- JSONString,
+                let title     = __dict__[FlickrConstants.Response.Keys.Metadata.title]       >>- JSONString,
+                let ownerId   = __dict__[FlickrConstants.Response.Keys.Metadata.ownerID]     >>- JSONString,
+                let ownerName = __dict__[FlickrConstants.Response.Keys.Metadata.ownerName]   >>- JSONString else { return Result(CreationError.Flickr.metadata) }
+            return Result.init <| FlickrPhotoMetadata(id: id, url: url, title: title, ownerID: ownerId, ownerName: ownerName)
+        }
+        
+        
+        
+        
+        
         guard let id      = dict[FlickrConstants.Response.Keys.Metadata.id]          >>- JSONString,
               let url     = dict[FlickrConstants.Response.Keys.Metadata.url]         >>- JSONString,
               let title   = dict[FlickrConstants.Response.Keys.Metadata.title]       >>- JSONString,
@@ -62,7 +84,10 @@ extension FlickrPhotoMetadata {
         case let .value(pageNumber): curry(getAll) <| [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
                                                    <| { allMetadataResults in _ = allMetadataResults >>- { allMetadata in Result.init
                                                    <| allMetadata.map { metadata in metadata.getFlickrPhoto
-                                                   <| block } } }
+                                                   <| block
+                    }
+                }
+            }
         }
     }
 }
@@ -71,11 +96,11 @@ extension FlickrPhotoMetadata {
 
 extension FlickrPhotoMetadata {
     static fileprivate func pageNumber(for index: Int) -> Result<String> {
-        let picturesPerPageStr = FlickrConstants.Parameters.Values.Metadata.picturesPerPage
-        switch Int(picturesPerPageStr).toResult <| URLRequestError.invalidURL(parameters: [FlickrConstants.Parameters.Keys.Metadata.picturesPerPage: picturesPerPageStr]) {
-        case let .error(error):           return Result(error)
-        case let .value(picturesPerPage): return Result.init <| String((index + picturesPerPage) / picturesPerPage)
+        func calculatePage(picturesPerPage: Int) -> Int {
+            return (index + picturesPerPage) / picturesPerPage
         }
+        return (Int(FlickrConstants.Parameters.Values.Metadata.picturesPerPage) >>- (calculatePage |>> String.init))
+            .toResult <| URLRequestError.invalidURL(parameters: [FlickrConstants.Parameters.Keys.Metadata.picturesPerPage: FlickrConstants.Parameters.Values.Metadata.picturesPerPage])
     }
 }
 
@@ -87,8 +112,8 @@ extension FlickrPhotoMetadata {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
             DispatchQueue.main.async {
                 switch (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url) { // FIXME: GET RID OF THIS SWITCH STATEMENT
-                case let .error(error): block <| Result(error)
-                case let .value(photo): block <| (Result.init <| FlickrPhoto(photo: photo, metadata: self))
+                case let .error(error): error |> (Result.init |>> block)
+                case let .value(photo): (photo, self) |> (FlickrPhoto.init |>> Result.init |>> block)
                 }
             }
         }

@@ -18,6 +18,6 @@ protocol ResultType {
     
     init(_ value: Value)
     init(_ error: Error)
-    init(_ error: Error?, _ value: Value?)
+//    init(_ error: Error?, _ value: Value?)
 }
 

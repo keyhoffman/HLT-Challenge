@@ -45,7 +45,8 @@ final class FlickrCoordinator: NSObject, SubCoordinator {
         }
         
         flickrCommentTableViewController.modalPresentationStyle = .custom
-        flickrCommentTableViewController.transitioningDelegate  =  transitioner
+        flickrCommentTableViewController.transitioningDelegate  = transitioner
+//        rootNavigationController.transitioningDelegate          = transitioner
         
         rootNavigationController.present(flickrCommentTableViewController, animated: true)
         
@@ -81,7 +82,7 @@ final class FlickrCoordinator: NSObject, SubCoordinator {
 final class Transitioner: NSObject, UIViewControllerTransitioningDelegate {
     
     private let showCommentsPresentationController: ShowCommentsPresentationController
-    private let dismissTrans = DismissCommentsAnimatedTransition()
+    private let dismissTransition = DismissCommentsAnimatedTransition()
     
     init(showPre: ShowCommentsPresentationController) {
         self.showCommentsPresentationController = showPre
@@ -96,7 +97,7 @@ final class Transitioner: NSObject, UIViewControllerTransitioningDelegate {
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return dismissTrans // FIXME: Y THO
+        return dismissTransition // FIXME: Y THO
     }
 }
 

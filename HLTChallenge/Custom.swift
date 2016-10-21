@@ -8,13 +8,7 @@
 
 import Foundation
 
-// MARK: - MonadicPrecedence Group
-
-precedencegroup MonadicPrecedenceLeft {
-    associativity: left
-    lowerThan:     LogicalDisjunctionPrecedence
-    higherThan:    AssignmentPrecedence
-}
+// MARK: - Applicative Operators
 
 precedencegroup ApplicativePrecedence {
     associativity: left
@@ -22,24 +16,70 @@ precedencegroup ApplicativePrecedence {
     lowerThan:     NilCoalescingPrecedence
 }
 
-// MARK: - Operator Declarations
-
-infix operator >>- : MonadicPrecedenceLeft
 infix operator <*> : ApplicativePrecedence
+infix operator <^> : ApplicativePrecedence
 
+func <*> <A, B>(_ f: ((A) -> B)?, _ a: A?) -> B? {
+    return a.apply(f)
+}
 
-// MARK: - Operator Implementations
-
-func >>- <A, B>(_ a: Result<A>, _ f: (A) -> Result<B>) -> Result<B> {
+func <^> <A, B>(_ f: (A) -> B, _ a: A?) -> B? {
     return a.flatMap(f)
 }
+
+// MARK: - Monadic Operators
+
+precedencegroup MonadicPrecedenceLeft {
+    associativity: left
+    lowerThan:     LogicalDisjunctionPrecedence
+    higherThan:    AssignmentPrecedence
+}
+
+precedencegroup MonadicPrecedenceRight {
+    associativity: left
+    lowerThan:     LogicalDisjunctionPrecedence
+    higherThan:    AssignmentPrecedence
+}
+
+infix operator >>- : MonadicPrecedenceLeft
+infix operator -<< : MonadicPrecedenceRight
+infix operator >-> : MonadicPrecedenceRight
+infix operator <-< : MonadicPrecedenceLeft
+
+// MARK: Optional
 
 func >>- <A, B>(_ a: A?, _ f: (A) -> B?) -> B? {
     return a.flatMap(f)
 }
 
-func <*> <A, B>(_ f: ((A) -> B)?, _ a: A?) -> B? {
-    return a.apply(f)
+func -<< <A, B>(_ f: (A) -> B?, _ a: A?) -> B? {
+    return a.flatMap(f)
+}
+
+func >-> <A, B, C>(_ f: @escaping (A) -> B?, _ g: @escaping (B) -> C?) -> (A) -> C? {
+    return { a in f(a) >>- g }
+}
+
+func <-< <A, B, C>(_ f: @escaping (B) -> C?, _ g: @escaping (A) -> B?) -> (A) -> C? {
+    return { a in g(a) >>- f }
+}
+
+// MARK: Result
+
+func >>- <A, B>(_ a: Result<A>, _ f: (A) -> Result<B>) -> Result<B> {
+    return a.flatMap(f)
+}
+
+func -<< <A, B>(_ f: (A) -> Result<B>, _ a: Result<A>) -> Result<B> {
+    return a.flatMap(f)
+}
+
+func >-> <A, B, C>(_ f: @escaping (A) -> Result<B>, _ g: @escaping (B) -> Result<C>) -> (A) -> Result<C> {
+    return { a in f(a) >>- g }
+}
+
+func <-< <A, B, C>(_ f: @escaping (B) -> Result<C>, _ g: @escaping (A) -> Result<B>) -> (A) -> Result<C> {
+    return { a in g(a) >>- f }
 }
 
 // MARK: - Non-Monadic Operators
@@ -56,14 +96,20 @@ precedencegroup PipePrecedenceRight {
     lowerThan:     NilCoalescingPrecedence
 }
 
-precedencegroup CompositionPrecedence {
+precedencegroup CompositionPrecedenceRight {
     associativity: right
     higherThan:    BitwiseShiftPrecedence
 }
 
-infix operator •  : CompositionPrecedence
-infix operator <| : PipePrecedenceLeft
-infix operator |> : PipePrecedenceLeft
+precedencegroup CompositionPrecedenceLeft {
+    associativity: right
+    higherThan:    BitwiseShiftPrecedence
+}
+
+infix operator <|  : PipePrecedenceLeft
+infix operator |>  : PipePrecedenceLeft
+infix operator <<| : CompositionPrecedenceRight
+infix operator |>> : CompositionPrecedenceLeft
 
 public func <| <A, B>(_ f: (A) -> B, _ a: A) -> B {
     return f(a)
@@ -73,8 +119,12 @@ public func |> <A, B>(_ a: A, _ f: (A) -> B) -> B {
     return f(a)
 }
 
-public func • <T, U, V>(f: @escaping (U) -> V, g: @escaping (T) -> U) -> (T) -> V {
+public func <<| <T, U, V>(_ f: @escaping (U) -> V, _ g: @escaping (T) -> U) -> (T) -> V {
     return compose(f, g)
+}
+
+public func |>> <T, U, V>(_ f: @escaping (T) -> U, _ g: @escaping (U) -> V) -> (T) -> V {
+    return compose(g, f)
 }
 
 public func compose<T, U, V>(_ f: @escaping (U) -> V, _ g: @escaping (T) -> U) -> (T) -> V {

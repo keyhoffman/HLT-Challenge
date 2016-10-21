@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Result
 
-enum Result<T: ResultRepresentable>: ResultType {
+enum Result<T: ResultRepresentable>: ResultType { //, Equatable {
     typealias Value = T
     
     case value(Value)
@@ -21,8 +21,8 @@ enum Result<T: ResultRepresentable>: ResultType {
 }
 
 extension Result {
-    init(_ error: Error?, _ value: Value?) { 
-             if let value = value { self = .value(value) }
+    init(_ value: Value?, _ error: Error?) {
+        if let value = value { self = .value(value) }
         else if let error = error { self = .error(error) }
         else { self = Result.init <| OptionalError.nonExistantValue(ofType: value) }
     }
@@ -59,3 +59,13 @@ extension Result {
     }
 }
 
+//// MARK: - Equatable Conformance
+//
+//func == <U>(_ lhs: Result<U>, _ rhs: Result<U>) -> Bool where U: Equatable {
+//    switch (lhs, rhs) {
+//    case (.value(let a), .value(let b)): return a == b
+//    case (.error, .value): return false
+//    case (.value, .error): return false
+//    case (.error, .error): return false
+//    }
+//}
