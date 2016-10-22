@@ -10,16 +10,16 @@ import UIKit
 
 // MARK: - ResultRepresentable Protocol
 
-protocol ResultRepresentable {}
-
-// MARK: - ResultRepresentable Conformance -- Native Swift Types
-
-extension Array:         ResultRepresentable {}
-extension UIImage:       ResultRepresentable {}
-extension Data:          ResultRepresentable {}
-extension Dictionary:    ResultRepresentable {}
-extension URLRequest:    ResultRepresentable {}
-extension URL:           ResultRepresentable {}
-extension URLComponents: ResultRepresentable {}
-extension Int:           ResultRepresentable {}
-extension String:        ResultRepresentable {}
+//protocol ResultRepresentable {}
+//
+//// MARK: - ResultRepresentable Conformance -- Native Swift Types
+//
+//extension Array:         ResultRepresentable {}
+//extension UIImage:       ResultRepresentable {}
+//extension Data:          ResultRepresentable {}
+//extension Dictionary:    ResultRepresentable {}
+//extension URLRequest:    ResultRepresentable {}
+//extension URL:           ResultRepresentable {}
+//extension URLComponents: ResultRepresentable {}
+//extension Int:           ResultRepresentable {}
+//extension String:        ResultRepresentable {}

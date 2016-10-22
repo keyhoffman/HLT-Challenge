@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - FlickrPhoto
 
-struct FlickrPhoto: ResultRepresentable, Equatable {
+struct FlickrPhoto: Equatable {
     let photo:    UIImage
     let metadata: FlickrPhotoMetadata
 }

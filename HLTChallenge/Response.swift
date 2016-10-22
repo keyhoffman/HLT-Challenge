@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Response
 
-struct Response: ResultRepresentable, Equatable {
+struct Response: Equatable {
     let data:       Data
     let statusCode: Int
 }

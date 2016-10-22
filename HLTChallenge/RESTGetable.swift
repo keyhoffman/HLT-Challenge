@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - RESTGetable Protocol
 
-protocol RESTGetable: Equatable, ResultRepresentable {
+protocol RESTGetable: Equatable {
     static var urlQueryParameters:   URLParameters { get }
     static var urlAddressParameters: URLParameters { get }
     

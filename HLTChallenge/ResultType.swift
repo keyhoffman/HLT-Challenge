@@ -11,7 +11,7 @@ import Foundation
 // MARK: - ResultType Protocol
 
 protocol ResultType {
-    associatedtype Value: ResultRepresentable
+    associatedtype Value
     
     func toOptional() -> Value?
     func flatMap(_ f: (Value) -> Self) -> Self

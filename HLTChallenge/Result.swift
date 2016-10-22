@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Result
 
-enum Result<T: ResultRepresentable>: ResultType { //, Equatable {
+enum Result<T>: ResultType { //, Equatable {
     typealias Value = T
     
     case value(Value)
@@ -34,6 +34,10 @@ extension Result {
         case let .error(error): return .error(error)
         case let .value(value): return f(value)
         }
+    }
+    
+    func map<U>(_ f: (Value) -> U) -> Result<U> {
+        return flatMap { .value(f($0)) }
     }
     
 //    func apply<U>(_ f: Result<(Value) -> U>) -> Result<U> {

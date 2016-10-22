@@ -18,7 +18,7 @@ typealias JSONDictionary = [String: Any]
 
 // MARK: - ResultBlock
 
-typealias ResultBlock<T: ResultRepresentable> = (Result<T>) -> Void
+typealias ResultBlock<T> = (Result<T>) -> Void
 
 // MARK: - Percentage
 
