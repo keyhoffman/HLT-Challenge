@@ -8,7 +8,13 @@
 
 import UIKit
 
-// MARK: - CGFloat Extension
+// MARK: - Percentage Extension
+
+extension Percentage {
+    var cgFloat: CGFloat {
+        return CGFloat(self)
+    }
+}
 
 extension Percentage {
     static var oneHundred: Percentage { return 1.00 }

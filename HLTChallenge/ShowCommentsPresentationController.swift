@@ -14,7 +14,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         guard let `self` = self else { return nil }
         let bv           = UIVisualEffectView.init <| UIBlurEffect(style: .dark)
         bv.frame         = self.containerView?.frame ?? .zero
-        bv.alpha         = .zero
+        bv.alpha         = Percentage.zero.cgFloat
         bv.clipsToBounds = true
         bv.addSubview <| self.presentedViewController.view
         return bv
@@ -34,7 +34,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     private lazy var flickrPhotoView: UIImageView? = { [weak self] in
         guard let `self` = self else { return nil }
         let pv         = UIImageView(image: self.flickrPhoto.photo)
-        pv.alpha       = .zero
+        pv.alpha       = Percentage.zero.cgFloat
         pv.contentMode = .scaleAspectFit
         return pv
     }()
@@ -43,7 +43,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         guard let `self` = self else { return nil }
         let l                       = UILabel()
         l.adjustsFontSizeToFitWidth = true
-        l.alpha                     = .zero
+        l.alpha                     = Percentage.zero.cgFloat
         l.backgroundColor           = .clear
         l.textColor                 = .white
         l.textAlignment             = .center
@@ -89,11 +89,11 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         containerView?.layoutIfNeeded()
         
         presentingViewController.transitionCoordinator?.animate(alongsideTransition: { [weak self] _ in
-            self?.backgroundBlurView?.alpha = .oneHundred
-            self?.flickrPhotoView?.alpha    = .oneHundred
-            self?.ownerNameLabel?.alpha     = .oneHundred
+            self?.backgroundBlurView?.alpha = Percentage.oneHundred.cgFloat
+            self?.flickrPhotoView?.alpha    = Percentage.oneHundred.cgFloat
+            self?.ownerNameLabel?.alpha     = Percentage.oneHundred.cgFloat
             
-            self?.presentingViewController.view.alpha = .thirty
+            self?.presentingViewController.view.alpha = Percentage.thirty.cgFloat
             self?.presentedViewController.view.frame  = self?.frameOfPresentedViewInContainerView ?? .zero
             
             self?.containerView?.layoutIfNeeded()
@@ -153,7 +153,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         backgroundBlurView?.removeFromSuperview()
         containerView?.removeLayoutGuide <*> mainStackViewLayoutGuide
         containerView?.removeGestureRecognizer <*> dismissTapGesture
-        presentingViewController.view.alpha = .oneHundred
+        presentingViewController.view.alpha = Percentage.oneHundred.cgFloat
     }
     
     // MARK: - UIViewControllerAnimatedTransitioning Conformance

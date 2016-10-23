@@ -22,4 +22,4 @@ typealias ResultBlock<T> = (Result<T>) -> Void
 
 // MARK: - Percentage
 
-typealias Percentage = CGFloat
+typealias Percentage = Float

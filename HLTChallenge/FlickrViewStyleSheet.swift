@@ -75,7 +75,7 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
         private var textColor: UIColor {
             switch self {
-            case .title: return UIColor.darkText.withAlphaComponent(.seventy)
+            case .title: return UIColor.darkText.withAlphaComponent(Percentage.seventy.cgFloat)
             }
         }
         
@@ -136,14 +136,14 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
         private var backgroundColor: UIColor? {
             switch self {
-            case .titleBlur:     return UIColor.white.withAlphaComponent(.fifty)
+            case .titleBlur:     return UIColor.white.withAlphaComponent(Percentage.fifty.cgFloat)
             case .titleVibrancy: return nil
             }
         }
         
         private var borderColor: CGColor? {
             switch self {
-            case .titleBlur:     return UIColor.darkText.withAlphaComponent(.forty).cgColor
+            case .titleBlur:     return UIColor.darkText.withAlphaComponent(Percentage.forty.cgFloat).cgColor
             case .titleVibrancy: return nil
             }
         }
