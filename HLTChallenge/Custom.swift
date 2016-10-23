@@ -35,6 +35,10 @@ func <^> <A, B>(_ f: (A) -> B, _ a: Result<A>) -> Result<B> {
     return a.map(f)
 }
 
+func <*> <A, B>(_ f: Result<(A) -> B>, _ a: Result<A>) -> Result<B> {
+    return a.apply(f)
+}
+
 // MARK: Array
 
 func <^> <A, B>(_ f: (A) -> B, _ `as`: [A]) -> [B] {
@@ -110,7 +114,7 @@ func >>- <A, B>(_ a: [A], _ f: (A) -> [B]) -> [B] {
 
 precedencegroup PipePrecedenceLeft {
     associativity: left
-    higherThan:    LogicalDisjunctionPrecedence
+    higherThan:    ApplicativePrecedence
     lowerThan:     NilCoalescingPrecedence
 }
 

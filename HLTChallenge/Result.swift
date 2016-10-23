@@ -10,43 +10,47 @@ import Foundation
 
 // MARK: - Result
 
-enum Result<T>: ResultType { //, Equatable {
-    typealias Value = T
+public enum Result<T> { 
+    public typealias Value = T
     
     case value(Value)
     case error(Error)
     
-    init(_ value: Value) { self = .value(value) }
-    init(_ error: Error) { self = .error(error) }
+    public init(_ value: Value) { self = .value(value) }
+    public init(_ error: Error) { self = .error(error) }
 }
 
-extension Result {
-    init(_ value: Value?, _ error: Error?) {
-        if let value = value { self = .value(value) }
+public extension Result {
+    public init(_ value: Value?, _ error: Error?) {
+             if let value = value { self = .value(value) }
         else if let error = error { self = .error(error) }
         else { self = Result.init <| OptionalError.nonExistantValue(ofType: value) }
     }
+    
+    init(_ value: Value?, with fail: @autoclosure () -> Error) {
+        self = value.map(Result.value) ?? .error(fail())
+    }
 }
 
-extension Result {
-    func flatMap<U>(_ f: (Value) -> Result<U>) -> Result<U> {
+public extension Result {
+    public func flatMap<U>(_ f: (Value) -> Result<U>) -> Result<U> {
         switch self {
         case let .error(error): return .error(error)
         case let .value(value): return f(value)
         }
     }
     
-    func map<U>(_ f: (Value) -> U) -> Result<U> {
+    public func map<U>(_ f: (Value) -> U) -> Result<U> {
         return flatMap { .value(f($0)) }
     }
     
-//    func apply<U>(_ f: Result<(Value) -> U>) -> Result<U> {
-//        return <#value#>
-//    }
+    public func apply<U>(_ f: Result<(Value) -> U>) -> Result<U> {
+        return f.flatMap { self.map($0) }
+    }
 }
 
-extension Result {
-    func toOptional() -> Value? {
+public extension Result {
+    public func toOptional() -> Value? {
         switch self {
         case .error:            return nil
         case .value(let value): return value
@@ -54,22 +58,14 @@ extension Result {
     }
 }
 
-extension Result {
-    func unwrap() -> Value {
-        switch self {
-        case .error:            fatalError(FatalError.couldNotUnwrapResult.debugDescription)
-        case .value(let value): return value
-        }
+public func == <T>(_ lhs: Result<T>, _ rhs: Result<T>) -> Bool where T: Equatable {
+    switch (lhs, rhs) {
+    case let (.value(v1), .value(v2)):
+             return v1 == v2
+    default: return false
     }
 }
 
-//// MARK: - Equatable Conformance
-//
-//func == <U>(_ lhs: Result<U>, _ rhs: Result<U>) -> Bool where U: Equatable {
-//    switch (lhs, rhs) {
-//    case (.value(let a), .value(let b)): return a == b
-//    case (.error, .value): return false
-//    case (.value, .error): return false
-//    case (.error, .error): return false
-//    }
-//}
+public func != <T>(_ lhs: Result<T>, _ rhs: Result<T>) -> Bool where T: Equatable {
+    return !(lhs == rhs)
+}

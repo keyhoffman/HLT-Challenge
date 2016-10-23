@@ -38,25 +38,25 @@ extension FlickrAPIGetable {
 extension FlickrAPIGetable {
     static func getAll(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<[Self]>) {
         
-//        let foo = url >-> urlRequest
-        let faa = (queryParameters |> (url >-> urlRequest), block)
-        let foo = dataTask
-        
-                
-        switch faa.0 {
-        case .error(let e): faa.1 <| Result(e)
-        case .value(let v): foo(v, faa.1)
-            
-            
-        }
-        
-        
+//        let foo = curry(dataTask) <^> (queryParameters |> (url >-> urlRequest))
+//
+//        _ = foo
+//        
+//        func addMe(x: Int, y: Int) -> Int {
+//            return x + y
+//        }
+//        
+//        _ = curry(_dataTask_) <| block <^> (queryParameters |> (url >-> urlRequest))
         switch queryParameters |> (url >-> urlRequest) {
         case let .error(error):   block <| Result(error)
         case let .value(request): dataTask(for: request, with: block)
         }
         
     }
+    
+//    static func _dataTask_(block: @escaping ResultBlock<[Self]>, request: URLRequest) {
+//        
+//    }
     
     static func dataTask(for request: URLRequest, with block: @escaping ResultBlock<[Self]>) {
         URLSession.shared.dataTask(with: request) { data, urlResponse, error in
