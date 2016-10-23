@@ -45,6 +45,20 @@ struct FlickrViewStyleSheet: ViewPreparer {
         
         let vibrancyViewConstraints = [vibrancyViewCenterX, vibrancyViewCenterY, vibrancyViewHeight, vibrancyViewWidth]
         
+        let _vibrancyViewCenterX = ¿NSLayoutConstraint.init <| flickrView.vibrancyView <| .centerX <| .equal <| flickrView.blurView <| .centerX <| 1 <| 0
+        let _vibrancyViewCenterY = ¿NSLayoutConstraint.init <| flickrView.vibrancyView <| .centerY <| .equal <| flickrView.blurView <| .centerY <| 1 <| 0
+        let _vibrancyViewHeight  = ¿NSLayoutConstraint.init <| flickrView.vibrancyView <| .height  <| .equal <| flickrView.blurView <| .height  <| 1 <| 0
+        let _vibrancyViewWidth   = ¿NSLayoutConstraint.init <| flickrView.vibrancyView <| .width   <| .equal <| flickrView.blurView <| .width   <| 1 <| 0
+        
+        let vibrancyViewCenterX_ = NSLayoutConstraint.init⟶ <| flickrView.vibrancyView <| .centerX <| .equal <| flickrView.blurView <| .centerX <| 1 <| 0
+        let vibrancyViewCenterY_ = NSLayoutConstraint.init⟶ <| flickrView.vibrancyView <| .centerY <| .equal <| flickrView.blurView <| .centerY <| 1 <| 0
+        let vibrancyViewHeight_  = NSLayoutConstraint.init⟶ <| flickrView.vibrancyView <| .height  <| .equal <| flickrView.blurView <| .height  <| 1 <| 0
+        let vibrancyViewWidth_   = NSLayoutConstraint.init⟶ <| flickrView.vibrancyView <| .width   <| .equal <| flickrView.blurView <| .width   <| 1 <| 0
+        
+        _ = [vibrancyViewCenterX_, vibrancyViewCenterY_, vibrancyViewHeight_, vibrancyViewWidth_]
+        
+        _ = [_vibrancyViewCenterX, _vibrancyViewCenterY, _vibrancyViewHeight, _vibrancyViewWidth]
+        
         NSLayoutConstraint.activate <| flickrImageViewConstraints + titleLabelConstraints + vibrancyViewConstraints
     }
     
