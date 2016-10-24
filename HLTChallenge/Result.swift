@@ -40,7 +40,7 @@ public extension Result {
         }
     }
     
-    public func map<U>(_ f: (Value) -> U) -> Result<U> {
+    public func map<U>(_ f: @escaping (Value) -> U) -> Result<U> {
         return flatMap { .value(f($0)) }
     }
     

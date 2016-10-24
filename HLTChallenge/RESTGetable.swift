@@ -51,10 +51,7 @@ extension RESTGetable {
 extension RESTGetable {
     // FIXME: GENERALIZE THIS METHOD TO WORK WITH `FlickrAPIGetable`
     static func get(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) {
-        switch queryParameters |> (url >-> urlRequest) { // FIXME: GET RID OF THIS SWITCH STATEMENT
-        case let .error(error):   block <| Result(error)
-        case let .value(request): dataTask(for: request, with: block)
-        }
+        _ = { dataTask(for: $0, with: block) } <^> (queryParameters |> (url >-> urlRequest)) // FIXME: HANDLE ERROR
     }
     
     // MARK: URL Configuration
@@ -90,7 +87,7 @@ extension RESTGetable {
     }
     
     static func decode(json data: Data) -> Result<JSONDictionary> {
-        do    { return (try JSONSerialization.jsonObject(with: data, options: .allowFragments) >>- _JSONDictionary).toResult(withError:) <| URLRequestError.couldNotParseJSON }
+        do    { return (try JSONSerialization.jsonObject(with: data, options: .allowFragments) >>- _JSONDictionary).toResult <| URLRequestError.couldNotParseJSON }
         catch { return Result(error) }
     }
 }

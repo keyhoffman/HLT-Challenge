@@ -22,7 +22,7 @@ final class FlickrView: UIView, Preparable, Configurable {
     
     let vibrancyView = FlickrViewStyleSheet.VisualEffectView.titleVibrancy.visualEffectView
 
-    private lazy var blurViewWidth: NSLayoutConstraint = { curry(NSLayoutConstraint.init) <| self.blurView <| .width <| .equal <| self <| .width <| Percentage.ten.cgFloat <| 0 }()
+    private lazy var blurViewWidth: NSLayoutConstraint = { ¿NSLayoutConstraint.init <| self.blurView <| .width <| .equal <| self <| .width <| Percentage.ten.cgFloat <| 0 }()
     
     // MARK: - Preparable Conformance
     
@@ -36,13 +36,13 @@ final class FlickrView: UIView, Preparable, Configurable {
         addSubview(blurView)
         blurView.contentView.addSubview(vibrancyView)
         vibrancyView.contentView.addSubview(titleLabel)
-        blurView.addGestureRecognizer <| UITapGestureRecognizer(target: self, action: #selector(displayPhotoTitle))
+        blurView.addGestureRecognizer <| UITapGestureRecognizer(target: self, action: .displayPhotoTitle)
     }
     
     private func setInitialBlurViewConstraints() {
-        let blurViewTop      = curry(NSLayoutConstraint.init) <| blurView <| .top      <| .equal <| self <| .topMargin      <| 1                         <| 0
-        let blurViewHeight   = curry(NSLayoutConstraint.init) <| blurView <| .height   <| .equal <| self <| .height         <| Percentage.ten.cgFloat    <| 0
-        let blurViewLeading  = curry(NSLayoutConstraint.init) <| blurView <| .leading  <| .equal <| self <| .leadingMargin  <| 1                         <| 0
+        let blurViewTop      = ¿NSLayoutConstraint.init <| blurView <| .top      <| .equal <| self <| .topMargin      <| 1                         <| 0
+        let blurViewHeight   = ¿NSLayoutConstraint.init <| blurView <| .height   <| .equal <| self <| .height         <| Percentage.ten.cgFloat    <| 0
+        let blurViewLeading  = ¿NSLayoutConstraint.init <| blurView <| .leading  <| .equal <| self <| .leadingMargin  <| 1                         <| 0
                 
         let blurViewConstraints = [blurViewTop, blurViewHeight, blurViewLeading, blurViewWidth]
         
@@ -59,7 +59,7 @@ final class FlickrView: UIView, Preparable, Configurable {
     
     private var flickrPhotoMetadata: FlickrPhotoMetadata?
     
-    dynamic private func displayPhotoTitle() {
+    dynamic fileprivate func displayPhotoTitle() {
         layoutIfNeeded()
         UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: Percentage.seventy.cgFloat, initialSpringVelocity: 0.0, options: .curveEaseOut, animations: { [weak self] in
             self?.blurViewWidth.constant = self?.blurViewWidth.constant == 0 ? 310 : 0 // FIXME: REMOVE MAGIC NUMBER
@@ -67,6 +67,10 @@ final class FlickrView: UIView, Preparable, Configurable {
             self?.layoutIfNeeded()
         })
     }
+}
+
+private extension Selector {
+    static let displayPhotoTitle = #selector(FlickrView.displayPhotoTitle)
 }
 
 

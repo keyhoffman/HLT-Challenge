@@ -32,13 +32,13 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     lazy var displaySearchTextFieldButton: UIBarButtonItem = { [weak self] in
         let bbi    = FlickrPhotoTableViewControllerStyleSheet.BarButtonItem.displaySearchTextField.barButtonItem
         bbi.target = self
-        bbi.action = #selector(displaySearchTextField)
+        bbi.action = .displaySearchTextField
         return bbi
     }()
     
     private lazy var refreshController: UIRefreshControl = { [weak self] in
         let rc = FlickrPhotoTableViewControllerStyleSheet.RefreshControl.tableViewTop.refreshControl
-        rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        rc.addTarget(self, action: .handleRefresh, for: .valueChanged)
         return rc
     }()
     
@@ -102,11 +102,16 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
         self.refreshControl = refreshController
     }
     
-    dynamic private func handleRefresh() {
+    dynamic fileprivate func handleRefresh() {
         loadPhotosForNextPage(self, tableView.numberOfRows(inSection: 0) - 1) // FIXME: THIS IS GROSS
     }
     
-    dynamic private func displaySearchTextField() {
+    dynamic fileprivate func displaySearchTextField() {
         fatalError()
     }
+}
+
+private extension Selector {
+    static let handleRefresh          = #selector(FlickrPhotoTableViewController.handleRefresh)
+    static let displaySearchTextField = #selector(FlickrPhotoTableViewController.displaySearchTextField)
 }

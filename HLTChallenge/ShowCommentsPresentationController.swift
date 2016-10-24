@@ -64,7 +64,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     
     private lazy var dismissTapGesture: UITapGestureRecognizer? = { [weak self] in
 //        guard let `self` = self else { return nil }
-        return UITapGestureRecognizer(target: self, action: #selector(tapDismiss))
+        return UITapGestureRecognizer(target: self, action: .tapDismiss)
     }()
     
     
@@ -130,15 +130,15 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         
         let topMarginOffset = containerView.frame.height * 0.03
         
-        let mainStackViewTop    = curry(NSLayoutConstraint.init) <| mainStackView <| .top     <| .equal <| containerView            <| .topMargin <| 1    <| topMarginOffset
-        let mainStackViewBottom = curry(NSLayoutConstraint.init) <| mainStackView <| .bottom  <| .equal <| mainStackViewLayoutGuide <| .top       <| 1    <| 0
-        let mainStackViewCenter = curry(NSLayoutConstraint.init) <| mainStackView <| .centerX <| .equal <| containerView            <| .centerX   <| 1    <| 0
-        let mainStackViewWidth  = curry(NSLayoutConstraint.init) <| mainStackView <| .width   <| .equal <| containerView            <| .width     <| 0.90 <| 0
+        let mainStackViewTop    = ¿NSLayoutConstraint.init <| mainStackView <| .top     <| .equal <| containerView            <| .topMargin <| 1    <| topMarginOffset
+        let mainStackViewBottom = ¿NSLayoutConstraint.init <| mainStackView <| .bottom  <| .equal <| mainStackViewLayoutGuide <| .top       <| 1    <| 0
+        let mainStackViewCenter = ¿NSLayoutConstraint.init <| mainStackView <| .centerX <| .equal <| containerView            <| .centerX   <| 1    <| 0
+        let mainStackViewWidth  = ¿NSLayoutConstraint.init <| mainStackView <| .width   <| .equal <| containerView            <| .width     <| 0.90 <| 0
         
         NSLayoutConstraint.activate <| [mainStackViewTop, mainStackViewCenter, mainStackViewWidth, mainStackViewBottom]
     }
     
-    dynamic private func tapDismiss() {
+    dynamic fileprivate func tapDismiss() {
         guard let dismissTapGesture = dismissTapGesture else { return }
         switch dismissTapGesture.state {
         case .ended: dismiss()
@@ -167,4 +167,9 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
             transitionContext.completeTransition($0)
         }
     }
+}
+
+
+private extension Selector {
+    static let tapDismiss = #selector(ShowCommentsPresentationController.tapDismiss)
 }

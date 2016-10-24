@@ -31,7 +31,7 @@ func <*> <A, B>(_ f: ((A) -> B)?, _ a: A?) -> B? {
 
 // MARK: Result
 
-func <^> <A, B>(_ f: (A) -> B, _ a: Result<A>) -> Result<B> {
+func <^> <A, B>(_ f: @escaping (A) -> B, _ a: Result<A>) -> Result<B> {
     return a.map(f)
 }
 

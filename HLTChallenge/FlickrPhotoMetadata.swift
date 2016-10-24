@@ -57,16 +57,14 @@ extension FlickrPhotoMetadata {
 
 extension FlickrPhotoMetadata {
     static func getPhotosStream(startingAt index: Int = 0, withBlock block: @escaping ResultBlock<FlickrPhoto>) {
-        switch pageNumber(for: index) { // FIXME: GET RID OF THIS SWITCH STATEMENT
-        case let .error(error):      block <| Result(error)
-        case let .value(pageNumber): curry(getAll) <| [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
-                                                   <| { allMetadataResults in _ = allMetadataResults >>- { allMetadata in Result.init
-                                                   <| allMetadata.map { metadata in metadata.getFlickrPhoto
-                                                   <| block
+        _ = { pageNumber in ¿getAll <| [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
+                                    <| { allMetadataResults in _ = allMetadataResults >>- { allMetadata in Result.init
+                                    <| allMetadata.map { metadata in metadata.getFlickrPhoto
+                                    <| block
                     }
                 }
             }
-        }
+        } <^> pageNumber(for: index) // FIXME: HANDLE ERROR AND CLEAN THIS UP!!!!!!
     }
 }
 
@@ -89,10 +87,8 @@ extension FlickrPhotoMetadata {
         DispatchQueue.global(qos: .userInitiated).async {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
             DispatchQueue.main.async {
-                switch (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url) { // FIXME: GET RID OF THIS SWITCH STATEMENT
-                case let .error(error): error |> (Result.init |>> block)
-                case let .value(photo): (photo, self) |> (FlickrPhoto.init |>> Result.init |>> block)
-                }
+                // FIXME: HANDLE ERROR AND CLEAN THIS UP!!!!!!
+                _ = { ($0, self) |> (FlickrPhoto.init |>> Result.init |>> block) } <^> (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url)
             }
         }
     }
