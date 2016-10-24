@@ -10,19 +10,18 @@ import UIKit
 
 final class ShowCommentsPresentationController: UIPresentationController, UIViewControllerAnimatedTransitioning {
     
-    private lazy var backgroundBlurView: UIVisualEffectView? = { [weak self] in
-        guard let `self` = self else { return nil }
+    private lazy var backgroundBlurView: UIVisualEffectView = { [weak self] in
         let bv           = UIVisualEffectView.init <| UIBlurEffect(style: .dark)
-        bv.frame         = self.containerView?.frame ?? .zero
+        bv.frame         = self?.containerView?.frame ?? .zero
         bv.alpha         = Percentage.zero.cgFloat
         bv.clipsToBounds = true
-        bv.addSubview <| self.presentedViewController.view
+        bv.addSubview <^> self?.presentedViewController.view
         return bv
     }()
 
-    private lazy var mainStackView: UIStackView? = { [weak self] in
-        guard let `self` = self else { return nil }
-        let sv           = UIStackView.init(withNullableSubViews:) <| [self.ownerNameLabel, self.flickrPhotoView]
+    private lazy var mainStackView: UIStackView = { [weak self] in
+        let sv           = UIStackView()
+        sv.addArrangedSubviews <*> [self?.ownerNameLabel, self?.flickrPhotoView]
         sv.axis          = .vertical
         sv.alignment     = .center
         sv.distribution  = .fillProportionally
@@ -31,16 +30,15 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         return sv
     }()
     
-    private lazy var flickrPhotoView: UIImageView? = { [weak self] in
-        guard let `self` = self else { return nil }
-        let pv         = UIImageView(image: self.flickrPhoto.photo)
+    private lazy var flickrPhotoView: UIImageView = { [weak self] in
+        let pv         = UIImageView()
+        pv.image       = self?.flickrPhoto.photo
         pv.alpha       = Percentage.zero.cgFloat
         pv.contentMode = .scaleAspectFit
         return pv
     }()
     
-    private lazy var ownerNameLabel: UILabel? = { [weak self] in
-        guard let `self` = self else { return nil }
+    private lazy var ownerNameLabel: UILabel = { [weak self] in
         let l                       = UILabel()
         l.adjustsFontSizeToFitWidth = true
         l.alpha                     = Percentage.zero.cgFloat
@@ -48,7 +46,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         l.textColor                 = .white
         l.textAlignment             = .center
         l.numberOfLines             = 2
-        l.text                      = "Photographer:\n" + self.flickrPhoto.metadata.ownerName
+        l.text                      = "Photographer:\n" + (self?.flickrPhoto.metadata.ownerName ?? .empty)
         return l
     }()
     
@@ -62,8 +60,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         return lg
     }()
     
-    private lazy var dismissTapGesture: UITapGestureRecognizer? = { [weak self] in
-//        guard let `self` = self else { return nil }
+    private lazy var dismissTapGesture: UITapGestureRecognizer = { [weak self] in
         return UITapGestureRecognizer(target: self, action: .tapDismiss)
     }()
     
@@ -81,7 +78,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         containerView?.addSubview <*> backgroundBlurView
         containerView?.addSubview <*> mainStackView
         containerView?.addGestureRecognizer <*> dismissTapGesture
-        
+    
         setConstraints()
         
         presentedViewController.view.frame = frameOfPresentedViewInContainerView.offsetBy(dx: 0, dy: UIScreen.main.bounds.height)
@@ -89,9 +86,9 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         containerView?.layoutIfNeeded()
         
         presentingViewController.transitionCoordinator?.animate(alongsideTransition: { [weak self] _ in
-            self?.backgroundBlurView?.alpha = Percentage.oneHundred.cgFloat
-            self?.flickrPhotoView?.alpha    = Percentage.oneHundred.cgFloat
-            self?.ownerNameLabel?.alpha     = Percentage.oneHundred.cgFloat
+            self?.backgroundBlurView.alpha = Percentage.oneHundred.cgFloat
+            self?.flickrPhotoView.alpha    = Percentage.oneHundred.cgFloat
+            self?.ownerNameLabel.alpha     = Percentage.oneHundred.cgFloat
             
             self?.presentingViewController.view.alpha = Percentage.thirty.cgFloat
             self?.presentedViewController.view.frame  = self?.frameOfPresentedViewInContainerView ?? .zero
@@ -126,9 +123,7 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     }
     
     private func setConstraints() {
-        guard let mainStackView = mainStackView, let containerView = containerView, let mainStackViewLayoutGuide = mainStackViewLayoutGuide else { return }
-        
-        let topMarginOffset = containerView.frame.height * 0.03
+        let topMarginOffset = (containerView?.frame.height ?? 0) * 0.03
         
         let mainStackViewTop    = ¿NSLayoutConstraint.init <| mainStackView <| .top     <| .equal <| containerView            <| .topMargin <| 1    <| topMarginOffset
         let mainStackViewBottom = ¿NSLayoutConstraint.init <| mainStackView <| .bottom  <| .equal <| mainStackViewLayoutGuide <| .top       <| 1    <| 0
@@ -139,7 +134,6 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     }
     
     dynamic fileprivate func tapDismiss() {
-        guard let dismissTapGesture = dismissTapGesture else { return }
         switch dismissTapGesture.state {
         case .ended: dismiss()
         default: break
@@ -147,10 +141,10 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     }
     
     private func removeAllViewsAndResetPresentingViewController() {
-        ownerNameLabel?    .removeFromSuperview()
-        flickrPhotoView?   .removeFromSuperview()
-        mainStackView?     .removeFromSuperview()
-        backgroundBlurView?.removeFromSuperview()
+        ownerNameLabel    .removeFromSuperview()
+        flickrPhotoView   .removeFromSuperview()
+        mainStackView     .removeFromSuperview()
+        backgroundBlurView.removeFromSuperview()
         containerView?.removeLayoutGuide <*> mainStackViewLayoutGuide
         containerView?.removeGestureRecognizer <*> dismissTapGesture
         presentingViewController.view.alpha = Percentage.oneHundred.cgFloat
@@ -168,7 +162,6 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
         }
     }
 }
-
 
 private extension Selector {
     static let tapDismiss = #selector(ShowCommentsPresentationController.tapDismiss)

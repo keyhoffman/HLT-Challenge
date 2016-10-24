@@ -25,7 +25,6 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
         let tf      = FlickrPhotoTableViewControllerStyleSheet.TextField.search.textField
         tf.isHidden = true
         tf.delegate = self
-//        tf.becomeFirstResponder()
         return tf
     }()
     
