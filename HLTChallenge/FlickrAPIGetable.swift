@@ -48,3 +48,11 @@ extension FlickrAPIGetable {
         }.resume()
     }
 }
+
+typealias GetableCollection = Collection & RESTGetable
+
+// MARK: - FlickrCollection Protocol
+
+protocol FlickrCollection: GetableCollection, FlickrAPIGetable {
+    
+}

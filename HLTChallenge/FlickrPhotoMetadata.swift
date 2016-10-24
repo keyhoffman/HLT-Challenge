@@ -56,15 +56,9 @@ extension FlickrPhotoMetadata {
 // MARK: - Module Static API
 
 extension FlickrPhotoMetadata {
-    static func getPhotosStream(startingAt index: Int = 0, withBlock block: @escaping ResultBlock<FlickrPhoto>) {
-        _ = { pageNumber in ¿getAll <| [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
-                                    <| { allMetadataResults in _ = allMetadataResults >>- { allMetadata in Result.init
-                                    <| allMetadata.map { metadata in metadata.getFlickrPhoto
-                                    <| block
-                    }
-                }
-            }
-        } <^> pageNumber(for: index) // FIXME: HANDLE ERROR AND CLEAN THIS UP!!!!!!
+    static func getPhotosStream(startingAt index: Int = 0, withBlock block: @escaping ResultBlock<FlickrPhoto>) { // FIXME: HANDLE ERROR AND CLEAN THIS UP!!!!!!
+        _ = pageNumber(for: index) <^> { pageNumber in ¿getAll <| [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
+            <| { allMetadataResults in _ = allMetadataResults >>- { allMetadata in Result.init <| allMetadata.map { metadata in metadata.getFlickrPhoto <| block } } } } //<^> pageNumber(for: index)
     }
 }
 
@@ -88,7 +82,7 @@ extension FlickrPhotoMetadata {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
             DispatchQueue.main.async {
                 // FIXME: HANDLE ERROR AND CLEAN THIS UP!!!!!!
-                _ = { ($0, self) |> (FlickrPhoto.init |>> Result.init |>> block) } <^> (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url)
+                _ = (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url) <^> { flickrPhoto in (flickrPhoto, self) |> (FlickrPhoto.init |>> Result.init |>> block) } //<^> (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url)
             }
         }
     }

@@ -35,6 +35,10 @@ func <^> <A, B>(_ f: @escaping (A) -> B, _ a: Result<A>) -> Result<B> {
     return a.map(f)
 }
 
+func <^> <A, B>(_ a: Result<A>, _ f: @escaping (A) -> B) -> Result<B> {
+    return a.map(f)
+}
+
 func <*> <A, B>(_ f: Result<(A) -> B>, _ a: Result<A>) -> Result<B> {
     return a.apply(f)
 }
