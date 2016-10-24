@@ -37,7 +37,7 @@ extension FlickrAPIGetable {
 // FIXME: FIX RESPECTIVE `RESTGetable` methods
 extension FlickrAPIGetable {
     static func getAll(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<[Self]>) {
-        _ = { dataTask(for: $0, with: block) } <^> (queryParameters |> (url >-> urlRequest)) // FIXME: HANDLE ERROR AND CLEAN THIS UPPPPP
+        _ = { request in dataTask(for: request, with: block) } <^> (queryParameters |> (url >-> urlRequest)) // FIXME: HANDLE ERROR AND CLEAN THIS UPPPPP
     }
     
     static func dataTask(for request: URLRequest, with block: @escaping ResultBlock<[Self]>) {
