@@ -11,9 +11,13 @@ import Foundation
 // MARK: - Dictionary Addition
 
 func + <A, B>(_ lhs: Dictionary<A, B>, _ rhs: Dictionary<A, B>) -> Dictionary<A, B> {
-    var dict = lhs // FIXME: GET RID OF THIS MUTABLE VARIABLE
-    for (key, value) in rhs { // FIXME: GET RID OF THIS FOR-LOOP
-        dict.updateValue(value, forKey: key)
-    }
-    return dict
+    guard let first = rhs.first else { return lhs }
+    
+    var newLeft  = lhs // FIXME: GET RID OF MUTABLE VARIABLES!!!!
+    var newRight = rhs
+    
+    newLeft.updateValue(first.value, forKey: first.key)
+    newRight[first.key] = nil
+    
+    return newLeft + newRight
 }
