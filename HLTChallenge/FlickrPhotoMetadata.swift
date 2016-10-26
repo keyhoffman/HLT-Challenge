@@ -35,7 +35,8 @@ extension FlickrPhotoMetadata {
 
 extension FlickrPhotoMetadata {
     var commentParameter: URLParameters {
-        return [FlickrConstants.Parameters.Keys.PhotoComments.photoID: id]
+//        return [FlickrConstants.Parameters.Keys.PhotoComments.photoID: id]
+        return [FlickrConstants.Parameters.Keys.PhotoComments.photoID: "29466047852"]
     }
     
     func getFlickrPhoto(withBlock block: @escaping ResultBlock<FlickrPhoto>) { // FIXME: HANDLE ERROR AND CLEAN THIS UP!!!!!!

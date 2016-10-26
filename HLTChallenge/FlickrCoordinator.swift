@@ -56,26 +56,25 @@ final class FlickrCoordinator: NSObject, SubCoordinator {
     // MARK: - FlickrAPIGetable API Calls
     
     private func loadComments(for flickrCommentTableViewController: FlickrCommentTableViewController, with photo: FlickrPhoto) {
-//        let photoIDParameter = FlickrPhotoComment.photoIDParameter(for: photo.metadata)
-//        FlickrPhotoComment.getAll(withAdditionalQueryParameters: photoIDParameter) { result in
-//            switch result {
-//            case let .error(error):    debugPrint(error)
-//            case let .value(comments): flickrCommentTableViewController.data = comments
-//            }
-//        }
+        FlickrPhotoCommentCollection.get(withAdditionalQueryParameters: photo.metadata.commentParameter) { result in
+            switch result {
+            case let .error(error):    debugPrint(error)
+            case let .value(comments): flickrCommentTableViewController.data = Array(comments.elements)
+            }
+            
+        }
     }
     
     private func loadPhotos(for flickrPhotoTableViewController: FlickrPhotoTableViewController, at index: Int = 0) {
-//        let dataCount = flickrPhotoTableViewController.data.count
-//        guard let picturesPerPage = Int(FlickrConstants.Parameters.Values.Metadata.picturesPerPage),
-//              (index >= dataCount - 2 && index >= picturesPerPage - 1) || dataCount == 0  else { return }
-//        
-//        FlickrPhotoMetadata.getPhotosStream(startingAt: flickrPhotoTableViewController.data.count) { result in
-//            switch result {
-//            case let .error(error):       debugPrint(error)
-//            case let .value(flickrPhoto): flickrPhotoTableViewController.data.append(flickrPhoto)
-//            }
-//        }
+        let dataCount = flickrPhotoTableViewController.data.count
+        guard let picturesPerPage = Int(FlickrConstants.Parameters.Values.Metadata.picturesPerPage), (index >= dataCount - 2 && index >= picturesPerPage - 1) || dataCount == 0  else { return }
+
+        FlickrPhotoMetadataCollection.getPhotosStream(startingAt: dataCount) { result in
+            switch result {
+            case let .error(error):       debugPrint(error)
+            case let .value(flickrPhoto): flickrPhotoTableViewController.data.append(flickrPhoto)
+            }
+        }
     }
 }
 
