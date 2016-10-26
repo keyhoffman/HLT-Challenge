@@ -406,8 +406,8 @@
 		03DE2B381DA60B93008CE5B1 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				03DE2B391DA60BA7008CE5B1 /* RESTGetable.swift */,
 				038726C41DC04F0700A9B816 /* JSONCreateable.swift */,
+				03DE2B391DA60BA7008CE5B1 /* RESTGetable.swift */,
 				031396851DAA264A000E4A1E /* FlickrAPIGetable.swift */,
 				038726C01DC0426D00A9B816 /* FlickrCollection.swift */,
 				038726C81DC074CE00A9B816 /* FlickrCollectionElement.swift */,
