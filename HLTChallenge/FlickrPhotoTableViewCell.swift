@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - FlickrPhotoTableViewCell
 
-final class FlickrPhotoTableViewCell: UITableViewCell, Configurable, Preparable {
+final class FlickrPhotoTableViewCell: UITableViewCell, PreparedConfigurable {
     
     // MARK: - Property Declarations
     

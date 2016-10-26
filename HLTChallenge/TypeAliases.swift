@@ -23,3 +23,16 @@ typealias ResultBlock<T> = (Result<T>) -> Void
 // MARK: - Percentage
 
 typealias Percentage = Float
+
+// MARK: - PreparedConfigurable
+
+typealias PreparedConfigurable = Preparable & Configurable
+
+// MARK: - RESTGetableCollection
+
+typealias RESTGetableCollection = Collection & RESTGetable
+
+// MARK: - FlickrGetableCollection
+
+/// RESTGetableCollection = Collection & RESTGetable
+typealias FlickrAPIGetableCollection = RESTGetableCollection & FlickrAPIGetable

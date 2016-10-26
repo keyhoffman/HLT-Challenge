@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - FlickrView
 
-final class FlickrView: UIView, Preparable, Configurable {
+final class FlickrView: UIView, PreparedConfigurable {
 
     // MARK: - Property Declarations
     

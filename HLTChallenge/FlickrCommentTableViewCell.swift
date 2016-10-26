@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - FlickrCommentTableViewCell
 
-final class FlickrCommentTableViewCell: UITableViewCell, Preparable, Configurable {
+final class FlickrCommentTableViewCell: UITableViewCell, PreparedConfigurable {
     
     private let authorLabel  = FlickrCommentTableViewCellStyleSheet.Label.author.label
     private let contentLabel = FlickrCommentTableViewCellStyleSheet.Label.content.label

@@ -35,6 +35,7 @@ func <^> <A, B>(_ f: @escaping (A) -> B, _ a: Result<A>) -> Result<B> {
     return a.map(f)
 }
 
+@discardableResult
 func <^> <A, B>(_ a: Result<A>, _ f: @escaping (A) -> B) -> Result<B> {
     return a.map(f)
 }

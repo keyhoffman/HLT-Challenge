@@ -44,6 +44,10 @@ extension RESTGetable {
     static func JSONArray(from object: Any) -> [JSONDictionary]? {
         return object as? [JSONDictionary]
     }
+    
+//    static func JSONSet(from object: Any) -> Set<JSONDictionary>? {
+//        return object as? Set<JSONDictionary>
+//    }
 }
 
 // MARK: - Module Static API
@@ -51,7 +55,7 @@ extension RESTGetable {
 extension RESTGetable {
     // FIXME: GENERALIZE THIS METHOD TO WORK WITH `FlickrAPIGetable`
     static func get(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) {
-        _ = { dataTask(for: $0, with: block) } <^> (queryParameters |> (url >-> urlRequest)) // FIXME: HANDLE ERROR
+        (queryParameters |> (url >-> urlRequest)) <^> { dataTask(for: $0, with: block) } //<^> (queryParameters |> (url >-> urlRequest)) // FIXME: HANDLE ERROR
     }
     
     // MARK: URL Configuration

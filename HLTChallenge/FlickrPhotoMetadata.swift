@@ -10,12 +10,16 @@ import UIKit
 
 // MARK: - FlickrPhotoMetadata
 
-struct FlickrPhotoMetadata: FlickrAPIGetable {
+struct FlickrPhotoMetadata: FlickrAPIGetable, Hashable {
     let id:      String
     let url:     String
     let title:   String
     let ownerID: String
     let ownerName: String
+    
+    var hashValue: Int {
+        return id.hashValue ^ ownerID.hashValue
+    }
 }
 
 // MARK: - Equatable Conformance
@@ -51,13 +55,15 @@ extension FlickrPhotoMetadata {
               status == FlickrConstants.Response.Values.Status.success else { return Result(CreationError.Flickr.metadata) }
         return photosArray.map(FlickrPhotoMetadata.create).invert()
     }
+    
+//    static func makeMe
 }
 
 // MARK: - Module Static API
 
 extension FlickrPhotoMetadata {
     static func getPhotosStream(startingAt index: Int = 0, withBlock block: @escaping ResultBlock<FlickrPhoto>) { // FIXME: HANDLE ERROR AND CLEAN THIS UP!!!!!!
-        _ = pageNumber(for: index) <^> { pageNumber in ¿getAll <| [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
+        pageNumber(for: index) <^> { pageNumber in ¿getAll <| [FlickrConstants.Parameters.Keys.Metadata.pageNumber: pageNumber]
             <| { allMetadataResults in _ = allMetadataResults >>- { allMetadata in Result.init <| allMetadata.map { metadata in metadata.getFlickrPhoto <| block } } } } //<^> pageNumber(for: index)
     }
 }
@@ -82,7 +88,7 @@ extension FlickrPhotoMetadata {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
             DispatchQueue.main.async {
                 // FIXME: HANDLE ERROR AND CLEAN THIS UP!!!!!!
-                _ = (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url) <^> { flickrPhoto in (flickrPhoto, self) |> (FlickrPhoto.init |>> Result.init |>> block) } //<^> (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url)
+                (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url) <^> { flickrPhoto in (flickrPhoto, self) |> (FlickrPhoto.init |>> Result.init |>> block) } //<^> (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url)
             }
         }
     }
