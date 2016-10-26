@@ -40,7 +40,7 @@ final class FlickrCommentTableViewCell: UITableViewCell, PreparedConfigurable {
     
     func configure(withData comment: FlickrPhotoComment) {
         defer { prepare() }
-        authorLabel.text =  comment.author
+        authorLabel.text =  comment.ownerName 
         contentLabel.text = comment.content
     }
 }

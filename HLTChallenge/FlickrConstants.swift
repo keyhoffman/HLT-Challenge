@@ -142,11 +142,13 @@ struct FlickrConstants {
             // MARK: PhotoComments
             
             struct PhotoComments {
-                static let id       = "id"
-                static let author   = "authorname"
-                static let content  = "_content"
-                static let comments = "comments"
-                static let comment  = "comment"
+                static let id        = "id"
+                static let ownerName = "authorname"
+                static let ownerID   = "author"
+                static let date      = "datecreate"
+                static let content   = "_content"
+                static let comments  = "comments"
+                static let comment   = "comment"
             }
         }
         

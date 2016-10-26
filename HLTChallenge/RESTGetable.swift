@@ -10,11 +10,9 @@ import Foundation
 
 // MARK: - RESTGetable Protocol
 
-protocol RESTGetable: Equatable {
+protocol RESTGetable: JSONCreatable {
     static var urlQueryParameters:   URLParameters { get }
     static var urlAddressParameters: URLParameters { get }
-    
-    static func create(from dictionary: JSONDictionary) -> Result<Self>
 }
 
 // MARK: - Module Static `urlAddressParameters` Keys
@@ -25,46 +23,21 @@ extension RESTGetable {
     static var path:   String { return "path" }
 }
 
-// MARK: - Module Static JSON Parsing Helper Methods
-
-extension RESTGetable {
-    static func JSONObject<A>(from object: Any) -> A? {
-        return object as? A
-    }
-    
-    static func JSONString(from object: Any) -> String? {
-        return object as? String
-    }
-    
-    // TODO: Find a better name for this function
-    static func _JSONDictionary(from object: Any) -> JSONDictionary? {
-        return object as? JSONDictionary
-    }
-    
-    static func JSONArray(from object: Any) -> [JSONDictionary]? {
-        return object as? [JSONDictionary]
-    }
-    
-//    static func JSONSet(from object: Any) -> Set<JSONDictionary>? {
-//        return object as? Set<JSONDictionary>
-//    }
-}
-
 // MARK: - Module Static API
 
 extension RESTGetable {
-    // FIXME: GENERALIZE THIS METHOD TO WORK WITH `FlickrAPIGetable`
-    static func get(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) {
-        (queryParameters |> (url >-> urlRequest)) <^> { dataTask(for: $0, with: block) } //<^> (queryParameters |> (url >-> urlRequest)) // FIXME: HANDLE ERROR
+    static func get(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) { // FIXME: HANDLE ERROR
+        queryParameters |> (url >-> urlRequest) <^> { dataTask(for: $0, with: block) }
     }
     
     // MARK: URL Configuration
     
-    static func urlRequest(from url: URL) -> Result<URLRequest> {
+    static private func urlRequest(from url: URL) -> Result<URLRequest> {
         return Result.init <| URLRequest(url: url)
     }
     
-    static func url(withAdditionalQueryParameters queryParameters: URLParameters = .empty) -> Result<URL> {
+    // FIXME: BREAK THIS UP FURTHER
+    static private func url(withAdditionalQueryParameters queryParameters: URLParameters = .empty) -> Result<URL> {
         let componentsURL = URLComponents(path:       urlAddressParameters[path],
                                           scheme:     urlAddressParameters[scheme],
                                           host:       urlAddressParameters[host],
@@ -77,7 +50,6 @@ extension RESTGetable {
 // MARK: - Fileprivate Static API
 
 extension RESTGetable {
-    // FIXME: GENERALIZE THIS METHOD TO WORK WITH `FlickrAPIGetable`
     static fileprivate func dataTask(for request: URLRequest, with block: @escaping ResultBlock<Self>) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
@@ -86,11 +58,11 @@ extension RESTGetable {
         }.resume()
     }
     
-    static func parse(response: Response) -> Result<Data> {
+    static private func parse(response: Response) -> Result<Data> {
         return Response.successRange.contains(response.statusCode) ? Result(response.data) : Result.init <| URLRequestError.invalidResponseStatus(code: response.statusCode)
     }
     
-    static func decode(json data: Data) -> Result<JSONDictionary> {
+    static private func decode(json data: Data) -> Result<JSONDictionary> {
         do    { return (try JSONSerialization.jsonObject(with: data, options: .allowFragments) >>- _JSONDictionary).toResult <| URLRequestError.couldNotParseJSON }
         catch { return Result(error) }
     }

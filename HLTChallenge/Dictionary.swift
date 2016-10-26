@@ -16,14 +16,14 @@ extension Dictionary {
     }
 }
 
-extension Dictionary: Hashable {
-    public var hashValue: Int {
-        return keys.map { $0.hashValue }.reduce(0, ^)
-    }
-}
-
-// MARK: - Equatable Conformance
-
-public func == <A, B>(_ lhs: Dictionary<A, B>, _ rhs: Dictionary<A, B>) -> Bool {
-    return lhs.hashValue == rhs.hashValue
-}
+//extension Dictionary: Hashable {
+//    public var hashValue: Int {
+//        return keys.map { $0.hashValue }.reduce(0, ^)
+//    }
+//}
+//
+//// MARK: - Equatable Conformance
+//
+//public func == <A, B>(_ lhs: Dictionary<A, B>, _ rhs: Dictionary<A, B>) -> Bool {
+//    return lhs.hashValue == rhs.hashValue
+//}
