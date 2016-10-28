@@ -8,6 +8,8 @@
 
 import Foundation
 
+// FIXME: REFACTOR THIS
+
 // MARK: - FlickrConstants
 
 struct FlickrConstants {

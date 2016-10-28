@@ -26,4 +26,3 @@ extension UIStackView {
         _ = views.flatMap { $0 }.map(addArrangedSubview)
     }
 }
-

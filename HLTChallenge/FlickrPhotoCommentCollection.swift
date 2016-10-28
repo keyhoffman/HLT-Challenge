@@ -13,6 +13,10 @@ struct FlickrPhotoCommentCollection: FlickrAPIGetableCollection {
 }
 
 extension FlickrPhotoCommentCollection {
+    init() {
+        elements = .empty
+    }
+    
     init(from array: [FlickrPhotoComment]) {
         elements = Set(array)
     }
@@ -27,7 +31,7 @@ extension FlickrPhotoCommentCollection {
         guard let commentsDict = dict[FlickrConstants.Response.Keys.PhotoComments.comments] >>- _JSONDictionary,
               let status       = dict[FlickrConstants.Response.Keys.General.status]         >>- JSONString,
               status == FlickrConstants.Response.Values.Status.success else { return Result(CreationError.Flickr.comment) }
-        guard let commentsArray = commentsDict[FlickrConstants.Response.Keys.PhotoComments.comment] >>- JSONArray else { return Result.init <| FlickrPhotoCommentCollection(from: .empty) }
+        guard let commentsArray = commentsDict[FlickrConstants.Response.Keys.PhotoComments.comment] >>- JSONArray else { return Result.init <| .empty }
         return commentsArray.map(FlickrPhotoComment.create).invert() <^> FlickrPhotoCommentCollection.init
     }
 }

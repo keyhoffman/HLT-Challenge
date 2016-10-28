@@ -36,14 +36,12 @@ extension RESTGetable {
         return Result.init <| URLRequest(url: url)
     }
     
-    // FIXME: BREAK THIS UP FURTHER
     static private func url(withAdditionalQueryParameters queryParameters: URLParameters = .empty) -> Result<URL> {
         let componentsURL = URLComponents(path:       urlAddressParameters[path],
                                           scheme:     urlAddressParameters[scheme],
                                           host:       urlAddressParameters[host],
                                           queryItems: (urlQueryParameters + queryParameters).map(URLQueryItem.init))?.url
-        
-        return componentsURL.toResult(withError:) <| URLRequestError.invalidURL(parameters: urlQueryParameters)
+        return componentsURL.toResult <| URLRequestError.invalidURL(parameters: urlQueryParameters)
     }
 }
 

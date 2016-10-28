@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - FlickrCollection Protocol
 
-protocol FlickrCollection {
+protocol FlickrCollection: Collection, EmptyMakeable {
     associatedtype FlickrElement: FlickrCollectionElement
     var elements: Set<FlickrElement> { get }
     init(from array: [FlickrElement])

@@ -13,6 +13,10 @@ struct FlickrPhotoMetadataCollection: FlickrAPIGetableCollection {
 }
 
 extension FlickrPhotoMetadataCollection {
+    init() {
+        elements = .empty
+    }
+    
     init(from array: [FlickrPhotoMetadata]) {
         elements = Set(array)
     }

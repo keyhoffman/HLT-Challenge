@@ -20,13 +20,13 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     }()
 
     private lazy var mainStackView: UIStackView = { [weak self] in
-        let sv           = UIStackView()
-        sv.addArrangedSubviews <*> [self?.ownerNameLabel, self?.flickrPhotoView]
-        sv.axis          = .vertical
-        sv.alignment     = .center
-        sv.distribution  = .fillProportionally
-        sv.spacing       = 5
+        let sv                                       = UIStackView()
+        sv.axis                                      = .vertical
+        sv.alignment                                 = .center
+        sv.distribution                              = .fillProportionally
+        sv.spacing                                   = 5
         sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.addArrangedSubviews <*> [self?.ownerNameLabel, self?.flickrPhotoView]
         return sv
     }()
     
