@@ -11,54 +11,49 @@ import UIKit
 final class ShowCommentsPresentationController: UIPresentationController, UIViewControllerAnimatedTransitioning {
     
     private lazy var backgroundBlurView: UIVisualEffectView = { [weak self] in
-        let bv           = UIVisualEffectView.init <| UIBlurEffect(style: .dark)
-        bv.frame         = self?.containerView?.frame ?? .zero
-        bv.alpha         = Percentage.zero.cgFloat
-        bv.clipsToBounds = true
-        bv.addSubview <^> self?.presentedViewController.view
-        return bv
-    }()
+        $0.frame         = self?.containerView?.frame ?? .zero
+        $0.alpha         = Percentage.zero.cgFloat
+        $0.clipsToBounds = true
+        $0.addSubview <^> self?.presentedViewController.view
+        return $0
+    }(UIVisualEffectView.init <| UIBlurEffect(style: .dark))
 
     private lazy var mainStackView: UIStackView = { [weak self] in
-        let sv                                       = UIStackView()
-        sv.axis                                      = .vertical
-        sv.alignment                                 = .center
-        sv.distribution                              = .fillProportionally
-        sv.spacing                                   = 5
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.addArrangedSubviews <*> [self?.ownerNameLabel, self?.flickrPhotoView]
-        return sv
-    }()
+        $0.axis                                      = .vertical
+        $0.alignment                                 = .center
+        $0.distribution                              = .fillProportionally
+        $0.spacing                                   = 5
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.addArrangedSubviews <*> [self?.ownerNameLabel, self?.flickrPhotoView]
+        return $0
+    }(UIStackView())
     
     private lazy var flickrPhotoView: UIImageView = { [weak self] in
-        let pv         = UIImageView()
-        pv.image       = self?.flickrPhoto.photo
-        pv.alpha       = Percentage.zero.cgFloat
-        pv.contentMode = .scaleAspectFit
-        return pv
-    }()
+        $0.image       = self?.flickrPhoto.photo
+        $0.alpha       = Percentage.zero.cgFloat
+        $0.contentMode = .scaleAspectFit
+        return $0
+    }(UIImageView())
     
     private lazy var ownerNameLabel: UILabel = { [weak self] in
-        let l                       = UILabel()
-        l.adjustsFontSizeToFitWidth = true
-        l.alpha                     = Percentage.zero.cgFloat
-        l.backgroundColor           = .clear
-        l.textColor                 = .white
-        l.textAlignment             = .center
-        l.numberOfLines             = 2
-        l.text                      = "Photographer:\n" + (self?.flickrPhoto.metadata.ownerName ?? .empty)
-        return l
-    }()
+        $0.adjustsFontSizeToFitWidth = true
+        $0.alpha                     = Percentage.zero.cgFloat
+        $0.backgroundColor           = .clear
+        $0.textColor                 = .white
+        $0.textAlignment             = .center
+        $0.numberOfLines             = 2
+        $0.text                      = "Photographer:\n" + (self?.flickrPhoto.metadata.ownerName ?? .empty)
+        return $0
+    }(UILabel())
     
     private lazy var mainStackViewLayoutGuide: UILayoutGuide? = { [weak self] in
         guard let `self` = self, let containerView = self.containerView else { return nil }
-        let lg = UILayoutGuide()
-        containerView.addLayoutGuide(lg)
-        lg.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive                              = true
-        lg.bottomAnchor.constraint(equalTo: self.presentedViewController.view.topAnchor).isActive               = true
-        lg.heightAnchor.constraint(greaterThanOrEqualTo: containerView.heightAnchor, multiplier: 0.03).isActive = true
-        return lg
-    }()
+        containerView.addLayoutGuide($0)
+        $0.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive                              = true
+        $0.bottomAnchor.constraint(equalTo: self.presentedViewController.view.topAnchor).isActive               = true
+        $0.heightAnchor.constraint(greaterThanOrEqualTo: containerView.heightAnchor, multiplier: 0.03).isActive = true
+        return $0
+    }(UILayoutGuide())
     
     private lazy var dismissTapGesture: UITapGestureRecognizer = { [weak self] in
         return UITapGestureRecognizer(target: self, action: .tapDismiss)
