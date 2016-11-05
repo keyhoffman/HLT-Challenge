@@ -44,6 +44,7 @@ extension FlickrPhotoMetadata {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
             DispatchQueue.main.async {
                 (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url) <^> { downloadedImage in (downloadedImage, self) |> (FlickrPhoto.init |>> Result.init |>> block) }
+//                _ = ((data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url)).map { downloadedImage in (downloadedImage, self) |> (FlickrPhoto.init |>> Result.init |>> block) }
             }
         }
     }

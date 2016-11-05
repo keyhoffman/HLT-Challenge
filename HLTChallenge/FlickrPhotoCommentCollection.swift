@@ -32,6 +32,6 @@ extension FlickrPhotoCommentCollection {
               let status       = dict[FlickrConstants.Response.Keys.General.status]         >>- JSONString,
               status == FlickrConstants.Response.Values.Status.success else { return Result(CreationError.Flickr.comment) }
         guard let commentsArray = commentsDict[FlickrConstants.Response.Keys.PhotoComments.comment] >>- JSONArray else { return Result.init <| .empty }
-        return commentsArray.map(FlickrPhotoComment.create).invert() <^> FlickrPhotoCommentCollection.init
+        return commentsArray.map(FlickrPhotoComment.create).inverted <^> FlickrPhotoCommentCollection.init
     }
 }

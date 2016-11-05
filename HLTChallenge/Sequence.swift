@@ -8,6 +8,27 @@
 
 import UIKit
 
+protocol ResultType {
+    associatedtype Value
+    var toOptional: Value? { get }
+}
+
+struct AnyResult<Value>: ResultType {
+    let toOptional: Value?
+    
+    init<A: ResultType>(_ result: A) where A.Value == Value {
+        toOptional = result.toOptional
+    }
+}
+
+extension Sequence where Iterator.Element: ResultType {
+    func _inverted<A>() -> [A] where A: ResultType {
+        return <#value#>
+    }
+}
+
+
+
 // MARK: - Sequence Extension
 
 // FIXME: Find a way to make this generic!!!!! Possibly with type erasure
@@ -19,8 +40,8 @@ extension Sequence where Iterator.Element == Result<FlickrPhotoMetadata> {
     /// - note: Transformation Structure ====>>  [Result\<FlickrPhotoMetadata\>] -> Result<[FlickrPhotoMetadata]>
     ///
     /// - returns: A `Result` of an `Array` of `FlickrImageMetadata`
-    func invert() -> Result<[FlickrPhotoMetadata]> {
-        return Result.init <| self.flatMap { $0.toOptional() }
+    var inverted: Result<[FlickrPhotoMetadata]> {
+        return Result.init <| self.flatMap { $0.toOptional }
     }
 }
 
@@ -28,8 +49,8 @@ extension Sequence where Iterator.Element == Result<FlickrPhotoMetadata> {
 
 // FIXME: Find a way to make this generic!!!!! Possibly with type erasure
 extension Sequence where Iterator.Element == Result<UIImage> {
-    func invert() -> Result<[UIImage]> {
-        return Result.init <| self.flatMap { $0.toOptional() }
+    var inverted: Result<[UIImage]> {
+        return Result.init <| self.flatMap { $0.toOptional }
     }
 }
 
@@ -37,8 +58,8 @@ extension Sequence where Iterator.Element == Result<UIImage> {
 
 // FIXME: Find a way to make this generic!!!!! Possibly with type erasure
 extension Sequence where Iterator.Element == Result<FlickrPhotoComment> {
-    func invert() -> Result<[FlickrPhotoComment]> {
-        return Result.init <| self.flatMap { $0.toOptional() }
+    var inverted: Result<[FlickrPhotoComment]> {
+        return Result.init <| self.flatMap { $0.toOptional }
     }
 }
 

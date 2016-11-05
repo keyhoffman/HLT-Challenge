@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Result
 
-public enum Result<T> { 
+public enum Result<T>: ResultType {
     public typealias Value = T
     
     case value(Value)
@@ -50,7 +50,7 @@ public extension Result {
 }
 
 public extension Result {
-    public func toOptional() -> Value? {
+    public var toOptional: Value? {
         switch self {
         case .error:            return nil
         case .value(let value): return value

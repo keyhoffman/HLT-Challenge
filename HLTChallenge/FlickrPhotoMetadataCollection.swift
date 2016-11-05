@@ -36,7 +36,7 @@ extension FlickrPhotoMetadataCollection {
               let photosArray = photosDict[FlickrConstants.Response.Keys.Metadata.photo] >>- JSONArray,
               status == FlickrConstants.Response.Values.Status.success else { return Result(CreationError.Flickr.metadata) }
         
-        return photosArray.map(FlickrPhotoMetadata.create).invert() <^> FlickrPhotoMetadataCollection.init
+        return photosArray.map(FlickrPhotoMetadata.create).inverted <^> FlickrPhotoMetadataCollection.init
     }
 }
 

@@ -15,10 +15,10 @@ protocol FlickrCollectionElement: JSONCreatable, Hashable {
     var ownerID: String { get }
 }
 
+// MARK: - Hashable Conformance
+
 extension FlickrCollectionElement {
-    var hashValue: Int {
-        return id.hashValue ^ ownerID.hashValue
-    }
+    var hashValue: Int { return id.hashValue ^ ownerID.hashValue }
 }
 
 // MARK: - Equatable Conformance
