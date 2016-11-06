@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FlickrPhotoMetadataCollection: FlickrAPIGetableCollection {
+struct FlickrPhotoMetadataCollection: FlickrCollection {
     let elements: Set<FlickrPhotoMetadata>
 }
 

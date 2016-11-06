@@ -30,9 +30,9 @@ typealias PreparedConfigurable = Preparable & Configurable
 
 // MARK: - RESTGetableCollection
 
-typealias RESTGetableCollection = Collection & RESTGetable
+//typealias RESTGetableCollection = Collection & RESTGetable
 
 // MARK: - FlickrGetableCollection
 
 /// RESTGetableCollection = Collection & RESTGetable
-typealias FlickrAPIGetableCollection = RESTGetableCollection & FlickrAPIGetable & FlickrCollection
+//typealias FlickrAPIGetableCollection = RESTGetableCollection & FlickrAPIGetable & FlickrCollection

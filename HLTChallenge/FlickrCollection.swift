@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - FlickrCollection Protocol
 
-protocol FlickrCollection: Collection, EmptyMakeable {
+protocol FlickrCollection: FlickrAPIGetable, Collection, EmptyMakeable {
     associatedtype FlickrElement: FlickrCollectionElement
     var elements: Set<FlickrElement> { get }
     init(from array: [FlickrElement])
@@ -33,6 +33,6 @@ extension FlickrCollection {
 
 // MARK: - Equatable Conformance
 
-func == <T: FlickrCollection>(_ lhs: T, _ rhs: T) -> Bool {
+func == <T>(_ lhs: T, _ rhs: T) -> Bool where T: FlickrCollection {
     return lhs.elements == rhs.elements
 }

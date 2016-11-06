@@ -23,6 +23,6 @@ extension FlickrCollectionElement {
 
 // MARK: - Equatable Conformance
 
-func == <T: FlickrCollectionElement>(_ lhs: T, _ rhs: T) -> Bool {
+func == <T>(_ lhs: T, _ rhs: T) -> Bool where T: FlickrCollectionElement {
     return lhs.hashValue == rhs.hashValue
 }

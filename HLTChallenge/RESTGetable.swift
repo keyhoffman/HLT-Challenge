@@ -29,14 +29,16 @@ extension RESTGetable {
     static func get(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) { // FIXME: HANDLE ERROR
         queryParameters |> (url >-> urlRequest) <^> { dataTask(for: $0, with: block) }
     }
-    
-    // MARK: URL Configuration
-    
-    static private func urlRequest(from url: URL) -> Result<URLRequest> {
+}
+
+// MARK: - URL Configuration Extension
+
+extension RESTGetable {
+    static fileprivate func urlRequest(from url: URL) -> Result<URLRequest> {
         return Result.init <| URLRequest(url: url)
     }
     
-    static private func url(withAdditionalQueryParameters queryParameters: URLParameters = .empty) -> Result<URL> {
+    static fileprivate func url(withAdditionalQueryParameters queryParameters: URLParameters = .empty) -> Result<URL> {
         let componentsURL = URLComponents(path:       urlAddressParameters[path],
                                           scheme:     urlAddressParameters[scheme],
                                           host:       urlAddressParameters[host],

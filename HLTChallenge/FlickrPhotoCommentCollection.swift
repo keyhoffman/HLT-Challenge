@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FlickrPhotoCommentCollection: FlickrAPIGetableCollection {
+struct FlickrPhotoCommentCollection: FlickrCollection {
     let elements: Set<FlickrPhotoComment>
 }
 
