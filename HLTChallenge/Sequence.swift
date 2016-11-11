@@ -21,11 +21,11 @@ struct AnyResult<Value>: ResultType {
     }
 }
 
-extension Sequence where Iterator.Element: ResultType {
-    func _inverted<A>() -> [A] where A: ResultType {
-        return <#value#>
-    }
-}
+//extension Sequence where Iterator.Element: ResultType {
+//    func _inverted<A>() -> [A] where A: ResultType {
+//        return <#value#>
+//    }
+//}
 
 
 

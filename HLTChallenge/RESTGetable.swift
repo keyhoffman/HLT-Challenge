@@ -27,7 +27,7 @@ extension RESTGetable {
 
 extension RESTGetable {
     static func get(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) { // FIXME: HANDLE ERROR
-        queryParameters |> (url >-> urlRequest) <^> { dataTask(for: $0, with: block) }
+        queryParameters |> (url >-> urlRequest) <^> { request in dataTask(for: request, with: block) }
     }
 }
 
@@ -53,7 +53,7 @@ extension RESTGetable {
     static fileprivate func dataTask(for request: URLRequest, with block: @escaping ResultBlock<Self>) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
-                (Response(data: data, urlResponse: response), error) |> (Result.init >-> parse >-> decode >-> create >-> block)
+                (Response(data: data, urlResponse: response), error) |> (Result.init >-> parse(response:) >-> decode(json:) >-> create >-> block)
             }
         }.resume()
     }

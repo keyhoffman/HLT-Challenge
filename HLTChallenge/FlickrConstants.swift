@@ -38,6 +38,13 @@ struct FlickrConstants {
                 static let noJSONCallback  = "nojsoncallback"
             }
             
+            /**
+             FlickrConstants.Parameters.Keys.Metadata.method:          FlickrConstants.Parameters.Values.Metadata.Method.getRecent.rawValue,
+             FlickrConstants.Parameters.Keys.Metadata.extras:          FlickrConstants.Parameters.Values.Metadata.extras,
+             FlickrConstants.Parameters.Keys.Metadata.safeSearch:      FlickrConstants.Parameters.Values.Metadata.SafeSearch.moderate.rawValue,
+             FlickrConstants.Parameters.Keys.Metadata.picturesPerPage: FlickrConstants.Parameters.Values.Metadata.picturesPerPage
+             */
+            
             // MARK: Metadata
             
             struct Metadata {
@@ -50,12 +57,16 @@ struct FlickrConstants {
 
             }
             
-            // MARK: PhotoInfo
+//            // MARK: PhotoInfo
+//            
+//            struct PhotoInfo {
+//                static let method  = "method"
+//                static let photoID = "photo_id"
+//            }
             
-            struct PhotoInfo {
-                static let method  = "method"
-                static let photoID = "photo_id"
-            }
+            /**
+            FlickrConstants.Parameters.Keys.PhotoComments.method: FlickrConstants.Parameters.Values.PhotoComments.method
+             */
             
             // MARK: PhotoComments
             
@@ -121,6 +132,22 @@ struct FlickrConstants {
                 static let status = "stat"
             }
             
+            /**
+             let photosDict  = dict[FlickrConstants.Response.Keys.Metadata.photos]      >>- _JSONDictionary,
+             let status      = dict[FlickrConstants.Response.Keys.General.status]       >>- JSONString,
+             let photosArray = photosDict[FlickrConstants.Response.Keys.Metadata.photo] >>- JSONArray,
+             */
+            
+            
+            /**
+             let id      = dict[FlickrConstants.Response.Keys.Metadata.id]          >>- JSONString,
+             let url     = dict[FlickrConstants.Response.Keys.Metadata.url]         >>- JSONString,
+             let title   = dict[FlickrConstants.Response.Keys.Metadata.title]       >>- JSONString,
+             let ownerId = dict[FlickrConstants.Response.Keys.Metadata.ownerID]     >>- JSONString,
+             let ownerName = dict[FlickrConstants.Response.Keys.Metadata.ownerName] >>- JSONString
+             */
+            
+            
             // MARK: Metadata
             
             struct Metadata {
@@ -133,13 +160,21 @@ struct FlickrConstants {
                 static let ownerName = "ownername"
             }
             
-            // MARK: PhotoInfo
+//            // MARK: PhotoInfo
+//            
+//            struct PhotoInfo {
+//                static let photo    = "photo"
+//                static let owner    = "owner"
+//                static let username = "username"
+//            }
             
-            struct PhotoInfo {
-                static let photo    = "photo"
-                static let owner    = "owner"
-                static let username = "username"
-            }
+            
+            /**
+             let commentsDict = dict[FlickrConstants.Response.Keys.PhotoComments.comments] >>- _JSONDictionary,
+             let status       = dict[FlickrConstants.Response.Keys.General.status]         >>- JSONString,
+             status == FlickrConstants.Response.Values.Status.success else { return Result(CreationError.Flickr.comment) }
+             guard let commentsArray = commentsDict[FlickrConstants.Response.Keys.PhotoComments.comment] >>- JSONArray else { return Result.init <| .empty }
+             */
             
             // MARK: PhotoComments
             
