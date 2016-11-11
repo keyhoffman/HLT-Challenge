@@ -15,16 +15,16 @@ precedencegroup ApplicativePrecedence { associativity: left higherThan: LogicalC
 infix operator <*> : ApplicativePrecedence
 infix operator <^> : ApplicativePrecedence
 
-public func <^> <A, B>(_ f:           (A) -> B, _ x:  A?)        -> B?        { return x.map(f) }
 public func <^> <A, B>(_ f:           (A) -> B, _ xs: [A])       -> [B]       { return xs.map(f) }
+public func <^> <A, B>(_ f:           (A) -> B, _ x:  A?)        -> B?        { return x.map(f) }
 public func <^> <A, B>(_ f: @escaping (A) -> B, _ x:  Result<A>) -> Result<B> { return x.map(f) }
 
-@discardableResult public func <^> <A, B>(_ x:  A?,        _ f:           (A) -> B) -> B?        { return x.map(f) }
 @discardableResult public func <^> <A, B>(_ xs: [A],       _ f:           (A) -> B) -> [B]       { return xs.map(f) }
+@discardableResult public func <^> <A, B>(_ x:  A?,        _ f:           (A) -> B) -> B?        { return x.map(f) }
 @discardableResult public func <^> <A, B>(_ x:  Result<A>, _ f: @escaping (A) -> B) -> Result<B> { return x.map(f) }
 
-public func <*> <A, B>(_ f:  ((A) -> B)?,      _ x:  A?) ->        B?        { return x.apply(f) }
 public func <*> <A, B>(_ fs: [(A) -> B],       _ xs: [A]) ->       [B]       { return xs.apply(fs) }
+public func <*> <A, B>(_ f:  ((A) -> B)?,      _ x:  A?) ->        B?        { return x.apply(f) }
 public func <*> <A, B>(_ f:  Result<(A) -> B>, _ x:  Result<A>) -> Result<B> { return x.apply(f) }
 
 // MARK: - Monadic Operators
@@ -37,8 +37,8 @@ infix operator -<< : MonadicPrecedenceRight
 infix operator >-> : MonadicPrecedenceRight
 infix operator <-< : MonadicPrecedenceLeft
 
-public func >>- <A, B>(_ x:  A?,        _ f: (A) -> B?) ->        B?        { return x.flatMap(f) }
 public func >>- <A, B>(_ xs: [A],       _ f: (A) -> [B]) ->       [B]       { return xs.flatMap(f) }
+public func >>- <A, B>(_ x:  A?,        _ f: (A) -> B?) ->        B?        { return x.flatMap(f) }
 public func >>- <A, B>(_ x:  Result<A>, _ f: (A) -> Result<B>) -> Result<B> { return x.flatMap(f) }
 
 public func -<< <A, B>(_ f: (A) -> B?,        _ x: A?) ->        B?        { return x.flatMap(f) }
@@ -69,6 +69,4 @@ public func |> <A, B>(_ x: A, _ f: (A) -> B) -> B { return f(x) }
 public func <<| <T, U, V>(_ f: @escaping (U) -> V, _ g: @escaping (T) -> U) -> (T) -> V { return compose(f, g) }
 public func |>> <T, U, V>(_ f: @escaping (T) -> U, _ g: @escaping (U) -> V) -> (T) -> V { return compose(g, f) }
 
-public func compose<T, U, V>(_ f: @escaping (U) -> V, _ g: @escaping (T) -> U) -> (T) -> V {
-    return { f(g($0)) }
-}
+public func compose<T, U, V>(_ f: @escaping (U) -> V, _ g: @escaping (T) -> U) -> (T) -> V { return { f(g($0)) } }
