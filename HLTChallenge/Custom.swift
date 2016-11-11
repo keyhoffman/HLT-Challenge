@@ -19,13 +19,13 @@ public func <^> <A, B>(_ f:           (A) -> B, _ x:  A?)        -> B?        { 
 public func <^> <A, B>(_ f:           (A) -> B, _ xs: [A])       -> [B]       { return xs.map(f) }
 public func <^> <A, B>(_ f: @escaping (A) -> B, _ x:  Result<A>) -> Result<B> { return x.map(f) }
 
-@discardableResult public func <^> <A, B>(_ x:  A?,        _ f: (A) -> B) -> B?        { return x.map(f) }
-@discardableResult public func <^> <A, B>(_ xs: [A],       _ f: (A) -> B) ->           [B]       { return xs.map(f) }
+@discardableResult public func <^> <A, B>(_ x:  A?,        _ f:           (A) -> B) -> B?        { return x.map(f) }
+@discardableResult public func <^> <A, B>(_ xs: [A],       _ f:           (A) -> B) -> [B]       { return xs.map(f) }
 @discardableResult public func <^> <A, B>(_ x:  Result<A>, _ f: @escaping (A) -> B) -> Result<B> { return x.map(f) }
 
-public func <*> <A, B>(_ f: ((A) -> B)?,      _ x:  A?) ->        B?        { return x.apply(f) }
-public func <*> <A, B>(_ fs: [(A) -> B],      _ xs: [A]) ->       [B]       { return xs.apply(fs) }
-public func <*> <A, B>(_ f: Result<(A) -> B>, _ x:  Result<A>) -> Result<B> { return x.apply(f) }
+public func <*> <A, B>(_ f:  ((A) -> B)?,      _ x:  A?) ->        B?        { return x.apply(f) }
+public func <*> <A, B>(_ fs: [(A) -> B],       _ xs: [A]) ->       [B]       { return xs.apply(fs) }
+public func <*> <A, B>(_ f:  Result<(A) -> B>, _ x:  Result<A>) -> Result<B> { return x.apply(f) }
 
 // MARK: - Monadic Operators
 
@@ -44,11 +44,11 @@ public func >>- <A, B>(_ x:  Result<A>, _ f: (A) -> Result<B>) -> Result<B> { re
 public func -<< <A, B>(_ f: (A) -> B?,        _ x: A?) ->        B?        { return x.flatMap(f) }
 public func -<< <A, B>(_ f: (A) -> Result<B>, _ x: Result<A>) -> Result<B> { return x.flatMap(f) }
 
-public func >-> <A, B, C>(_ f: @escaping (A) -> B?,        _ g: @escaping (B) -> C?) ->        (A) -> C?        { return { x in f(x) >>- g } }
-public func >-> <A, B, C>(_ f: @escaping (A) -> Result<B>, _ g: @escaping (B) -> Result<C>) -> (A) -> Result<C> { return { x in f(x) >>- g } }
+public func >-> <A, B, C>(_ f: @escaping (A) -> B?,        _ g: @escaping (B) -> C?) ->        (A) -> C?        { return { f($0) >>- g } }
+public func >-> <A, B, C>(_ f: @escaping (A) -> Result<B>, _ g: @escaping (B) -> Result<C>) -> (A) -> Result<C> { return { f($0) >>- g } }
 
-public func <-< <A, B, C>(_ f: @escaping (B) -> C?,        _ g: @escaping (A) -> B?) ->        (A) -> C?        { return { x in g(x) >>- f } }
-public func <-< <A, B, C>(_ f: @escaping (B) -> Result<C>, _ g: @escaping (A) -> Result<B>) -> (A) -> Result<C> { return { x in g(x) >>- f } }
+public func <-< <A, B, C>(_ f: @escaping (B) -> C?,        _ g: @escaping (A) -> B?) ->        (A) -> C?        { return { g($0) >>- f } }
+public func <-< <A, B, C>(_ f: @escaping (B) -> Result<C>, _ g: @escaping (A) -> Result<B>) -> (A) -> Result<C> { return { g($0) >>- f } }
 
 // MARK: - Non-Monadic Operators
 
@@ -70,5 +70,5 @@ public func <<| <T, U, V>(_ f: @escaping (U) -> V, _ g: @escaping (T) -> U) -> (
 public func |>> <T, U, V>(_ f: @escaping (T) -> U, _ g: @escaping (U) -> V) -> (T) -> V { return compose(g, f) }
 
 public func compose<T, U, V>(_ f: @escaping (U) -> V, _ g: @escaping (T) -> U) -> (T) -> V {
-    return { x in f(g(x)) }
+    return { f(g($0)) }
 }
