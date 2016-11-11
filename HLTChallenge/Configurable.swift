@@ -12,5 +12,5 @@ import UIKit
 
 protocol Configurable {
     associatedtype DataType
-    func configure(withData data: DataType)
+    func configure(_ data: DataType)
 }

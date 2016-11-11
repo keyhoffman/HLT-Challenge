@@ -26,30 +26,30 @@ extension RESTGetable {
 // MARK: - Module Static API
 
 extension RESTGetable {
-    static func get(withAdditionalQueryParameters queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) { // FIXME: HANDLE ERROR
+    static func get(queryParameters: URLParameters = .empty, withBlock block: @escaping ResultBlock<Self>) { // FIXME: HANDLE ERROR
         queryParameters |> (url >-> urlRequest) <^> { request in dataTask(for: request, with: block) }
     }
 }
 
-// MARK: - URL Configuration Extension
+// MARK: - Fileprivate URL Configuration API
 
-extension RESTGetable {
-    fileprivate static func urlRequest(from url: URL) -> Result<URLRequest> {
+fileprivate extension RESTGetable {
+    fileprivate static func urlRequest(for url: URL) -> Result<URLRequest> {
         return Result.init <| URLRequest(url: url)
     }
     
-    fileprivate static func url(withAdditionalQueryParameters queryParameters: URLParameters = .empty) -> Result<URL> {
-        let componentsURL = URLComponents(path:       urlAddressParameters[path],
-                                          scheme:     urlAddressParameters[scheme],
-                                          host:       urlAddressParameters[host],
-                                          queryItems: (urlQueryParameters + queryParameters).map(URLQueryItem.init))?.url
-        return componentsURL.toResult <| URLRequestError.invalidURL(parameters: urlQueryParameters)
+    fileprivate static func url(queryParameters: URLParameters = .empty) -> Result<URL> {
+        return Result.init <| ((URLComponents(path:       urlAddressParameters[path],
+                                              scheme:     urlAddressParameters[scheme],
+                                              host:       urlAddressParameters[host],
+                                              queryItems: (urlQueryParameters + queryParameters).map(URLQueryItem.init)) >>- { components in components.url }),
+                                URLRequestError.invalidURL(parameters: urlQueryParameters))
     }
 }
 
 // MARK: - Fileprivate Static API
 
-extension RESTGetable {
+fileprivate extension RESTGetable {
     fileprivate static func dataTask(for request: URLRequest, with block: @escaping ResultBlock<Self>) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
@@ -67,5 +67,3 @@ extension RESTGetable {
         catch { return Result(error) }
     }
 }
-
-

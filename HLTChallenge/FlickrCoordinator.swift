@@ -50,13 +50,13 @@ final class FlickrCoordinator: NSObject, SubCoordinator {
         
         rootNavigationController.present(flickrCommentTableViewController, animated: true)
         
-        loadComments(for: flickrCommentTableViewController, with: flickrPhoto)
+        loadComments(for: flickrPhoto, in: flickrCommentTableViewController)
     }
     
     // MARK: - FlickrAPIGetable API Calls
     
-    private func loadComments(for flickrCommentTableViewController: FlickrCommentTableViewController, with photo: FlickrPhoto) {
-        FlickrPhotoCommentCollection.get(withAdditionalQueryParameters: photo.metadata.commentParameter) { result in
+    private func loadComments(for photo: FlickrPhoto, in flickrCommentTableViewController: FlickrCommentTableViewController) {
+        FlickrPhotoCommentCollection.get(queryParameters: photo.metadata.commentParameter) { result in
             switch result {
             case let .error(error):    debugPrint(error)
             case let .value(comments): flickrCommentTableViewController.data = Array(comments.elements)

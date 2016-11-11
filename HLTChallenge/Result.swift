@@ -27,9 +27,9 @@ public extension Result {
         else { self = Result.init <| OptionalError.nonExistantValue(ofType: value) }
     }
     
-    init(_ value: Value?, with fail: @autoclosure () -> Error) {
-        self = value.map(Result.value) ?? .error(fail())
-    }
+//    init(_ value: Value?, with fail: @autoclosure () -> Error) {
+//        self = value.map(Result.value) ?? .error(fail())
+//    }
 }
 
 public extension Result {

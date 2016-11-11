@@ -158,6 +158,8 @@ final class ShowCommentsPresentationController: UIPresentationController, UIView
     }
 }
 
+// MARK: - Selector Extension
+
 fileprivate extension Selector {
     fileprivate static let tapDismiss = #selector(ShowCommentsPresentationController.tapDismiss)
 }

@@ -8,46 +8,9 @@
 
 import UIKit
 
-protocol TableViewControllerType: Preparable {
-    associatedtype Cell: Configurable
-}
-
-extension TableViewControllerType where Self: UITableViewController, Cell: UITableViewCell {
-//    var data: [Cell.DataType] {
-////        get { return [Cell.DataType] }
-//        didSet {
-//            defer {
-//                tableView.reloadData()
-//                refreshControl?.endRefreshing()
-//            }
-//        }
-//    }
-    
-    var emptyMessageLabel: UILabel {
-        let l           = UILabel.init <| CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
-        l.tag           = 0
-        l.text          = "No data available"
-        l.textColor     = .red
-        l.textAlignment = .center
-        l.sizeToFit()
-        return l
-    }
-
-    
-    func setEmptyBackgroundLabel() {
-        tableView.backgroundView = emptyMessageLabel
-        tableView.separatorStyle = .none
-    }
-    
-    func removeEmptyBackgroundLabel() {
-        tableView.backgroundView = nil
-        tableView.separatorStyle = .singleLine
-    }
-}
-
 // MARK: - TableViewController
 
-class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cell: Configurable {
+class TableViewContoller<Cell: UITableViewCell>: UITableViewController where Cell: Configurable { // TODO: MAKE THIS A PROTOCOL!!!!!
     
     typealias DataType = Cell.DataType
 

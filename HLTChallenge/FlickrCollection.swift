@@ -16,7 +16,7 @@ protocol FlickrCollection: FlickrAPIGetable, Collection, EmptyInitializable {
     init(from array: [FlickrElement])
 }
 
-// MARK: - FlickrCollection Extension
+// MARK: - Collection Conformance
 
 extension FlickrCollection {
     typealias FlickrIndex = SetIndex<FlickrElement>

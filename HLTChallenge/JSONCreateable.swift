@@ -15,20 +15,8 @@ protocol JSONCreatable: Equatable {
 }
 
 extension JSONCreatable {
-    static func JSONObject<A>(from object: Any) -> A? {
-        return object as? A
-    }
-    
-    static func JSONString(from object: Any) -> String? {
-        return object as? String
-    }
-    
-    // TODO: Find a better name for this function
-    static func _JSONDictionary(from object: Any) -> JSONDictionary? {
-        return object as? JSONDictionary
-    }
-    
-    static func JSONArray(from object: Any) -> [JSONDictionary]? {
-        return object as? [JSONDictionary]
-    }
+    static func JSONObject<A>  (from object: Any) -> A?                { return object as? A }
+    static func JSONString     (from object: Any) -> String?           { return object as? String }
+    static func _JSONDictionary(from object: Any) -> JSONDictionary?   { return object as? JSONDictionary } // TODO: Find a better name for this function
+    static func JSONArray      (from object: Any) -> [JSONDictionary]? { return object as? [JSONDictionary] }
 }

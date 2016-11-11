@@ -60,7 +60,7 @@ extension FlickrPhotoMetadataCollection {
 
 // MARK: - Fileprivate Static API
 
-extension FlickrPhotoMetadataCollection {
+fileprivate extension FlickrPhotoMetadataCollection {
     fileprivate static func pageNumber(for index: Int) -> Result<String> {
         func calculatePage(picturesPerPage: Int) -> Int {
             return (index + picturesPerPage) / picturesPerPage

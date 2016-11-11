@@ -25,7 +25,6 @@ final class FlickrCommentTableViewController: TableViewContoller<FlickrCommentTa
         defer { FlickrCommentTableViewControllerStyleSheet.prepare(self) }
     }
     
-    
     // MARK: - BaseTableViewController Overridden Methods
     
     override func setEmptyBackgroundLabel() {
@@ -48,3 +47,17 @@ final class FlickrCommentTableViewController: TableViewContoller<FlickrCommentTa
     }
 }
 
+// MARK: - FlickrCommentTableViewControllerStyleSheet
+
+fileprivate struct FlickrCommentTableViewControllerStyleSheet: ViewPreparer {
+    
+    // MARK: - ViewPreparer Conformance
+    
+    fileprivate static func prepare(_ commentsTVC: FlickrCommentTableViewController) {
+        
+        defer { commentsTVC.view.layoutIfNeeded() }
+        
+        commentsTVC.view.backgroundColor = .clear
+        commentsTVC.tableView.allowsSelection = false
+    }
+}
