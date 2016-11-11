@@ -12,7 +12,7 @@ import UIKit
 
 struct FlickrViewStyleSheet: ViewPreparer {
     
-    static private let titleLabelBottomToFlickrViewTopOffsetByViewHeightFactor: CGFloat = 0.8
+    private static let titleLabelBottomToFlickrViewTopOffsetByViewHeightFactor: CGFloat = 0.8
     
     // MARK: - ViewPreparer Conformance
     

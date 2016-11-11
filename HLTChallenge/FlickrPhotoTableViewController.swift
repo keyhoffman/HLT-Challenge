@@ -110,7 +110,7 @@ final class FlickrPhotoTableViewController: TableViewContoller<FlickrPhotoTableV
     }
 }
 
-private extension Selector {
-    static let handleRefresh          = #selector(FlickrPhotoTableViewController.handleRefresh)
-    static let displaySearchTextField = #selector(FlickrPhotoTableViewController.displaySearchTextField)
+fileprivate extension Selector {
+    fileprivate static let handleRefresh          = #selector(FlickrPhotoTableViewController.handleRefresh)
+    fileprivate static let displaySearchTextField = #selector(FlickrPhotoTableViewController.displaySearchTextField)
 }

@@ -8,16 +8,16 @@
 
 import Foundation
 
-protocol EmptyMakeable {
+protocol EmptyInitializable {
     init()
 }
 
-extension EmptyMakeable {
+extension EmptyInitializable {
     static var empty: Self {
         return Self()
     }
 }
 
-extension String:     EmptyMakeable {}
-extension Dictionary: EmptyMakeable {}
-extension Set:        EmptyMakeable {}
+extension String:     EmptyInitializable {}
+extension Dictionary: EmptyInitializable {}
+extension Set:        EmptyInitializable {}

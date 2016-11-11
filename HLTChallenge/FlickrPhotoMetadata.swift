@@ -35,8 +35,8 @@ extension FlickrPhotoMetadata {
 
 extension FlickrPhotoMetadata {
     var commentParameter: URLParameters {
-//        return [FlickrConstants.Parameters.Keys.PhotoComments.photoID: id]
-        return [FlickrConstants.Parameters.Keys.PhotoComments.photoID: "29466047852"]
+//        return [FlickrConstants.Parameters.Keys.PhotoCommentCollection.photoID: id]
+        return [FlickrConstants.Parameters.Keys.CommentCollection.photoID: "29466047852"]
     }
     
     func getFlickrPhoto(withBlock block: @escaping ResultBlock<FlickrPhoto>) { // FIXME: HANDLE ERROR AND CLEAN THIS UP!!!!!!
@@ -44,7 +44,6 @@ extension FlickrPhotoMetadata {
             let data = URL(string: self.url).flatMap { try? Data(contentsOf:$0) }
             DispatchQueue.main.async {
                 (data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url) <^> { downloadedImage in (downloadedImage, self) |> (FlickrPhoto.init |>> Result.init |>> block) }
-//                _ = ((data >>- UIImage.init).toResult <| CreationError.Flickr.photo(forURL: self.url)).map { downloadedImage in (downloadedImage, self) |> (FlickrPhoto.init |>> Result.init |>> block) }
             }
         }
     }

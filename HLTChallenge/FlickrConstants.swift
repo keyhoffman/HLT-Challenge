@@ -8,8 +8,6 @@
 
 import Foundation
 
-// FIXME: REFACTOR THIS
-
 // MARK: - FlickrConstants
 
 struct FlickrConstants {
@@ -38,39 +36,20 @@ struct FlickrConstants {
                 static let noJSONCallback  = "nojsoncallback"
             }
             
-            /**
-             FlickrConstants.Parameters.Keys.Metadata.method:          FlickrConstants.Parameters.Values.Metadata.Method.getRecent.rawValue,
-             FlickrConstants.Parameters.Keys.Metadata.extras:          FlickrConstants.Parameters.Values.Metadata.extras,
-             FlickrConstants.Parameters.Keys.Metadata.safeSearch:      FlickrConstants.Parameters.Values.Metadata.SafeSearch.moderate.rawValue,
-             FlickrConstants.Parameters.Keys.Metadata.picturesPerPage: FlickrConstants.Parameters.Values.Metadata.picturesPerPage
-             */
+            // MARK: - MetadataCollection
             
-            // MARK: Metadata
-            
-            struct Metadata {
+            struct MetadataCollection {
                 static let method          = "method"
                 static let picturesPerPage = "per_page"
                 static let pageNumber      = "page"
                 static let text            = "text"
                 static let extras          = "extras"
                 static let safeSearch      = "safe_search"
-
             }
             
-//            // MARK: PhotoInfo
-//            
-//            struct PhotoInfo {
-//                static let method  = "method"
-//                static let photoID = "photo_id"
-//            }
+            // MARK: CommentCollection
             
-            /**
-            FlickrConstants.Parameters.Keys.PhotoComments.method: FlickrConstants.Parameters.Values.PhotoComments.method
-             */
-            
-            // MARK: PhotoComments
-            
-            struct PhotoComments {
+            struct CommentCollection {
                 static let method  = "method"
                 static let photoID = "photo_id"
             }
@@ -88,9 +67,9 @@ struct FlickrConstants {
                 static let noJSONCallback = "1"
             }
             
-            // MARK: Metadata
+            // MARK: MetadataCollection
             
-            struct Metadata {
+            struct MetadataCollection {
                 static let picturesPerPage = "10"
                 static let extras          = "url_m, owner_name"
                 
@@ -104,15 +83,9 @@ struct FlickrConstants {
                 }
             }
             
-            // MARK: PhotoInfo
+            // MARK: CommentCollection
             
-            struct PhotoInfo {
-                static let method = "flickr.photos.getInfo"
-            }
-            
-            // MARK: PhotoComments
-            
-            struct PhotoComments {
+            struct CommentCollection {
                 static let method = "flickr.photos.comments.getList"
             }
         }
@@ -132,27 +105,16 @@ struct FlickrConstants {
                 static let status = "stat"
             }
             
-            /**
-             let photosDict  = dict[FlickrConstants.Response.Keys.Metadata.photos]      >>- _JSONDictionary,
-             let status      = dict[FlickrConstants.Response.Keys.General.status]       >>- JSONString,
-             let photosArray = photosDict[FlickrConstants.Response.Keys.Metadata.photo] >>- JSONArray,
-             */
+            // MARK: - MetadataCollection
             
-            
-            /**
-             let id      = dict[FlickrConstants.Response.Keys.Metadata.id]          >>- JSONString,
-             let url     = dict[FlickrConstants.Response.Keys.Metadata.url]         >>- JSONString,
-             let title   = dict[FlickrConstants.Response.Keys.Metadata.title]       >>- JSONString,
-             let ownerId = dict[FlickrConstants.Response.Keys.Metadata.ownerID]     >>- JSONString,
-             let ownerName = dict[FlickrConstants.Response.Keys.Metadata.ownerName] >>- JSONString
-             */
-            
+            struct MetadataCollection {
+                static let photoDictionary = "photos"
+                static let photoArray      = "photo"
+            }
             
             // MARK: Metadata
             
             struct Metadata {
-                static let photos    = "photos"
-                static let photo     = "photo"
                 static let title     = "title"
                 static let id        = "id"
                 static let ownerID   = "owner"
@@ -160,32 +122,21 @@ struct FlickrConstants {
                 static let ownerName = "ownername"
             }
             
-//            // MARK: PhotoInfo
-//            
-//            struct PhotoInfo {
-//                static let photo    = "photo"
-//                static let owner    = "owner"
-//                static let username = "username"
-//            }
+            // MARK: - CommentCollection
             
+            struct CommentCollection {
+                static let commentDictionary = "comments"
+                static let commentArray      = "comment"
+            }
             
-            /**
-             let commentsDict = dict[FlickrConstants.Response.Keys.PhotoComments.comments] >>- _JSONDictionary,
-             let status       = dict[FlickrConstants.Response.Keys.General.status]         >>- JSONString,
-             status == FlickrConstants.Response.Values.Status.success else { return Result(CreationError.Flickr.comment) }
-             guard let commentsArray = commentsDict[FlickrConstants.Response.Keys.PhotoComments.comment] >>- JSONArray else { return Result.init <| .empty }
-             */
+            // MARK: Comment
             
-            // MARK: PhotoComments
-            
-            struct PhotoComments {
+            struct Comment {
                 static let id        = "id"
                 static let ownerName = "authorname"
                 static let ownerID   = "author"
                 static let date      = "datecreate"
                 static let content   = "_content"
-                static let comments  = "comments"
-                static let comment   = "comment"
             }
         }
         

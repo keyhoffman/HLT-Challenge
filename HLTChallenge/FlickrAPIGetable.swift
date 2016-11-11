@@ -12,6 +12,8 @@ import Foundation
 
 protocol FlickrAPIGetable: RESTGetable {}
 
+// MARK: - FlickrAPIGetable Extension
+
 extension FlickrAPIGetable {
     static var urlGeneralQueryParameters: URLParameters {
         return [

@@ -21,10 +21,10 @@ struct FlickrPhotoComment: FlickrCollectionElement {
 
 extension FlickrPhotoComment {
     static func create(from dict: JSONDictionary) -> Result<FlickrPhotoComment> {
-        guard let id        = dict[FlickrConstants.Response.Keys.PhotoComments.id]        >>- JSONString,
-              let ownerName = dict[FlickrConstants.Response.Keys.PhotoComments.ownerName] >>- JSONString,
-              let ownerID   = dict[FlickrConstants.Response.Keys.PhotoComments.ownerID]   >>- JSONString,
-              let content   = dict[FlickrConstants.Response.Keys.PhotoComments.content]   >>- JSONString else { return Result(CreationError.Flickr.comment) }
+        guard let id        = dict[FlickrConstants.Response.Keys.Comment.id]        >>- JSONString,
+              let ownerName = dict[FlickrConstants.Response.Keys.Comment.ownerName] >>- JSONString,
+              let ownerID   = dict[FlickrConstants.Response.Keys.Comment.ownerID]   >>- JSONString,
+              let content   = dict[FlickrConstants.Response.Keys.Comment.content]   >>- JSONString else { return Result(CreationError.Flickr.comment) }
         return Result.init <| FlickrPhotoComment(id: id, ownerName: ownerName, ownerID: ownerID, content: content)
     }
 }

@@ -10,11 +10,13 @@ import Foundation
 
 // MARK: - FlickrCollection Protocol
 
-protocol FlickrCollection: FlickrAPIGetable, Collection, EmptyMakeable {
+protocol FlickrCollection: FlickrAPIGetable, Collection, EmptyInitializable {
     associatedtype FlickrElement: FlickrCollectionElement
     var elements: Set<FlickrElement> { get }
     init(from array: [FlickrElement])
 }
+
+// MARK: - FlickrCollection Extension
 
 extension FlickrCollection {
     typealias FlickrIndex = SetIndex<FlickrElement>

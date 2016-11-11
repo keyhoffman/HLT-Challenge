@@ -67,10 +67,10 @@ final class FlickrCoordinator: NSObject, SubCoordinator {
     
     private func loadPhotos(for flickrPhotoTableViewController: FlickrPhotoTableViewController, at index: Int = 0) {
         let dataCount = flickrPhotoTableViewController.data.count
-        guard let picturesPerPage = Int(FlickrConstants.Parameters.Values.Metadata.picturesPerPage), (index >= dataCount - 2 && index >= picturesPerPage - 1) || dataCount == 0  else { return }
+        guard let picturesPerPage = Int(FlickrConstants.Parameters.Values.MetadataCollection.picturesPerPage), (index >= dataCount - 2 && index >= picturesPerPage - 1) || dataCount == 0  else { return }
 
-        FlickrPhotoMetadataCollection.getPhotosStream(startingAt: dataCount) { result in
-            switch result {
+        FlickrPhotoMetadataCollection.getPhotosStream(startingAt: dataCount) { photoResult in
+            switch photoResult {
             case let .error(error):       debugPrint(error)
             case let .value(flickrPhoto): flickrPhotoTableViewController.data.append(flickrPhoto)
             }

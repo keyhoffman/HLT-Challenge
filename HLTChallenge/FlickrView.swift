@@ -69,8 +69,8 @@ final class FlickrView: UIView, PreparedConfigurable {
     }
 }
 
-private extension Selector {
-    static let displayPhotoTitle = #selector(FlickrView.displayPhotoTitle)
+fileprivate extension Selector {
+    fileprivate static let displayPhotoTitle = #selector(FlickrView.displayPhotoTitle)
 }
 
 
