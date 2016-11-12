@@ -12,8 +12,6 @@ import Foundation
 
 protocol ErrorMessageSender: CustomStringConvertible {}
 
-
-
 extension ErrorMessageSender {
     var messagePrefix: String {
         return "Oooops... Something went wrong!\n"

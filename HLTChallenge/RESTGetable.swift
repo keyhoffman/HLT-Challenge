@@ -35,6 +35,7 @@ extension RESTGetable {
 
 fileprivate extension RESTGetable {
     fileprivate static func urlRequest(for url: URL) -> Result<URLRequest> {
+        print("UURRLL", url.absoluteURL)
         return Result.init <| URLRequest(url: url)
     }
     
